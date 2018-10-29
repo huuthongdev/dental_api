@@ -1,5 +1,4 @@
 import { app, connectDatabase, initDatabase } from './refs';
-import './utils/keep-alive';
 
 connectDatabase();
 initDatabase();
