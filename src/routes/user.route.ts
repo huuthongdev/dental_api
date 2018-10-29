@@ -1,8 +1,15 @@
 import { Router } from "express";
-import { CreateUserService, LoginService } from "../refs";
-import { mustBeUser } from "./middlewares/must-be-user.middleware";
+import { CreateUserService, LoginService, ChangePasswordService, mustBeUser } from "../refs";
 
 export const userRouter = Router();
+
+// Login
+userRouter.post('/log-in', (req, res: any) => {
+    const { email, phone, password } = req.body;
+    LoginService.login(phone, email, password)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
 
 userRouter.use(mustBeUser);
 
@@ -14,10 +21,10 @@ userRouter.post('/', (req, res: any) => {
         .catch(res.onError);
 });
 
-// Login
-userRouter.post('/log-in', (req, res: any) => {
-    const { email, phone, password } = req.body;
-    LoginService.login(phone, email, password)
+// Change password
+userRouter.post('/change-password', (req, res: any) => {
+    const { oldPassword, newPassword } = req.body;
+    ChangePasswordService.change(req.query.userId, oldPassword, newPassword)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

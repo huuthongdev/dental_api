@@ -5,19 +5,19 @@ import { Modifield } from "../../src/types";
 const branchSchema = new Schema({
     sid: { type: Number, required: true },
     // Information
-    name: { type: String, required: true, trim: true, unique: true },
-    email: { type: String, required: true, trim: true, lowercase: true, unique: true },
-    phone: { type: Number, required: true, trim: true, unique: true },
+    name: { type: String, required: true, trim: true, unique: true, sparse: true },
+    email: { type: String, trim: true, lowercase: true, unique: true, sparse: true },
+    phone: { type: String, trim: true, unique: true, sparse: true },
     isMaster: { type: Boolean, default: false },
-     // Address
-     city: { type: String, trim: true },
-     district: { type: String, trim: true },
-     address: { type: String, trim: true },
+    // Address
+    city: { type: String, trim: true },
+    district: { type: String, trim: true },
+    address: { type: String, trim: true },
     //  Create Related
     createAt: { type: Number, default: Date.now() },
     createBy: { type: Schema.Types.ObjectId, ref: 'User' },
     // Modifield
-    modifieds: [{  
+    modifieds: [{
         updateAt: { type: Number },
         dataBackup: { type: String }
     }]
@@ -30,12 +30,12 @@ export class Branch extends BranchModel {
     // Information
     name: string;
     email: string;
-    phone: number;
+    phone: string;
     isMaster: boolean;
-     // Address
-     city: string;
-     district: string;
-     address: string;
+    // Address
+    city: string;
+    district: string;
+    address: string;
     //  Create Related
     createAt: number;
     createBy: User;

@@ -1,7 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { json } from 'body-parser';
-import { onError, userRouter } from './refs';
+import { onError, userRouter, branchRouter } from './refs';
+
 export const app = express();
 
 app.use(cors());
@@ -11,6 +12,7 @@ app.use(onError);
 // if (!process.env.NODE_ENV) app.use((req, res, next) => setTimeout(next, 500));
 app.get('/', (req, res) => res.send({ success: true }));
 app.use('/user', userRouter);
+app.use('/branch', branchRouter)
 
 app.use((req, res) => res.status(404).send({ success: false, message: 'INVALID_ROUTE' }));
 

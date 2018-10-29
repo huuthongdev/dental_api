@@ -2,6 +2,7 @@ import { model, Schema } from "mongoose";
 import { Modifield } from "../../src/types";
 
 const userSchema = new Schema({
+    sid: { type: Number, required: true, trim: true, unique: true },
     // Personal Information
     name: { type: String, required: true, trim: true },
     birthday: { type: Number, trim: true },
@@ -9,6 +10,7 @@ const userSchema = new Schema({
     phone: { type: String, required: true, trim: true, unique: true },
     password: { type: String, required: true, trim: true },
     passwordVersion: { type: Number, default: 1 },
+    isActive: { type: Boolean, default: true },
     // Address
     city: { type: String, trim: true },
     district: { type: String, trim: true },
@@ -22,6 +24,7 @@ const userSchema = new Schema({
      // Modifield
      modifieds: [{  
         updateAt: { type: Number },
+        updateBy: { type: Schema.Types.ObjectId, ref: 'User' },
         dataBackup: { type: String }
     }]
 });
