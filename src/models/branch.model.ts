@@ -19,6 +19,7 @@ const branchSchema = new Schema({
     // Modifield
     modifieds: [{
         updateAt: { type: Number },
+        updateBy: { type: Schema.Types.ObjectId, ref: 'User' },
         dataBackup: { type: String }
     }]
 });

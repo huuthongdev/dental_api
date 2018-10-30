@@ -1,9 +1,7 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { app, DEFAULT_PASSWORD, ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, ChangePasswordService } from '../../src/refs';
+import { app, DEFAULT_PASSWORD, ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, ChangePasswordService, UserError } from '../../src/refs';
 import { InitDatabaseForTest } from '../init-database-for-test';
-
-const { errors } = ChangePasswordService;
 
 describe('POST /user/change-password', () => {
     let token: string, userId: string;
@@ -46,6 +44,6 @@ describe('POST /user/change-password', () => {
         const { success, message } = response.body;
         equal(response.status, 400);
         equal(success, false);
-        equal(message, errors.OLD_PASSWORD_INCORRECT);
+        equal(message, UserError.OLD_PASSWORD_INCORRECT);
     });
 });

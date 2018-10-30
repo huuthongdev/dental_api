@@ -17,6 +17,7 @@ export enum Role {
 }
 
 export interface Modifield {
+    _id: string,
     updateAt: number,
     dataBackup: string
 }

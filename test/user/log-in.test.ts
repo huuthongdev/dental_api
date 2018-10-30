@@ -1,8 +1,6 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { app, ROOT_EMAIL, DEFAULT_PASSWORD, ROOT_NAME, ROOT_PHONE, LoginService, User } from '../../src/refs';
-
-const { errors } = LoginService;
+import { app, ROOT_EMAIL, DEFAULT_PASSWORD, ROOT_NAME, ROOT_PHONE, LoginService, User, UserError } from '../../src/refs';
 
 describe('POST /user/log-in', () => {
     it('Can login with Email', async () => {
@@ -68,19 +66,19 @@ describe('POST /user/log-in', () => {
             .post('/user/log-in').send({ phone: 'ROOT_PHONE', password: DEFAULT_PASSWORD });
         equal(res1.status, 400);
         equal(res1.body.success, false);
-        equal(res1.body.message, errors.INVALID_LOG_IN_INFO);
+        equal(res1.body.message, UserError.INVALID_LOG_IN_INFO);
 
         const res2 = await request(app)
             .post('/user/log-in').send({ email: 'ROOT_PHONE', password: DEFAULT_PASSWORD });
         equal(res2.status, 400);
         equal(res2.body.success, false);
-        equal(res2.body.message, errors.INVALID_LOG_IN_INFO);
+        equal(res2.body.message, UserError.INVALID_LOG_IN_INFO);
 
         const res3 = await request(app)
             .post('/user/log-in').send({ email: ROOT_EMAIL, password: 'DEFAULT_PASSWORD' });
         equal(res3.status, 400);
         equal(res3.body.success, false);
-        equal(res3.body.message, errors.INVALID_LOG_IN_INFO);
+        equal(res3.body.message, UserError.INVALID_LOG_IN_INFO);
     });
 
     it('Cannot login with removed user', async () => {
@@ -89,6 +87,6 @@ describe('POST /user/log-in', () => {
             .post('/user/log-in').send({ email: ROOT_EMAIL, password: DEFAULT_PASSWORD });
         equal(response.status, 400);
         equal(response.body.success, false);
-        equal(response.body.message, errors.INVALID_LOG_IN_INFO);
+        equal(response.body.message, UserError.INVALID_LOG_IN_INFO);
     });
 });

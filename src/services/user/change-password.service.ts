@@ -1,21 +1,16 @@
 import { hash, compare } from "bcryptjs";
-import { mustExist, makeSure, User, ModifiedUserService } from "../../../src/refs";
+import { mustExist, makeSure, User, ModifiedService, UserError } from "../../../src/refs";
 
 export class ChangePasswordService {
-    static errors = {
-        OLD_PASSWORD_MUST_BE_PROVIDED: 'OLD_PASSWORD_MUST_BE_PROVIDED',
-        NEW_PASSWORD_MUST_BE_PROVIDED: 'NEW_PASSWORD_MUST_BE_PROVIDED',
-        OLD_PASSWORD_INCORRECT: 'OLD_PASSWORD_INCORRECT'
-    }
 
     static async validate(userId: string, oldPassword: string, newPassword: string) {
         // Must Exist
-        mustExist(oldPassword, this.errors.OLD_PASSWORD_MUST_BE_PROVIDED);
-        mustExist(newPassword, this.errors.NEW_PASSWORD_MUST_BE_PROVIDED);
+        mustExist(oldPassword, UserError.OLD_PASSWORD_MUST_BE_PROVIDED);
+        mustExist(newPassword, UserError.NEW_PASSWORD_MUST_BE_PROVIDED);
         // Make Sure
         const user = await User.findById(userId) as User;
         const isMatch = await compare(oldPassword, user.password);
-        makeSure(isMatch, this.errors.OLD_PASSWORD_INCORRECT);
+        makeSure(isMatch, UserError.OLD_PASSWORD_INCORRECT);
         return user as User;
     }
 
@@ -24,7 +19,7 @@ export class ChangePasswordService {
         const passwordVersion = userOld.passwordVersion + 1;
         const hashed = await hash(newPassword, 8);
         const user = await User.findByIdAndUpdate(userId, { password: hashed, passwordVersion }, { new: true });
-        ModifiedUserService.modified(userId, userId, userOld);
+        ModifiedService.user(userId, userId, userOld);
         const userRes = user.toObject();
         delete userRes.password;
         return userRes;

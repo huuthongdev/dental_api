@@ -1,9 +1,7 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { CreateUserService, app } from '../../src/refs';
+import { CreateUserService, app, UserError } from '../../src/refs';
 import { InitDatabaseForTest } from '../init-database-for-test';
-
-const { errors } = CreateUserService;
 
 describe('POST /user/', () => {
     let token: string, userId: string;
@@ -71,7 +69,7 @@ describe('POST /user/', () => {
         const res1 = await request(app)
             .post('/user').set({ token }).send(dataSend1);
         equal(res1.status, 400);
-        equal(res1.body.message, errors.NAME_MUST_BE_PROVIDED);
+        equal(res1.body.message, UserError.NAME_MUST_BE_PROVIDED);
 
         const dataSend2 = {
             name: 'User name',
@@ -87,7 +85,7 @@ describe('POST /user/', () => {
         const res2 = await request(app)
             .post('/user').set({ token }).send(dataSend2);
         equal(res2.status, 400);
-        equal(res2.body.message, errors.EMAIL_MUST_BE_PROVIDED);
+        equal(res2.body.message, UserError.EMAIL_MUST_BE_PROVIDED);
 
         const dataSend3 = {
             name: 'User name',
@@ -103,7 +101,7 @@ describe('POST /user/', () => {
         const res3 = await request(app)
             .post('/user').set({ token }).send(dataSend3);
         equal(res3.status, 400);
-        equal(res3.body.message, errors.PHONE_MUST_BE_PROVIDED);
+        equal(res3.body.message, UserError.PHONE_MUST_BE_PROVIDED);
 
         const dataSend4 = {
             name: 'User name',
@@ -119,7 +117,7 @@ describe('POST /user/', () => {
         const res4 = await request(app)
             .post('/user').set({ token }).send(dataSend4);
         equal(res4.status, 400);
-        equal(res4.body.message, errors.PASSWORD_MUST_BE_PROVIDED);
+        equal(res4.body.message, UserError.PASSWORD_MUST_BE_PROVIDED);
     });
 
     it('Cannot create new user errors unique', async () => {
@@ -139,7 +137,7 @@ describe('POST /user/', () => {
             .post('/user').set({ token }).send(dataSend1);
         equal(res1.status, 400);
         equal(res1.body.success, false);
-        equal(res1.body.message, errors.EMAIL_IS_EXISTED);
+        equal(res1.body.message, UserError.EMAIL_IS_EXISTED);
 
         const dataSend2 = {
             name: 'user name',
@@ -156,6 +154,6 @@ describe('POST /user/', () => {
             .post('/user').set({ token }).send(dataSend2);
         equal(res2.status, 400);
         equal(res2.body.success, false);
-        equal(res2.body.message, errors.PHONE_IS_EXISTED);
+        equal(res2.body.message, UserError.PHONE_IS_EXISTED);
     });
 });
