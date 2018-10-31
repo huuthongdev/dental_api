@@ -38,7 +38,9 @@ describe('POST /branch/', () => {
             _id: result._id,
             modifieds: [],
             createAt: result.createAt,
-            isMaster: false
+            isMaster: false,
+            isActive: true
+
         }
         deepEqual(result, resExpected);
     });
@@ -71,7 +73,8 @@ describe('POST /branch/', () => {
             _id: result._id,
             modifieds: [],
             createAt: result.createAt,
-            isMaster: true
+            isMaster: true,
+            isActive: true
         }
         deepEqual(result, resExpected);
     });

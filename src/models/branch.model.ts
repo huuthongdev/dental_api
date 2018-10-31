@@ -21,7 +21,9 @@ const branchSchema = new Schema({
         updateAt: { type: Number },
         updateBy: { type: Schema.Types.ObjectId, ref: 'User' },
         dataBackup: { type: String }
-    }]
+    }],
+    // Status
+    isActive: { type: Boolean, default: true }
 });
 
 const BranchModel = model('Branch', branchSchema);
@@ -42,5 +44,7 @@ export class Branch extends BranchModel {
     createBy: User;
     // Modifield
     modifieds: Modifield[];
+    // Status
+    isActive: boolean;
 }
 

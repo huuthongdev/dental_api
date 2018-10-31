@@ -9,6 +9,8 @@ export class UpdateBranchService {
         const oldBranch = await Branch.findById(branchId).select({ modifieds: false, __v: false, createAt: false, createBy: false });
         mustExist(oldBranch, BranchError.CANNOT_FIND_BRANCH);
         // Make Sure
+        const checkUniqueName = await Branch.count({ name, _id: { $ne: branchId } });
+        makeSure(checkUniqueName === 0, BranchError.NAME_IS_EXISTED);
         if (email) {
             makeSure(validateEmail(email), BranchError.EMAIL_INCORRECT);
             const checkUniqueEmail = await Branch.count({ email, _id: { $ne: branchId } });
@@ -18,8 +20,6 @@ export class UpdateBranchService {
             const checkUniquePhone = await Branch.count({ phone, _id: { $ne: branchId } });
             makeSure(checkUniquePhone === 0, BranchError.PHONE_IS_EXISTED);
         }
-        const checkUniqueName = await Branch.count({ name, _id: { $ne: branchId } });
-        makeSure(checkUniqueName === 0, BranchError.NAME_IS_EXISTED);
         return oldBranch;
     }
 

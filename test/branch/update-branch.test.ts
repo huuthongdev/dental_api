@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
 import { InitDatabaseForTest } from '../../test/init-database-for-test';
-import { app, UserError, Branch } from '../../src/refs';
+import { app, Branch, BranchError, CreateBranchService } from '../../src/refs';
 
-describe('PUT /branch/', () => {
+describe('PUT /branch/:branchId', () => {
     let userId: string, token: string, branchId: string;
     beforeEach('Prepare data for test', async () => {
         const dataInit = await InitDatabaseForTest.createRootBranch();
@@ -39,7 +39,8 @@ describe('PUT /branch/', () => {
             __v: 0,
             modifieds: [],
             createAt: result.createAt,
-            isMaster: true
+            isMaster: true,
+            isActive: true
         }
         deepEqual(result, resExpected);
         // Check database
@@ -54,5 +55,115 @@ describe('PUT /branch/', () => {
         equal(JSON.parse(branchDb.modifieds[0].dataBackup).city, 'HCM');
         equal(JSON.parse(branchDb.modifieds[0].dataBackup).district, 'Phu Nhuan');
         equal(JSON.parse(branchDb.modifieds[0].dataBackup).address, 'Address');
+    });
+
+    it('Cannot update: Error required', async () => {
+        const dataSend = {
+            // name: 'Name branch',
+            email: 'branch@gmail.com',
+            phone: '0908508136',
+            city: 'HCM',
+            district: 'Phu Nhuan',
+            address: 'address',
+        }
+        const res = await request(app)
+            .post('/branch/').set({ token }).send(dataSend);
+        equal(res.status, 400);
+        equal(res.body.success, false);
+        equal(res.body.message, BranchError.NAME_MUST_BE_PROVIDED);
+    });
+
+    it('Cannot create new Branch error unique', async () => {
+        await CreateBranchService.create(userId, 'Name', 'branch22@gmail.com', '0908557899222', 'HCM', 'Phu Nhuan', 'Address');
+        const dataSend1 = {
+            name: 'Name',
+            email: 'branch2@gmail.com',
+            phone: '09085081361',
+            city: 'HCM',
+            district: 'Phu Nhuan',
+            address: 'address',
+        }
+        const res1 = await request(app)
+            .put('/branch/' + branchId).set({ token }).send(dataSend1);
+        equal(res1.status, 400);
+        equal(res1.body.success, false);
+        equal(res1.body.message, BranchError.NAME_IS_EXISTED);
+
+        const dataSend2 = {
+            name: 'Name 2',
+            email: 'branch22@gmail.com',
+            phone: '09085081361',
+            city: 'HCM',
+            district: 'Phu Nhuan',
+            address: 'address',
+        }
+        const res2 = await request(app)
+            .put('/branch/' + branchId).set({ token }).send(dataSend2);
+        equal(res2.status, 400);
+        equal(res2.body.success, false);
+        equal(res2.body.message, BranchError.EMAIL_IS_EXISTED);
+
+        const dataSend3 = {
+            name: 'Name 2',
+            email: 'branch2@gmail.com',
+            phone: '0908557899222',
+            city: 'HCM',
+            district: 'Phu Nhuan',
+            address: 'address',
+        }
+        const res3 = await request(app)
+            .put('/branch/' + branchId).set({ token }).send(dataSend3);
+        equal(res3.status, 400);
+        equal(res3.body.success, false);
+        equal(res3.body.message, BranchError.PHONE_IS_EXISTED);
+    });
+
+    it('Cannot update with invalid email', async () => {
+        const dataSend1 = {
+            name: 'Name',
+            email: 'branch2gmail.com',
+            phone: '09085081361',
+            city: 'HCM',
+            district: 'Phu Nhuan',
+            address: 'address',
+        }
+        const res1 = await request(app)
+            .put('/branch/' + branchId).set({ token }).send(dataSend1);
+        equal(res1.status, 400);
+        equal(res1.body.success, false);
+        equal(res1.body.message, BranchError.EMAIL_INCORRECT);
+    });
+
+    it('Cannot update removed branch', async () => {
+        await Branch.findByIdAndRemove(branchId);
+        const dataSend1 = {
+            name: 'Name',
+            email: 'branch2gmail.com',
+            phone: '09085081361',
+            city: 'HCM',
+            district: 'Phu Nhuan',
+            address: 'address',
+        }
+        const res1 = await request(app)
+            .put('/branch/' + branchId).set({ token }).send(dataSend1);
+        equal(res1.status, 400);
+        equal(res1.body.success, false);
+        equal(res1.body.message, BranchError.CANNOT_FIND_BRANCH);
+    });
+
+    it('Cannot update with invalid id', async () => {
+        const dataSend1 = {
+            name: 'Name',
+            email: 'branch2gmail.com',
+            phone: '09085081361',
+            city: 'HCM',
+            district: 'Phu Nhuan',
+            address: 'address',
+        }
+        const res1 = await request(app)
+            .put('/branch/' + 'branchId').set({ token }).send(dataSend1);
+        equal(res1.status, 400);
+        equal(res1.body.success, false);
+        equal(res1.body.message, 'INVALID_ID');
     });
 });

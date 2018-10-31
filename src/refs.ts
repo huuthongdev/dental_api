@@ -20,6 +20,7 @@ import { ChangePasswordService } from './services/user/change-password.service';
 import { CreateBranchService } from './services/branch/create-branch.service';
 import { ModifiedService } from './services/modified/modified.service';
 import { UpdateBranchService } from './services/branch/update-branch.service';
+import { DisableAndRemoveBranchService } from './services/branch/disable-and-remove-branch.service';
 // Middlewares
 import { onError } from './routes/middlewares/on-error.middleware';
 import { mustBeUser } from './routes/middlewares/must-be-user.middleware';
@@ -55,6 +56,7 @@ export { ModifiedService }
 export { ChangePasswordService }
 export { CreateBranchService }
 export { UpdateBranchService }
+export { DisableAndRemoveBranchService }
 // Middlewares
 export { onError }
 export { mustBeUser }
