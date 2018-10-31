@@ -36,7 +36,7 @@ branchRouter.put('/enable/:branchId', (req, res: any) => {
 });
 
 // Remove branch
-branchRouter.delete('/remove/:branchId', (req, res: any) => {
+branchRouter.delete('/:branchId', (req, res: any) => {
     DisableAndRemoveBranchService.remove(req.query.userId, req.params.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);

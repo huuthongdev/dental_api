@@ -37,7 +37,7 @@ describe('PUT /branch/:branchId', () => {
             address: 'address update',
             createBy: userId,
             __v: 0,
-            modifieds: [],
+            modifieds: result.modifieds,
             createAt: result.createAt,
             isMaster: true,
             isActive: true

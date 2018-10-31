@@ -10,13 +10,11 @@ describe('POST /user/log-in', () => {
         const { success, result } = response.body;
         equal(success, true);
         const resExpected: any = {
-            sid: 1,
-            isActive: true,
             _id: result._id,
+            sid: 1,
             name: ROOT_NAME,
             email: ROOT_EMAIL,
             phone: ROOT_PHONE,
-            password: result.password,
             birthday: result.birthday,
             city: 'HCM',
             district: 'Phu Nhuan',
@@ -26,6 +24,7 @@ describe('POST /user/log-in', () => {
             modifieds: [],
             createAt: result.createAt,
             roleInBranchs: [],
+            isActive: true,
             passwordVersion: 1,
             token: result.token
         }
@@ -39,13 +38,11 @@ describe('POST /user/log-in', () => {
         const { success, result } = response.body;
         equal(success, true);
         const resExpected: any = {
-            sid: 1,
-            isActive: true,
             _id: result._id,
+            sid: 1,
             name: ROOT_NAME,
             email: ROOT_EMAIL,
             phone: ROOT_PHONE,
-            password: result.password,
             birthday: result.birthday,
             city: 'HCM',
             district: 'Phu Nhuan',
@@ -55,6 +52,7 @@ describe('POST /user/log-in', () => {
             modifieds: [],
             createAt: result.createAt,
             roleInBranchs: [],
+            isActive: true,
             passwordVersion: 1,
             token: result.token
         }

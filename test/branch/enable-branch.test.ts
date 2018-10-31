@@ -3,18 +3,19 @@ import { deepEqual, equal } from 'assert';
 import { InitDatabaseForTest } from '../../test/init-database-for-test';
 import { app, Branch, BranchError } from '../../src/refs';
 
-describe('PUT /disable/:branchId', () => {
+describe('PUT /enalble/:branchId', () => {
     let userId: string, token: string, branchId: string;
     beforeEach('Prepare data for test', async () => {
         const dataInit = await InitDatabaseForTest.createRootBranch();
         userId = dataInit.rootUser._id.toString();
         token = dataInit.rootUser.token.toString();
         branchId = dataInit.normalBranch._id.toString();
+        await Branch.findByIdAndUpdate(branchId, { isActive: true });
     });
 
-    it('Can disbale branch', async () => {
+    it('Can enable branch', async () => {
         const response = await request(app)
-            .put('/branch/disable/' + branchId)
+            .put('/branch/enable/' + branchId)
             .set({ token });
         const { success, result } = response.body;
         equal(success, true);
@@ -30,7 +31,7 @@ describe('PUT /disable/:branchId', () => {
             address: 'Address2',
             createBy: userId,
             __v: 0,
-            isActive: false,
+            isActive: true,
             modifieds: [],
             createAt: result.createAt,
             isMaster: false
@@ -38,10 +39,10 @@ describe('PUT /disable/:branchId', () => {
         deepEqual(result, resExpected);
     });
 
-    it('Cannot disable remove branch', async () => {
+    it('Cannot enable remove branch', async () => {
         await Branch.findByIdAndRemove(branchId);
         const response = await request(app)
-            .put('/branch/disable/' + branchId)
+            .put('/branch/enable/' + branchId)
             .set({ token });
         const { success, message } = response.body;
         equal(success, false);
@@ -51,7 +52,7 @@ describe('PUT /disable/:branchId', () => {
 
     it('Cannot disable with invalid id', async () => {
         const response = await request(app)
-            .put('/branch/disable/' + 'branchId')
+            .put('/branch/enable/' + 'branchId')
             .set({ token });
         const { success, message } = response.body;
         equal(success, false);

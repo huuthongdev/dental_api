@@ -21,8 +21,8 @@ const userSchema = new Schema({
     //  Create Related
     createAt: { type: Number, default: Date.now() },
     createBy: { type: Schema.Types.ObjectId, ref: 'User' },
-     // Modifield
-     modifieds: [{  
+    // Modifield
+    modifieds: [{
         updateAt: { type: Number },
         updateBy: { type: Schema.Types.ObjectId, ref: 'User' },
         dataBackup: { type: String }
@@ -32,6 +32,7 @@ const userSchema = new Schema({
 const UserModel = model('User', userSchema);
 
 export class User extends UserModel {
+    sid: number;
     // Personal Information
     name: string;
     birthday: number;

@@ -1,6 +1,5 @@
-import { mustExist, makeSure, ServerError, User, UserError } from '../../refs';
+import { mustExist, makeSure, ServerError, User, UserError, GetUserInfo, validateEmail } from '../../refs';
 import { compare } from 'bcryptjs';
-import { validateEmail } from '../../../src/utils/validate';
 import { createToken } from '../../../src/utils/jwt';
 
 export class LoginService {
@@ -17,7 +16,7 @@ export class LoginService {
         mustExist(user, UserError.INVALID_LOG_IN_INFO);
         const isMatch = await compare(password, user.password);
         makeSure(isMatch, UserError.INVALID_LOG_IN_INFO);
-        return await this.getUserInfo(user._id);
+        return this.getUserInfoWithToken(user);
     }
 
     static async loginWithEmail(email: string, password: string) {
@@ -26,14 +25,14 @@ export class LoginService {
         mustExist(user, UserError.INVALID_LOG_IN_INFO);
         const isMatch = await compare(password, user.password);
         makeSure(isMatch, UserError.INVALID_LOG_IN_INFO);
-        return await this.getUserInfo(user._id);
+        return this.getUserInfoWithToken(user);
     }
 
-    static async getUserInfo(userId: string) {
-        const user = await User.findById(userId) as User;
+    static async getUserInfoWithToken(user: User) {
         const token = await createToken({ _id: user._id, version: user.passwordVersion });
-        const userRes = user.toObject() as User;
-        userRes.token = token;
-        return userRes;
+        let userInfo = await GetUserInfo.get(user._id) as User;
+        userInfo = userInfo.toObject();
+        userInfo.token = token;
+        return userInfo;
     }
 }

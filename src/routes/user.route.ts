@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { CreateUserService, LoginService, ChangePasswordService, mustBeUser } from "../refs";
+import { CreateUserService, LoginService, ChangePasswordService, mustBeUser, SetRoleInBranchService } from "../refs";
 
 export const userRouter = Router();
-
+ 
 // Login
 userRouter.post('/log-in', (req, res: any) => {
     const { email, phone, password } = req.body;
@@ -25,6 +25,14 @@ userRouter.post('/', (req, res: any) => {
 userRouter.post('/change-password', (req, res: any) => {
     const { oldPassword, newPassword } = req.body;
     ChangePasswordService.change(req.query.userId, oldPassword, newPassword)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+// Set role in branch
+userRouter.put('/set-role-in-branch', (req, res: any) => {
+    const { roles, userId, branchId } = req.body;
+    SetRoleInBranchService.set(userId, branchId, roles)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

@@ -25,8 +25,7 @@ export class UpdateBranchService {
 
     static async update(userId: string, branchId: string, name: string, email?: string, phone?: string, city?: string, district?: string, address?: string) {
         const oldBranch = await this.validate(userId, branchId, name, email, phone, city, district, address) as Branch;
-        const branch = await Branch.findByIdAndUpdate(branchId, { name, email, phone, city, district, address }, { new: true });
-        ModifiedService.branch(branchId, userId, oldBranch);
-        return branch;
+        await Branch.findByIdAndUpdate(branchId, { name, email, phone, city, district, address }, { new: true });
+        return await ModifiedService.branch(branchId, userId, oldBranch);
     }
 }

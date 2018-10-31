@@ -1,5 +1,5 @@
 import { hash, compare } from "bcryptjs";
-import { mustExist, makeSure, User, ModifiedService, UserError } from "../../../src/refs";
+import { mustExist, makeSure, User, ModifiedService, UserError, GetUserInfo } from "../../../src/refs";
 
 export class ChangePasswordService {
 
@@ -20,8 +20,6 @@ export class ChangePasswordService {
         const hashed = await hash(newPassword, 8);
         const user = await User.findByIdAndUpdate(userId, { password: hashed, passwordVersion }, { new: true });
         ModifiedService.user(userId, userId, userOld);
-        const userRes = user.toObject();
-        delete userRes.password;
-        return userRes;
+        return await GetUserInfo.get(user._id);
     }
 }

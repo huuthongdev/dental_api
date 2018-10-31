@@ -2,7 +2,8 @@ import { Schema, model } from "mongoose";
 import { Role } from "../../src/types";
 
 const roleInBranchSchema = new Schema({
-    branch: { type: Schema.Types.ObjectId, ref: 'Branch' },
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    branch: { type: Schema.Types.ObjectId, ref: 'Branch', required: true },
     roles: [{ type: String }]
 });
 

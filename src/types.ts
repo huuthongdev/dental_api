@@ -1,3 +1,5 @@
+import { Product } from "./refs";
+
 export enum Role {
     // Chủ tịch
     CHAIRMAN = 'CHAIRMAN',
@@ -20,4 +22,9 @@ export interface Modifield {
     _id: string,
     updateAt: number,
     dataBackup: string
+}
+
+export interface AccessorieItem {
+    product: string | Product;
+    total: number;
 }
