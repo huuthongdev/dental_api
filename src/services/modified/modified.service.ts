@@ -1,6 +1,7 @@
-import { User, Branch, Service } from "../../../src/refs";
+import { User, Branch, Service, Product } from "../../../src/refs";
 
 export class ModifiedService {
+
     static async user(userId: string, updateBy: string, dataBackup: User) {
         const data = JSON.stringify(dataBackup).toString();
         const updateAt = Date.now();
@@ -17,5 +18,11 @@ export class ModifiedService {
         const data = JSON.stringify(dataBackup).toString();
         const updateAt = Date.now();
         return await Service.findByIdAndUpdate(serviceId, { $addToSet: { modifieds: { updateAt, updateBy, dataBackup: data } } }, { new: true });
+    }
+
+    static async product(productId: string, updateBy: string, dataBackup: Product) {
+        const data = JSON.stringify(dataBackup).toString();
+        const updateAt = Date.now();
+        return await Product.findByIdAndUpdate(productId, { $addToSet: { modifieds: { updateAt, updateBy, dataBackup: data } } }, { new: true });
     }
 }

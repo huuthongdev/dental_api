@@ -1,0 +1,1 @@
+export const modifiedSelect = { modifieds: false, __v: false, createAt: false, createBy: false };

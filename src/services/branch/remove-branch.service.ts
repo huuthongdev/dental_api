@@ -1,6 +1,6 @@
 import { mustBeObjectId, Branch, mustExist, BranchError, ModifiedService, makeSure } from "../../../src/refs";
 
-export class DisableAndRemoveBranchService {
+export class RemoveBranchService {
     static async validate(userId: string, brandId: string, remove: boolean = false) {
         mustBeObjectId(userId, brandId);
         const oldBranch = await Branch.findById(brandId).select({ modifieds: false, __v: false, createAt: false, createBy: false }) as Branch;

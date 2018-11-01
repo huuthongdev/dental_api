@@ -7,7 +7,7 @@ export class SetRoleInBranchService {
         mustExist(user, UserError.CANNOT_FIND_USER);
         const branch = await Branch.findById(branchId);
         mustExist(branch, BranchError.CANNOT_FIND_BRANCH);
-        const roleInBranch = await RoleInBranch.findOne({ branch: branchId });
+        const roleInBranch = await RoleInBranch.findOne({ branch: branchId, user: userId });
         for (let i = 0; i < roles.length; i++) {
             const { ACCOUNTANT, ACCOUNTING_MANAGER, CHAIRMAN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST } = Role;
             const rolesArr = [ACCOUNTANT, ACCOUNTING_MANAGER, CHAIRMAN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST];

@@ -2,6 +2,7 @@ import { model, Schema } from "mongoose";
 import { Branch } from "../../src/refs";
 
 const serviceMetaSchema = new Schema({
+    service: { type: Schema.Types.ObjectId, ref: 'Service' },
     price: { type: Number },
     branch: { type: Schema.Types.ObjectId, ref: 'Branch' }
 });

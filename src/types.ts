@@ -26,5 +26,5 @@ export interface Modifield {
 
 export interface AccessorieItem {
     product: string | Product;
-    total: number;
+    qty: number;
 }

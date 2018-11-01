@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { json } from 'body-parser';
-import { onError, userRouter, branchRouter, serviceRouter } from './refs';
+import { onError, userRouter, branchRouter, serviceRouter, productRouter } from './refs';
 
 export const app = express();
 
@@ -14,6 +14,7 @@ app.get('/', (req, res) => res.send({ success: true }));
 app.use('/user', userRouter);
 app.use('/branch', branchRouter);
 app.use('/service', serviceRouter);
+app.use('/product', productRouter);
 
 app.use((req, res) => res.status(404).send({ success: false, message: 'INVALID_ROUTE' }));
 

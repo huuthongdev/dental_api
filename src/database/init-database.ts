@@ -1,18 +1,18 @@
 import faker from 'faker';
 import { User } from '../../src/models/user.model';
-import { ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, DEFAULT_PASSWORD } from '../../src/refs';
+import { ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, DEFAULT_PASSWORD, SID_START_AT, CreateBranchService, BRANCH_MASTER_NAME, SetRoleInBranchService, Role } from '../../src/refs';
 import { hash } from 'bcryptjs';
 
 export async function initDatabase() {
     const userCount = await User.count({});
     if (userCount !== 0) return;
-    await createRootAccount();
+    await prepareDataInit();
 }
 
-export async function createRootAccount() {
+export async function prepareDataInit() {
     const password = await hash(DEFAULT_PASSWORD, 8);
     const user = new User({
-        sid: 1,
+        sid: SID_START_AT,
         name: ROOT_NAME,
         email: ROOT_EMAIL,
         phone: ROOT_PHONE,
@@ -25,4 +25,6 @@ export async function createRootAccount() {
         homeTown: 'HA NOI',
     });
     await user.save();
+    const branchMaster = await CreateBranchService.create(user._id, BRANCH_MASTER_NAME, '', '', '', '', '', true);
+    await SetRoleInBranchService.set(user._id, branchMaster._id, [Role.CHAIRMAN]);
 }

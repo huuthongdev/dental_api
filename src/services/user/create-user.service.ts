@@ -1,4 +1,4 @@
-import { mustExist, User, makeSure, mustBeObjectId, UserError, validateEmail, RoleInBranch } from "../../refs";
+import { mustExist, User, makeSure, mustBeObjectId, UserError, validateEmail, RoleInBranch, SID_START_AT } from "../../refs";
 import { hash } from 'bcryptjs';
 export class CreateUserService {
 
@@ -22,7 +22,7 @@ export class CreateUserService {
     static async create(userId: string, name: string, email: string, phone: string, password: string, birthday?: number, city?: string, district?: string, address?: string, homeTown?: string, roleInBranchs?: RoleInBranch[]) {
         await this.validate(userId, name, email, phone, password);
         const hashed = await hash(password, 8);
-        const sid = await this.getUserSid();
+        const sid = await this.getSid();
         const user = new User({
             sid,
             // Personal Information
@@ -47,8 +47,9 @@ export class CreateUserService {
         return userRes;
     }
 
-    static async getUserSid() {
-        const user = await User.count({});
-        return user + 1;
+    static async getSid() {
+        const maxSid = await User.find({}).sort({ sid: -1 }).limit(1) as User[];
+        if (maxSid.length === 0) return SID_START_AT;
+        return maxSid[0].sid + 1;
     }
 }

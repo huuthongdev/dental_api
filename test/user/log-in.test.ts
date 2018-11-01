@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { app, ROOT_EMAIL, DEFAULT_PASSWORD, ROOT_NAME, ROOT_PHONE, LoginService, User, UserError } from '../../src/refs';
+import { app, ROOT_EMAIL, DEFAULT_PASSWORD, ROOT_NAME, ROOT_PHONE, LoginService, User, UserError, SID_START_AT } from '../../src/refs';
 
 describe('POST /user/log-in', () => {
     it('Can login with Email', async () => {
@@ -11,7 +11,7 @@ describe('POST /user/log-in', () => {
         equal(success, true);
         const resExpected: any = {
             _id: result._id,
-            sid: 1,
+            sid: SID_START_AT,
             name: ROOT_NAME,
             email: ROOT_EMAIL,
             phone: ROOT_PHONE,
@@ -23,7 +23,7 @@ describe('POST /user/log-in', () => {
             __v: 0,
             modifieds: [],
             createAt: result.createAt,
-            roleInBranchs: [],
+            roleInBranchs: result.roleInBranchs,
             isActive: true,
             passwordVersion: 1,
             token: result.token
@@ -39,7 +39,7 @@ describe('POST /user/log-in', () => {
         equal(success, true);
         const resExpected: any = {
             _id: result._id,
-            sid: 1,
+            sid: SID_START_AT,
             name: ROOT_NAME,
             email: ROOT_EMAIL,
             phone: ROOT_PHONE,
@@ -51,7 +51,7 @@ describe('POST /user/log-in', () => {
             __v: 0,
             modifieds: [],
             createAt: result.createAt,
-            roleInBranchs: [],
+            roleInBranchs: result.roleInBranchs,
             isActive: true,
             passwordVersion: 1,
             token: result.token

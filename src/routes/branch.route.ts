@@ -1,9 +1,15 @@
 import { Router } from "express";
-import { mustBeUser, CreateBranchService, UpdateBranchService, DisableAndRemoveBranchService } from "../refs";
+import { CreateBranchService, UpdateBranchService, RemoveBranchService, mustBeChairman, GetAllUSerInCurrentBranch, mustBeDirector } from "../refs";
 
 export const branchRouter = Router();
 
-branchRouter.use(mustBeUser);
+branchRouter.get('/user-in-current-branch', mustBeDirector , (req, res: any) => {
+    GetAllUSerInCurrentBranch.getAll(req.query.branchId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+branchRouter.use(mustBeChairman);
 
 // Create new Branch
 branchRouter.post('/', (req, res: any) => {
@@ -23,21 +29,21 @@ branchRouter.put('/:branchId', (req, res: any) => {
 
 // Disable branch
 branchRouter.put('/disable/:branchId', (req, res: any) => {
-    DisableAndRemoveBranchService.disable(req.query.userId, req.params.branchId)
+    RemoveBranchService.disable(req.query.userId, req.params.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
 
 // Enable branch
 branchRouter.put('/enable/:branchId', (req, res: any) => {
-    DisableAndRemoveBranchService.enable(req.query.userId, req.params.branchId)
+    RemoveBranchService.enable(req.query.userId, req.params.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
 
 // Remove branch
 branchRouter.delete('/:branchId', (req, res: any) => {
-    DisableAndRemoveBranchService.remove(req.query.userId, req.params.branchId)
+    RemoveBranchService.remove(req.query.userId, req.params.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

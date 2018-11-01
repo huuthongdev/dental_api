@@ -1,4 +1,4 @@
-import { mustBeObjectId, BranchError, mustExist, Branch, makeSure, validateEmail, ModifiedService } from "../../../src/refs";
+import { mustBeObjectId, BranchError, mustExist, Branch, makeSure, validateEmail, ModifiedService, modifiedSelect } from "../../../src/refs";
 
 export class UpdateBranchService {
 
@@ -6,7 +6,7 @@ export class UpdateBranchService {
         mustBeObjectId(userId, branchId);
         // Must Exist
         mustExist(name, BranchError.NAME_MUST_BE_PROVIDED);
-        const oldBranch = await Branch.findById(branchId).select({ modifieds: false, __v: false, createAt: false, createBy: false });
+        const oldBranch = await Branch.findById(branchId).select(modifiedSelect);
         mustExist(oldBranch, BranchError.CANNOT_FIND_BRANCH);
         // Make Sure
         const checkUniqueName = await Branch.count({ name, _id: { $ne: branchId } });

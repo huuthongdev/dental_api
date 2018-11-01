@@ -1,34 +1,34 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
 import { InitDatabaseForTest } from '../../test/init-database-for-test';
-import { app, Branch, BranchError } from '../../src/refs';
+import { app, Branch, BranchError, SID_START_AT } from '../../src/refs';
 
 describe('PUT /remove/:branchId', () => {
-    let userId: string, token: string, branchId: string, branchMasterId: string;
+    let userId: string, token: string, branchId: string, branchMasterId: string, normalBranchId: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.createRootBranch();
+        const dataInit = await InitDatabaseForTest.createNormalBranch();
         userId = dataInit.rootUser._id.toString();
         token = dataInit.rootUser.token.toString();
-        branchId = dataInit.normalBranch._id.toString();
-        branchMasterId = dataInit.masterBranch._id.toString();
+        branchId = dataInit.branchMaster._id.toString();
+        normalBranchId = dataInit.normalBranch._id.toString();
     });
 
     it('Can remove branch', async () => {
         const response = await request(app)
-            .delete('/branch/' + branchId)
-            .set({ token });
+            .delete('/branch/' + normalBranchId)
+            .set({ token, branch: branchId });
         const { success, result } = response.body;
         equal(success, true);
         equal(response.status, 200);
         const resExpected: any = {
-            _id: branchId,
-            sid: 2,
-            name: 'Branch name 2',
-            email: 'brand2@gmail.com',
-            phone: '09092',
-            city: 'HCM2',
-            district: 'Phu Nhuan2',
-            address: 'Address2',
+            _id: normalBranchId,
+            sid: SID_START_AT + 1,
+            name: 'Normal Branch',
+            email: 'normalbranch@gmail.com',
+            phone: '0123',
+            city: 'HCM',
+            district: 'Phu Nhuan',
+            address: 'Address',
             createBy: userId,
             __v: 0,
             isActive: true,
@@ -38,15 +38,15 @@ describe('PUT /remove/:branchId', () => {
         };
         deepEqual(result, resExpected);
         // Check database
-        const branchDb = await Branch.findById(branchId);
+        const branchDb = await Branch.findById(normalBranchId);
         equal(branchDb, undefined);
     });
 
     it('Cannot remove removed branch', async () => {
-        await Branch.findByIdAndRemove(branchId);
+        await Branch.findByIdAndRemove(normalBranchId);
         const response = await request(app)
-            .delete('/branch/' + branchId)
-            .set({ token });
+            .delete('/branch/' + normalBranchId)
+            .set({ token, branch: branchId });
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);
@@ -56,7 +56,7 @@ describe('PUT /remove/:branchId', () => {
     it('Cannot disable with invalid id', async () => {
         const response = await request(app)
             .delete('/branch/' + 'branchId')
-            .set({ token });
+            .set({ token, branch: branchId });
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);
@@ -65,8 +65,8 @@ describe('PUT /remove/:branchId', () => {
 
     it('Cannot remove master branch', async () => {
         const response = await request(app)
-            .delete('/branch/' + branchMasterId)
-            .set({ token });
+            .delete('/branch/' + branchId)
+            .set({ token, branch: branchId });
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);

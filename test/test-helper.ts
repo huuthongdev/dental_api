@@ -1,5 +1,5 @@
-import { connectDatabase, User, Branch, Service, Product } from '../src/refs';
-import { createRootAccount } from '../src/database/init-database';
+import { connectDatabase, User, Branch, Service, Product, RoleInBranch } from '../src/refs';
+import { prepareDataInit } from '../src/database/init-database';
 
 before(async () => await connectDatabase())
 
@@ -8,5 +8,6 @@ beforeEach(async () => {
     await Branch.remove({});
     await Service.remove({});
     await Product.remove({});
-    await createRootAccount();
+    await RoleInBranch.remove({});
+    await prepareDataInit();
 });

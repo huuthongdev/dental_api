@@ -10,6 +10,8 @@ interface ServerConfig {
     DEFAULT_PASSWORD: string;
     SERVER_URL: string;
     SHOULD_KEEP_ALIVE?: boolean;
+    SID_START_AT: number;
+    BRANCH_MASTER_NAME: string;
 }
 
 const testingConfig: ServerConfig = {
@@ -21,6 +23,8 @@ const testingConfig: ServerConfig = {
     ROOT_EMAIL: 'admin@gmail.com',
     ROOT_PHONE: '0908508136',
     DEFAULT_PASSWORD: 'admin',
+    SID_START_AT: 10000,
+    BRANCH_MASTER_NAME: 'Branch Name'
 }
 
 const developmentConfig: ServerConfig = {
@@ -31,7 +35,9 @@ const developmentConfig: ServerConfig = {
     ROOT_EMAIL: 'admin@gmail.com',
     ROOT_PHONE: '0908508136',
     DEFAULT_PASSWORD: 'admin',
-    SERVER_URL: 'http://localhost:4000'
+    SERVER_URL: 'http://localhost:4000',
+    SID_START_AT: 10000,
+    BRANCH_MASTER_NAME: 'Branch Name'
 };
 
 const staggingConfig: ServerConfig = {
@@ -42,7 +48,9 @@ const staggingConfig: ServerConfig = {
     ROOT_PHONE: '0908508136',
     ROOT_NAME: 'admin',
     DEFAULT_PASSWORD: 'admin',
-    SERVER_URL: 'https://api-kpibsc.herokuapp.com'
+    SERVER_URL: 'https://api-kpibsc.herokuapp.com',
+    SID_START_AT: 10000,
+    BRANCH_MASTER_NAME: 'Branch Name'
 }
 
 // TODO update production config to run in production mode
@@ -54,4 +62,4 @@ function getConfig(): ServerConfig {
     return developmentConfig;
 }
 
-export const { ROOT_EMAIL, ROOT_PHONE, DATABASE_URI, FRONT_END_URL, JWT_TOKEN_SECRET_KEY, ROOT_NAME, DEFAULT_PASSWORD, SERVER_URL, SHOULD_KEEP_ALIVE } = getConfig();
+export const { ROOT_EMAIL, ROOT_PHONE, DATABASE_URI, FRONT_END_URL, JWT_TOKEN_SECRET_KEY, ROOT_NAME, DEFAULT_PASSWORD, SERVER_URL, SHOULD_KEEP_ALIVE, SID_START_AT, BRANCH_MASTER_NAME } = getConfig();

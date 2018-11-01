@@ -1,6 +1,6 @@
-import { mustBeObjectId, mustExist, Branch, makeSure, validateEmail, BranchError } from "../../refs";
+import { mustBeObjectId, mustExist, Branch, makeSure, validateEmail, BranchError, SID_START_AT } from "../../refs";
 
-export class CreateBranchService {
+export class CreateBranchService { 
 
     static async validate(userId: string, name: string, email?: string, phone?: string, city?: string, district?: string, address?: string, isMaster?: boolean) {
         mustBeObjectId(userId);
@@ -23,10 +23,11 @@ export class CreateBranchService {
         const checkUniqueName = await Branch.count({ name });
         makeSure(checkUniqueName === 0, BranchError.NAME_IS_EXISTED);
     }
-
+ 
     static async getSid() {
-        const branch = await Branch.count({});
-        return branch + 1;
+        const maxSid = await Branch.find({}).sort({ sid: -1 }).limit(1) as Branch[];
+        if (maxSid.length === 0) return SID_START_AT;
+        return maxSid[0].sid + 1;
     }
 
     static async create(userId: string, name: string, email?: string, phone?: string, city?: string, district?: string, address?: string, isMaster?: boolean) {

@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { Modifield } from "../../src/types";
+import { RoleInBranch } from "../../src/refs";
 
 const userSchema = new Schema({
     sid: { type: Number, required: true, trim: true, unique: true },
@@ -47,7 +48,7 @@ export class User extends UserModel {
     address: string;
     homeTown: string;
     // Role In Branch
-    roleInBranchs: any;
+    roleInBranchs: RoleInBranch[];
     //  Create Related
     createAt: number;
     createBy: User;

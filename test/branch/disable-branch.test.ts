@@ -1,33 +1,34 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
 import { InitDatabaseForTest } from '../../test/init-database-for-test';
-import { app, Branch, BranchError } from '../../src/refs';
+import { app, Branch, BranchError, SID_START_AT } from '../../src/refs';
 
 describe('PUT /disable/:branchId', () => {
-    let userId: string, token: string, branchId: string;
+    let userId: string, token: string, branchId: string, normalBranchId: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.createRootBranch();
+        const dataInit = await InitDatabaseForTest.createNormalBranch();
         userId = dataInit.rootUser._id.toString();
         token = dataInit.rootUser.token.toString();
-        branchId = dataInit.normalBranch._id.toString();
+        branchId = dataInit.branchMaster._id.toString();
+        normalBranchId = dataInit.normalBranch._id.toString();
     });
 
     it('Can disbale branch', async () => {
         const response = await request(app)
-            .put('/branch/disable/' + branchId)
-            .set({ token });
+            .put('/branch/disable/' + normalBranchId)
+            .set({ token, branch: branchId });
         const { success, result } = response.body;
         equal(success, true);
         equal(response.status, 200);
         const resExpected: any = {
-            _id: branchId,
-            sid: 2,
-            name: 'Branch name 2',
-            email: 'brand2@gmail.com',
-            phone: '09092',
-            city: 'HCM2',
-            district: 'Phu Nhuan2',
-            address: 'Address2',
+            _id: normalBranchId,
+            sid: SID_START_AT + 1,
+            name: 'Normal Branch',
+            email: 'normalbranch@gmail.com',
+            phone: '0123',
+            city: 'HCM',
+            district: 'Phu Nhuan',
+            address: 'Address',
             createBy: userId,
             __v: 0,
             isActive: false,
@@ -39,10 +40,10 @@ describe('PUT /disable/:branchId', () => {
     });
 
     it('Cannot disable remove branch', async () => {
-        await Branch.findByIdAndRemove(branchId);
+        await Branch.findByIdAndRemove(normalBranchId);
         const response = await request(app)
-            .put('/branch/disable/' + branchId)
-            .set({ token });
+            .put('/branch/disable/' + normalBranchId)
+            .set({ token, branch: branchId });
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);
@@ -52,7 +53,7 @@ describe('PUT /disable/:branchId', () => {
     it('Cannot disable with invalid id', async () => {
         const response = await request(app)
             .put('/branch/disable/' + 'branchId')
-            .set({ token });
+            .set({ token, branch: branchId });
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);
