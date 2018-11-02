@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { json } from 'body-parser';
-import { onError, userRouter, branchRouter, serviceRouter, productRouter, clientRouter, ticketRouter, receiptVoucherRouter } from './refs';
+import { onError, userRouter, branchRouter, serviceRouter, productRouter, clientRouter, ticketRouter, receiptVoucherRouter, calendarDentistRouter } from './refs';
 
 export const app = express();
 
@@ -18,6 +18,7 @@ app.use('/product', productRouter);
 app.use('/client', clientRouter);
 app.use('/ticket', ticketRouter);
 app.use('/receipt-voucher', receiptVoucherRouter);
+app.use('/calendar-dentist', calendarDentistRouter);
 
 app.use((req, res) => res.status(404).send({ success: false, message: 'INVALID_ROUTE' }));
 

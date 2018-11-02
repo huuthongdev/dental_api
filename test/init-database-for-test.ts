@@ -90,4 +90,14 @@ export class InititalDatabaseForTest {
         const checkUser = await CreateUserService.create(rootUser._id, 'Normal', 'normal@gmail.com', '0999999', 'password');
         return { rootUser, branchMaster, normalBranch, checkUser }
     }
+
+    static async testCreateCalendarDentist() {
+        const { rootUser, branchMaster, normalBranch } = await this.createNormalBranch();
+        const dentist = await CreateUserService.create(rootUser._id, 'Dentist', 'dentist@gmail.com', '0999999', 'password');
+        await SetRoleInBranchService.set(dentist._id, normalBranch._id, [Role.DENTIST]);
+        await CreateUserService.create(rootUser._id, 'Staff', 'staff@gmail.com', '0999999111', 'password');
+        const staff = await LoginService.login(undefined, 'staff@gmail.com', 'password');
+        await SetRoleInBranchService.set(staff._id, normalBranch._id, [Role.CUSTOMER_CARE]);
+        return { rootUser, branchMaster, normalBranch, staff, dentist };
+    }
 }

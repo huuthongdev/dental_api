@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { Client, User, Branch, Service, ReceiptVoucher } from "../../src/refs";
+import { Client, User, Branch, Service, ReceiptVoucher, CalendarDentist } from "../../src/refs";
 import { Modifield } from "../../src/types";
 
 const ticketSchema = new Schema({
@@ -17,7 +17,7 @@ const ticketSchema = new Schema({
     }],
     totalAmount: { type: Number, default: 0 },
     receiptVoucher: [{ type: Schema.Types.ObjectId, ref: 'ReceiptVoucher' }],
-    calendars: [{ type: Schema.Types.ObjectId, ref: 'Calendar' }],
+    calendars: [{ type: Schema.Types.ObjectId, ref: 'CalendarDentist' }],
     // Client Feedback 
     feedback: {
         message: { type: String, trim: true },
@@ -48,7 +48,7 @@ export class Ticket extends TicketModel {
     items: TicketItem[];
     totalAmount: number;
     receiptVoucher: string | ReceiptVoucher;
-    // calendars: string | Calendar; TODO:
+    calendars: string | CalendarDentist;
     // Client Feedback 
     feedback: {
         message: string;

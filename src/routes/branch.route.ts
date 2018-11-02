@@ -1,9 +1,16 @@
 import { Router } from "express";
-import { CreateBranchService, UpdateBranchService, RemoveBranchService, GetAllUSerInCurrentBranch, mustBeUser } from "../refs";
+import { CreateBranchService, UpdateBranchService, RemoveBranchService, GetAllUSerInCurrentBranch, mustBeUser, GetAllBranchService } from "../refs";
 
 export const branchRouter = Router();
 
 branchRouter.use(mustBeUser);
+
+// Get all branch
+branchRouter.get('/', (req, res: any) => {
+    GetAllBranchService.get()
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
 
 // Get user in current branch
 branchRouter.get('/user-in-current-branch', (req, res: any) => {

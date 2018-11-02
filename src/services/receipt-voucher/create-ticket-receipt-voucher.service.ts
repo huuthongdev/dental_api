@@ -1,6 +1,6 @@
 import { mustBeObjectId, Ticket, mustExist, TicketError, Client, ClientError, modifiedSelect, ReceiptVoucher, makeSure, ReceiptVoucherError, SID_START_AT, ReceiptVoucherType, ModifiedService, ModifieldTicketMessage } from "../../../src/refs";
 
-export class CreateTicketReceipVoucher {
+export class CreateTicketReceiptVoucherService {
     static async validate(userId: string, branchId: string, clientId: string, totalPayment: number, ticketId: string, content: string) {
         mustBeObjectId(userId, branchId, clientId, ticketId);
         // Must Exist

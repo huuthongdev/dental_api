@@ -1,4 +1,4 @@
-import { User, Branch, Service, Product, Client, Ticket, TicketService } from "../../../src/refs";
+import { User, Branch, Service, Product, Client, Ticket, TicketService, CalendarDentist } from "../../../src/refs";
 
 export class ModifiedService {
 
@@ -37,5 +37,11 @@ export class ModifiedService {
         const updateAt = Date.now();
         await Ticket.findByIdAndUpdate(ticketId, { $addToSet: { modifieds: { updateAt, updateBy, dataBackup: data, message } } }, { new: true });
         return await TicketService.getTicketInfo(ticketId);
+    }
+    
+    static async calendarDentist(calendarDentistId: string, updateBy: string, dataBackup: CalendarDentist) {
+        const data = JSON.stringify(dataBackup).toString();
+        const updateAt = Date.now();
+        return await CalendarDentist.findByIdAndUpdate(calendarDentistId, { $addToSet: { modifieds: { updateAt, updateBy, dataBackup: data } } }, { new: true });
     }
 }

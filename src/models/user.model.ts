@@ -2,6 +2,8 @@ import { model, Schema } from "mongoose";
 import { Modifield } from "../../src/types";
 import { RoleInBranch } from "../../src/refs";
 
+const { ObjectId } = Schema.Types;
+
 const userSchema = new Schema({
     sid: { type: Number, required: true, trim: true, unique: true },
     // Personal Information
@@ -18,14 +20,14 @@ const userSchema = new Schema({
     address: { type: String, trim: true },
     homeTown: { type: String, trim: true },
     // Role In Branch
-    roleInBranchs: [{ type: Schema.Types.ObjectId, ref: 'RoleInBranch' }],
+    roleInBranchs: [{ type: ObjectId, ref: 'RoleInBranch' }],
     //  Create Related
     createAt: { type: Number, default: Date.now() },
-    createBy: { type: Schema.Types.ObjectId, ref: 'User' },
+    createBy: { type: ObjectId, ref: 'User' },
     // Modifield
     modifieds: [{
         updateAt: { type: Number },
-        updateBy: { type: Schema.Types.ObjectId, ref: 'User' },
+        updateBy: { type: ObjectId, ref: 'User' },
         dataBackup: { type: String }
     }]
 });
