@@ -1,16 +1,16 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
 import { app, SID_START_AT, Service, ServiceError } from '../../src/refs';
-import { InitDatabaseForTest } from '../../test/init-database-for-test';
+import { InititalDatabaseForTest } from '../../test/init-database-for-test';
 
 describe('DELETE /service/:serviceId', () => {
     let token: string, userId: string, serviceId: string, branchId: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.createService();
-        token = dataInit.rootUser.token.toString();
-        userId = dataInit.rootUser._id.toString();
-        serviceId = dataInit.service._id.toString();
-        branchId = dataInit.branchMaster._id.toString();
+        const dataInitial = await InititalDatabaseForTest.createService();
+        token = dataInitial.rootUser.token.toString();
+        userId = dataInitial.rootUser._id.toString();
+        serviceId = dataInitial.service._id.toString();
+        branchId = dataInitial.branchMaster._id.toString();
     });
 
     it('Can remove service', async () => {
@@ -34,6 +34,9 @@ describe('DELETE /service/:serviceId', () => {
             basicProcedure: ['Quy trinh']
         };
         deepEqual(result, resExpected);
+        // Check database
+        const serviceDb: any = await Service.findById(serviceId);
+        equal(serviceDb, undefined);
     });
 
     it('Cannot remove a removed service', async () => {

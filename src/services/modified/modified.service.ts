@@ -1,4 +1,4 @@
-import { User, Branch, Service, Product } from "../../../src/refs";
+import { User, Branch, Service, Product, Client, Ticket, TicketService } from "../../../src/refs";
 
 export class ModifiedService {
 
@@ -24,5 +24,18 @@ export class ModifiedService {
         const data = JSON.stringify(dataBackup).toString();
         const updateAt = Date.now();
         return await Product.findByIdAndUpdate(productId, { $addToSet: { modifieds: { updateAt, updateBy, dataBackup: data } } }, { new: true });
+    }
+
+    static async client(clientId: string, updateBy: string, dataBackup: Client) {
+        const data = JSON.stringify(dataBackup).toString();
+        const updateAt = Date.now();
+        return await Client.findByIdAndUpdate(clientId, { $addToSet: { modifieds: { updateAt, updateBy, dataBackup: data } } }, { new: true });
+    }
+
+    static async ticket(ticketId: string, updateBy: string, dataBackup: Ticket, message: string) {
+        const data = JSON.stringify(dataBackup).toString();
+        const updateAt = Date.now();
+        await Ticket.findByIdAndUpdate(ticketId, { $addToSet: { modifieds: { updateAt, updateBy, dataBackup: data, message } } }, { new: true });
+        return await TicketService.getTicketInfo(ticketId);
     }
 }

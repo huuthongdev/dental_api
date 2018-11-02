@@ -1,15 +1,15 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { InitDatabaseForTest } from '../../test/init-database-for-test';
-import { app, Branch, BranchError, SID_START_AT } from '../../src/refs';
+import { InititalDatabaseForTest } from '../../test/init-database-for-test';
+import { app, SID_START_AT } from '../../src/refs';
 
 describe('GET /branch/user-in-current-branch', () => {
     let token: string, branchId: string, userId: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.testGetAllUserInCurrentBranch();
-        token = dataInit.userDirect.token.toString();
-        branchId = dataInit.normalBranch._id.toString();
-        userId = dataInit.rootUser._id.toString();
+        const dataInitial = await InititalDatabaseForTest.testGetAllUserInCurrentBranch();
+        token = dataInitial.userDirect.token.toString();
+        branchId = dataInitial.normalBranch._id.toString();
+        userId = dataInitial.rootUser._id.toString();
     });
 
     it('Can get all user in current branch', async () => {

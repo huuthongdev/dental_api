@@ -41,3 +41,8 @@ export class Product extends ProductModel {
         dataBackup: string
     }]
 }
+
+export interface ProductItem {
+    product: string | Product;
+    qty: number;
+}

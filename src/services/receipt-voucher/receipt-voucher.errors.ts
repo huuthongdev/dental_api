@@ -1,0 +1,4 @@
+export enum ReceiptVoucherError {
+    OVER_PAYMENT_LIMIT = 'OVER_PAYMENT_LIMIT',
+    TOTAL_PAYMENT_IS_ZERO = 'TOTAL_PAYMENT_IS_ZERO'
+}

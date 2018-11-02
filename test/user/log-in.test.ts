@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { app, ROOT_EMAIL, DEFAULT_PASSWORD, ROOT_NAME, ROOT_PHONE, LoginService, User, UserError, SID_START_AT } from '../../src/refs';
+import { app, ROOT_EMAIL, DEFAULT_PASSWORD, ROOT_NAME, ROOT_PHONE, User, UserError, SID_START_AT } from '../../src/refs';
 
 describe('POST /user/log-in', () => {
     it('Can login with Email', async () => {
@@ -15,11 +15,6 @@ describe('POST /user/log-in', () => {
             name: ROOT_NAME,
             email: ROOT_EMAIL,
             phone: ROOT_PHONE,
-            birthday: result.birthday,
-            city: 'HCM',
-            district: 'Phu Nhuan',
-            address: '99 Nguyễn Văn Trỗi',
-            homeTown: 'HA NOI',
             __v: 0,
             modifieds: [],
             createAt: result.createAt,
@@ -43,11 +38,6 @@ describe('POST /user/log-in', () => {
             name: ROOT_NAME,
             email: ROOT_EMAIL,
             phone: ROOT_PHONE,
-            birthday: result.birthday,
-            city: 'HCM',
-            district: 'Phu Nhuan',
-            address: '99 Nguyễn Văn Trỗi',
-            homeTown: 'HA NOI',
             __v: 0,
             modifieds: [],
             createAt: result.createAt,

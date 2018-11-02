@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { mustBeChairman, CreateProductService, UpdateProductService, RemoveProductService } from "../../src/refs";
+import { CreateProductService, UpdateProductService, RemoveProductService, mustBeUser } from "../../src/refs";
 
 export const productRouter = Router();
 
-productRouter.use(mustBeChairman);
+productRouter.use(mustBeUser);
 
 // Create product
 productRouter.post('/', (req, res: any) => {

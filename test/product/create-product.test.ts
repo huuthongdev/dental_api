@@ -1,15 +1,15 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { InitDatabaseForTest } from '../../test/init-database-for-test';
+import { InititalDatabaseForTest } from '../../test/init-database-for-test';
 import { app, SID_START_AT, ProductError, CreateProductService, CreateUserService, LoginService, UserError } from '../../src/refs';
 
 describe('POST /product', () => {
     let userId: string, token: string, branchId: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.loginRootAccount();
-        userId = dataInit.rootUser._id.toString();
-        token = dataInit.rootUser.token.toString();
-        branchId = dataInit.branchMaster._id.toString();
+        const dataInitial = await InititalDatabaseForTest.loginRootAccount();
+        userId = dataInitial.rootUser._id.toString();
+        token = dataInitial.rootUser.token.toString();
+        branchId = dataInitial.branchMaster._id.toString();
     });
 
     it('Can create product', async () => {
@@ -79,19 +79,19 @@ describe('POST /product', () => {
         equal(message, ProductError.NAME_IS_EXISTED);
     });
 
-    it('Cannot create product with not chairman', async () => {
-        await CreateUserService.create(userId, 'normal', 'normaluser@gmail.com', '0123', 'password');
-        const tokenNormalUser = await LoginService.login('0123', undefined, 'password');
-        const dataSend = {
-            name: 'Product Name',
-            suggestedRetailerPrice: 300,
-            origin: 'VN'
-        }
-        const response = await request(app)
-            .post('/product').set({ token: tokenNormalUser.token, branch: branchId }).send(dataSend);
-        const { success, message } = response.body;
-        equal(success, false);
-        equal(response.status, 400);
-        equal(message, UserError.PERMISSION_DENIED);
-    });
+    // it('Cannot create product with not chairman', async () => {
+    //     await CreateUserService.create(userId, 'normal', 'normaluser@gmail.com', '0123', 'password');
+    //     const tokenNormalUser = await LoginService.login('0123', undefined, 'password');
+    //     const dataSend = {
+    //         name: 'Product Name',
+    //         suggestedRetailerPrice: 300,
+    //         origin: 'VN'
+    //     }
+    //     const response = await request(app)
+    //         .post('/product').set({ token: tokenNormalUser.token, branch: branchId }).send(dataSend);
+    //     const { success, message } = response.body;
+    //     equal(success, false);
+    //     equal(response.status, 400);
+    //     equal(message, UserError.PERMISSION_DENIED);
+    // });
 });

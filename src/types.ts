@@ -21,10 +21,17 @@ export enum Role {
 export interface Modifield {
     _id: string,
     updateAt: number,
-    dataBackup: string
+    dataBackup: string,
+    message: string
 }
 
 export interface AccessorieItem {
     product: string | Product;
     qty: number;
+}
+
+export enum ModifieldTicketMessage {
+    PAYMENT = 'PAYMENT',
+    UPDATE_ITEMS = 'UPDATE_ITEMS',
+    CHANGE_DENTIST_RESPONSIBLE = 'CHANGE_DENTIST_RESPONSIBLE'
 }

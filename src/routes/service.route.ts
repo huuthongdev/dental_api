@@ -1,17 +1,18 @@
 import { Router } from "express";
-import { mustBeUser, CreateService, UpdateService, RemoveService, GetAllService, CreateServiceMeta, mustBeDirector } from "../../src/refs";
+import { mustBeUser, CreateService, UpdateService, RemoveService, GetAllService, CreateServiceMeta } from "../../src/refs";
 
 export const serviceRouter = Router();
 
+
+serviceRouter.use(mustBeUser);
+
 // Create Service meta
-serviceRouter.post('/service-meta/:serviceId', mustBeDirector , (req, res: any) => {
+serviceRouter.post('/service-meta/:serviceId', (req, res: any) => {
     const { price } = req.body;
     CreateServiceMeta.create(req.params.serviceId, price, req.query.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
-
-serviceRouter.use(mustBeUser);
 
 // Create new Service
 serviceRouter.post('/', (req, res: any) => {

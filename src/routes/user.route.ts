@@ -2,7 +2,7 @@ import { Router } from "express";
 import { CreateUserService, LoginService, ChangePasswordService, mustBeUser, SetRoleInBranchService } from "../refs";
 
 export const userRouter = Router();
- 
+
 // Login
 userRouter.post('/log-in', (req, res: any) => {
     const { email, phone, password } = req.body;
@@ -15,8 +15,8 @@ userRouter.use(mustBeUser);
 
 // Create new user
 userRouter.post('/', (req, res: any) => {
-    const { name, email, phone, password, birthday, city, district, address, homeTown, roleInBranchs } = req.body;
-    CreateUserService.create(req.query.userId, name, email, phone, password, birthday, city, district, address, homeTown, roleInBranchs)
+    const { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole } = req.body;
+    CreateUserService.create(req.query.userId, name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

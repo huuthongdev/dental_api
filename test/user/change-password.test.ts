@@ -1,18 +1,19 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { app, DEFAULT_PASSWORD, ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, ChangePasswordService, UserError, SID_START_AT, Role } from '../../src/refs';
-import { InitDatabaseForTest } from '../init-database-for-test';
+import { app, DEFAULT_PASSWORD, ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, ChangePasswordService, UserError, SID_START_AT, Role, User } from '../../src/refs';
+import { InititalDatabaseForTest } from '../init-database-for-test';
 
 describe('POST /user/change-password', () => {
     let token: string, userId: string, branchId: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.loginRootAccount();
-        token = dataInit.rootUser.token.toString();
-        userId = dataInit.rootUser._id.toString();
-        branchId = dataInit.branchMaster._id.toString();
+        const dataInitial = await InititalDatabaseForTest.loginRootAccount();
+        token = dataInitial.rootUser.token.toString();
+        userId = dataInitial.rootUser._id.toString();
+        branchId = dataInitial.branchMaster._id.toString();
     });
 
     it('Can change password', async () => {
+        const oldUser = await User.findById(userId);
         const response = await request(app)
             .post('/user/change-password').set({ token, branch: branchId }).send({ oldPassword: DEFAULT_PASSWORD, newPassword: 'Perline@2018' });
         const { success, result } = response.body;
@@ -24,13 +25,13 @@ describe('POST /user/change-password', () => {
             name: ROOT_NAME,
             email: ROOT_EMAIL,
             phone: ROOT_PHONE,
-            birthday: 850237200000,
-            city: 'HCM',
-            district: 'Phu Nhuan',
-            address: '99 Nguyễn Văn Trỗi',
-            homeTown: 'HA NOI',
             __v: 0,
-            modifieds: [],
+            modifieds: [{
+                _id: result.modifieds[0]._id,
+                dataBackup: JSON.stringify(oldUser),
+                updateAt: result.modifieds[0].updateAt,
+                updateBy: userId
+            }],
             createAt: result.createAt,
             roleInBranchs:
                 [{

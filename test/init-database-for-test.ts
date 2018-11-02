@@ -1,6 +1,6 @@
-import { LoginService, ROOT_EMAIL, DEFAULT_PASSWORD, ROOT_PHONE, CreateBranchService, SetRoleInBranchService, Role, CreateService, Branch, User, CreateProductService, CreateUserService } from "../src/refs";
+import { LoginService, ROOT_EMAIL, DEFAULT_PASSWORD, ROOT_PHONE, CreateBranchService, SetRoleInBranchService, Role, CreateService, Branch, User, CreateProductService, CreateUserService, Client, CreateClientService, Service, CreateTicketService } from "../src/refs";
 
-export class InitDatabaseForTest {
+export class InititalDatabaseForTest {
     static async loginRootAccount() {
         const branchMaster = await Branch.findOne({ isMaster: true }) as Branch;
         const rootUser = await LoginService.login(ROOT_PHONE, undefined, DEFAULT_PASSWORD) as User;
@@ -25,6 +25,12 @@ export class InitDatabaseForTest {
         return { rootUser, branchMaster, normalBranch, product };
     }
 
+    static async createClient() {
+        const { rootUser, branchMaster, normalBranch } = await this.createNormalBranch();
+        const client = await CreateClientService.create(rootUser._id, 'Client', '0123', 'client@gmail.com', Date.now(), [], 'HCM', 'Phu Nhuan', '95/54 Huynh Van Banh', 'Phan Thiet');
+        return { rootUser, branchMaster, normalBranch, client }
+    }
+
     static async testGetAllUserInCurrentBranch() {
         const { rootUser, branchMaster, normalBranch } = await this.createNormalBranch();
         const user1 = await CreateUserService.create(rootUser._id, 'User 1', 'user1@gmail.com', '01', 'password');
@@ -47,5 +53,41 @@ export class InitDatabaseForTest {
         // const check = await User.findById(userDirect._id);
         // console.log(check);
         return { rootUser, branchMaster, normalBranch, userDirect };
+    }
+
+    static async testCreateTicket() {
+        const { rootUser, branchMaster, normalBranch, client } = await this.createClient();
+        const service1 = await CreateService.create(rootUser._id, 'Service 1', 100, [], []);
+        const service2 = await CreateService.create(rootUser._id, 'Service 2', 200, [], []);
+        const service3 = await CreateService.create(rootUser._id, 'Service 3', 300, [], []);
+        const service4 = await CreateService.create(rootUser._id, 'Service 4', 400, [], []);
+        const service5 = await CreateService.create(rootUser._id, 'Service 5', 500, [], []);
+        const dentist = await CreateUserService.create(rootUser._id, 'Dentist', 'dentist@gmail.com', '0999999', 'password');
+        await SetRoleInBranchService.set(dentist._id, normalBranch._id, [Role.DENTIST]);
+        await CreateUserService.create(rootUser._id, 'Staff', 'staff@gmail.com', '222222', 'password');
+        const staffCustomerCase = await LoginService.login(undefined, 'staff@gmail.com', 'password') as User;
+        await SetRoleInBranchService.set(staffCustomerCase._id, normalBranch._id, [Role.CUSTOMER_CARE]);
+        return { rootUser, branchMaster, normalBranch, client, services: [service1, service2, service3, service4, service5] as Service[], dentist, staffCustomerCase }
+    }
+
+    static async testUpdateTicket() {
+        const { rootUser, branchMaster, normalBranch, client, services, dentist, staffCustomerCase } = await this.testCreateTicket();
+        const dentist2 = await CreateUserService.create(rootUser._id, 'Dentist2', 'dentist2@gmail.com', '09999992', 'password');
+        await SetRoleInBranchService.set(dentist2._id, normalBranch._id, [Role.DENTIST]);
+        const items = [{
+            service: services[0]._id,
+            qty: 1
+        }, {
+            service: services[1]._id,
+            qty: 2
+        }];
+        const ticket = await CreateTicketService.create(client._id, staffCustomerCase._id, dentist._id, normalBranch._id, items);
+        return { ticket, rootUser, branchMaster, normalBranch, client, services, dentist, dentist2, staffCustomerCase }
+    }
+
+    static async testCheckRoleInBranch() {
+        const { rootUser, branchMaster, normalBranch } = await this.createNormalBranch();
+        const checkUser = await CreateUserService.create(rootUser._id, 'Normal', 'normal@gmail.com', '0999999', 'password');
+        return { rootUser, branchMaster, normalBranch, checkUser }
     }
 }

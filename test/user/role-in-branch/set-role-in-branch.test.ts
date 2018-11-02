@@ -1,18 +1,18 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { InitDatabaseForTest } from '../../../test/init-database-for-test';
+import { InititalDatabaseForTest } from '../../../test/init-database-for-test';
 import { app, Role, ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, Branch, BranchError, User, UserError, RoleInBranchError, SID_START_AT } from '../../../src/refs';
 
 describe('POST /user/set-role-in-branch/:branchId', () => {
     let userId: string, branchId: string, token: string, branchName: string, normalBranchId: string, normalBranchName: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.createNormalBranch();
-        userId = dataInit.rootUser._id.toString();
-        token = dataInit.rootUser.token.toString();
-        branchId = dataInit.branchMaster._id.toString();
-        branchName = dataInit.branchMaster.name;
-        normalBranchId = dataInit.normalBranch._id.toString();
-        normalBranchName = dataInit.normalBranch.name.toString();
+        const dataInitial = await InititalDatabaseForTest.createNormalBranch();
+        userId = dataInitial.rootUser._id.toString();
+        token = dataInitial.rootUser.token.toString();
+        branchId = dataInitial.branchMaster._id.toString();
+        branchName = dataInitial.branchMaster.name;
+        normalBranchId = dataInitial.normalBranch._id.toString();
+        normalBranchName = dataInitial.normalBranch.name.toString();
     });
 
     it('Can set role in current branch for user', async () => {
@@ -32,11 +32,6 @@ describe('POST /user/set-role-in-branch/:branchId', () => {
             name: ROOT_NAME,
             email: ROOT_EMAIL,
             phone: ROOT_PHONE,
-            birthday: result.birthday,
-            city: 'HCM',
-            district: 'Phu Nhuan',
-            address: '99 Nguyễn Văn Trỗi',
-            homeTown: 'HA NOI',
             __v: 0,
             modifieds: [],
             createAt: result.createAt,
@@ -69,11 +64,6 @@ describe('POST /user/set-role-in-branch/:branchId', () => {
             name: ROOT_NAME,
             email: ROOT_EMAIL,
             phone: ROOT_PHONE,
-            birthday: result.birthday,
-            city: 'HCM',
-            district: 'Phu Nhuan',
-            address: '99 Nguyễn Văn Trỗi',
-            homeTown: 'HA NOI',
             __v: 0,
             modifieds: [],
             createAt: result.createAt,

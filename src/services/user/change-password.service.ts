@@ -19,7 +19,7 @@ export class ChangePasswordService {
         const passwordVersion = userOld.passwordVersion + 1;
         const hashed = await hash(newPassword, 8);
         const user = await User.findByIdAndUpdate(userId, { password: hashed, passwordVersion }, { new: true });
-        ModifiedService.user(userId, userId, userOld);
+        await ModifiedService.user(userId, userId, userOld);
         return await GetUserInfo.get(user._id);
     }
 }

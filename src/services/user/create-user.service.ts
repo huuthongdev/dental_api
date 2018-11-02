@@ -1,8 +1,8 @@
-import { mustExist, User, makeSure, mustBeObjectId, UserError, validateEmail, RoleInBranch, SID_START_AT } from "../../refs";
+import { mustExist, User, makeSure, mustBeObjectId, UserError, validateEmail, RoleInBranch, SID_START_AT, Branch, Role, RoleInBranchError, BranchError, SetRoleInBranchService, GetUserInfo } from "../../refs";
 import { hash } from 'bcryptjs';
 export class CreateUserService {
 
-    static async validate(userId: string, name: string, email: string, phone: string, password: string) {
+    static async validate(userId: string, name: string, email: string, phone: string, password: string, branchWorkId?: Branch, branchRole?: Role) {
         mustBeObjectId(userId);
         // Check Exist
         mustExist(name, UserError.NAME_MUST_BE_PROVIDED);
@@ -16,11 +16,20 @@ export class CreateUserService {
         makeSure(emailCount === 0, UserError.EMAIL_IS_EXISTED);
         const phoneCount = await User.count({ phone });
         makeSure(phoneCount === 0, UserError.PHONE_IS_EXISTED);
-        return;
+        // Check Role
+        if (branchWorkId && branchRole) {
+            const { ACCOUNTANT, ACCOUNTING_MANAGER, CHAIRMAN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST } = Role;
+            const rolesArr = [ACCOUNTANT, ACCOUNTING_MANAGER, CHAIRMAN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST];
+            makeSure(rolesArr.includes(branchRole), RoleInBranchError.INVALID_ROLE);
+            const branchWork = await Branch.findById(branchWorkId) as Branch;
+            mustExist(branchWork, BranchError.CANNOT_FIND_BRANCH);
+            return branchWork;
+        }
+        return true;
     }
 
-    static async create(userId: string, name: string, email: string, phone: string, password: string, birthday?: number, city?: string, district?: string, address?: string, homeTown?: string, roleInBranchs?: RoleInBranch[]) {
-        await this.validate(userId, name, email, phone, password);
+    static async create(userId: string, name: string, email: string, phone: string, password: string, birthday?: number, city?: string, district?: string, address?: string, homeTown?: string, branchWorkId?: Branch, branchRole?: Role) {
+        const branchWork = await this.validate(userId, name, email, phone, password, branchWorkId, branchRole) as Branch;
         const hashed = await hash(password, 8);
         const sid = await this.getSid();
         const user = new User({
@@ -36,15 +45,12 @@ export class CreateUserService {
             district,
             address,
             homeTown,
-            // Role In Branch
-            roleInBranchs,
             //  Create Related
             createBy: userId,
         });
         await user.save();
-        const userRes = user.toObject();
-        delete userRes.password;
-        return userRes;
+        if (branchWork._id) return await SetRoleInBranchService.set(user._id, branchWork._id, [branchRole]);
+        return await GetUserInfo.get(user._id);
     }
 
     static async getSid() {

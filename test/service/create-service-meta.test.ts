@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { InitDatabaseForTest } from '../../test/init-database-for-test';
+import { InititalDatabaseForTest } from '../../test/init-database-for-test';
 import { app, ServiceError, CreateService, Service, SID_START_AT, SetRoleInBranchService, Role, RoleInBranch, CreateServiceMeta, RemoveService, CreateUserService, LoginService, UserError } from '../../src/refs';
 
 const { errors } = CreateServiceMeta;
@@ -8,11 +8,11 @@ const { errors } = CreateServiceMeta;
 describe('POST /service/service-meta/:serviceId', () => {
     let token: string, userId: string, serviceId: string, normalBrandId: string, normalUserId: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.createService();
-        token = dataInit.rootUser.token.toString();
-        userId = dataInit.rootUser._id.toString();
-        serviceId = dataInit.service._id.toString();
-        normalBrandId = dataInit.normalBranch._id.toString();
+        const dataInitial = await InititalDatabaseForTest.createService();
+        token = dataInitial.rootUser.token.toString();
+        userId = dataInitial.rootUser._id.toString();
+        serviceId = dataInitial.service._id.toString();
+        normalBrandId = dataInitial.normalBranch._id.toString();
         // Set Direct
         await SetRoleInBranchService.set(userId, normalBrandId, [Role.DIRECTOR]);
     });
@@ -76,14 +76,14 @@ describe('POST /service/service-meta/:serviceId', () => {
         equal(message, ServiceError.CANNOT_FIND_SERVICE);
     });
 
-    it('Cannot create service meta with user is not direct in current branch', async () => {
-        await CreateUserService.create(userId, 'Normal', 'normal@gmail.com', '09087777777', 'password');
-        const userNormal = await LoginService.login(undefined, 'normal@gmail.com', 'password');
-        const response = await request(app)
-            .post('/service/service-meta/' + serviceId).set({ token: userNormal.token, branch: normalBrandId }).send({ price: 900000 });
-        const { success, message } = response.body;
-        equal(success, false);
-        equal(response.status, 400);
-        equal(message, UserError.PERMISSION_DENIED);
-    });
+    // it('Cannot create service meta with user is not direct in current branch', async () => {
+    //     await CreateUserService.create(userId, 'Normal', 'normal@gmail.com', '09087777777', 'password');
+    //     const userNormal = await LoginService.login(undefined, 'normal@gmail.com', 'password');
+    //     const response = await request(app)
+    //         .post('/service/service-meta/' + serviceId).set({ token: userNormal.token, branch: normalBrandId }).send({ price: 900000 });
+    //     const { success, message } = response.body;
+    //     equal(success, false);
+    //     equal(response.status, 400);
+    //     equal(message, UserError.PERMISSION_DENIED);
+    // });
 });

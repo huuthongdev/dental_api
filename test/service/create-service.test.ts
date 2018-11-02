@@ -1,15 +1,15 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { InitDatabaseForTest } from '../../test/init-database-for-test';
+import { InititalDatabaseForTest } from '../../test/init-database-for-test';
 import { app, ServiceError, CreateService, Service, SID_START_AT, CreateProductService, AccessorieItem } from '../../src/refs';
 
 describe('POST /service', () => {
     let token: string, userId: string, branchId: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.loginRootAccount();
-        token = dataInit.rootUser.token.toString();
-        userId = dataInit.rootUser._id.toString();
-        branchId = dataInit.branchMaster._id.toString();
+        const dataInitial = await InititalDatabaseForTest.loginRootAccount();
+        token = dataInitial.rootUser.token.toString();
+        userId = dataInitial.rootUser._id.toString();
+        branchId = dataInitial.branchMaster._id.toString();
     });
 
     it('Can create new Service', async () => {

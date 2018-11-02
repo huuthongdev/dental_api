@@ -1,16 +1,16 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { InitDatabaseForTest } from '../../test/init-database-for-test';
+import { InititalDatabaseForTest } from '../../test/init-database-for-test';
 import { app, ServiceError, Service, SID_START_AT } from '../../src/refs';
 
 describe('PUT /disable/:serviceId', () => {
     let token: string, userId: string, serviceId: string, branchId: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.createService();
-        token = dataInit.rootUser.token.toString();
-        userId = dataInit.rootUser._id.toString();
-        serviceId = dataInit.service._id.toString();
-        branchId = dataInit.branchMaster._id.toString();
+        const dataInitial = await InititalDatabaseForTest.createService();
+        token = dataInitial.rootUser.token.toString();
+        userId = dataInitial.rootUser._id.toString();
+        serviceId = dataInitial.service._id.toString();
+        branchId = dataInitial.branchMaster._id.toString();
     });
 
     it('Can disable service', async () => {

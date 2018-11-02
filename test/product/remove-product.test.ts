@@ -1,16 +1,16 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { InitDatabaseForTest } from '../../test/init-database-for-test';
+import { InititalDatabaseForTest } from '../../test/init-database-for-test';
 import { app, SID_START_AT, ProductError, Product } from '../../src/refs';
 
 describe('DELETE /product/:productId', () => {
     let userId: string, token: string, branchId: string, productId: string;
     beforeEach('Prepare data for test', async () => {
-        const dataInit = await InitDatabaseForTest.createProduct();
-        userId = dataInit.rootUser._id.toString();
-        token = dataInit.rootUser.token.toString();
-        branchId = dataInit.branchMaster._id.toString();
-        productId = dataInit.product._id.toString();
+        const dataInitial = await InititalDatabaseForTest.createProduct();
+        userId = dataInitial.rootUser._id.toString();
+        token = dataInitial.rootUser.token.toString();
+        branchId = dataInitial.branchMaster._id.toString();
+        productId = dataInitial.product._id.toString();
     });
 
     it('Can remove product', async () => {
@@ -34,6 +34,9 @@ describe('DELETE /product/:productId', () => {
             productMetaes: []
         };
         deepEqual(result, resExpected);
+        // Check database
+        const productDb: any = await Product.findById(productId);
+        equal(productDb, undefined);
     });
 
     it('Cannot remove removed service', async () => {
