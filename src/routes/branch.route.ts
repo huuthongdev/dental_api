@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CreateBranchService, UpdateBranchService, RemoveBranchService, GetAllUSerInCurrentBranch, mustBeUser, GetAllBranchService } from "../refs";
+import { CreateBranchService, UpdateBranchService, RemoveBranchService, GetAllUSerInCurrentBranch, mustBeUser, GetAllBranchService, GetBranchDetailDataService } from "../refs";
 
 export const branchRouter = Router();
 
@@ -52,6 +52,13 @@ branchRouter.put('/enable/:branchId', (req, res: any) => {
 // Remove branch
 branchRouter.delete('/:branchId', (req, res: any) => {
     RemoveBranchService.remove(req.query.userId, req.params.branchId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+// Get branch detail data
+branchRouter.get('/detail/:branchId', (req, res: any) => {
+    GetBranchDetailDataService.get(req.params.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

@@ -51,6 +51,7 @@ import { CreateCalendarDentistService } from './services/calendar-dentist/create
 import { ChangeStatusCalendarDentistService } from './services/calendar-dentist/change-status-calendar-dentist.service';
 import { CheckTokenUserService } from './services/user/check-token-user.service';
 import { GetAllEmployeesService } from './services/user/get-all-employee.service';
+import { GetBranchDetailDataService } from './services/branch/get-branch-detail-data.service';
 // Middlewares
 import { onError } from './routes/middlewares/on-error.middleware';
 import { mustBeUser } from './routes/middlewares/must-be-user.middleware';
@@ -136,6 +137,7 @@ export { CreateCalendarDentistService }
 export { ChangeStatusCalendarDentistService }
 export { CheckTokenUserService }
 export { GetAllEmployeesService }
+export { GetBranchDetailDataService }
 // Middlewares
 export { onError }
 export { mustBeUser }

@@ -9,7 +9,7 @@ app.use(cors());
 app.use(json());
 app.use(onError);
 
-if (!process.env.NODE_ENV) app.use((req, res, next) => setTimeout(next, 500));
+// if (!process.env.NODE_ENV) app.use((req, res, next) => setTimeout(next, 500));
 
 app.get('/', (req, res) => res.send({ success: true, server: 'DENTAL_APPLICATION' }));
 app.use('/user', userRouter);
