@@ -49,6 +49,8 @@ import { UpdateTicketService } from './services/ticket/update-ticket.service';
 import { CreateTicketReceiptVoucherService } from './services/receipt-voucher/create-ticket-receipt-voucher.service';
 import { CreateCalendarDentistService } from './services/calendar-dentist/create-calendar-dentist.service';
 import { ChangeStatusCalendarDentistService } from './services/calendar-dentist/change-status-calendar-dentist.service';
+import { CheckTokenUserService } from './services/user/check-token-user.service';
+import { GetAllEmployeesService } from './services/user/get-all-employee.service';
 // Middlewares
 import { onError } from './routes/middlewares/on-error.middleware';
 import { mustBeUser } from './routes/middlewares/must-be-user.middleware';
@@ -132,6 +134,8 @@ export { UpdateTicketService }
 export { CreateTicketReceiptVoucherService }
 export { CreateCalendarDentistService }
 export { ChangeStatusCalendarDentistService }
+export { CheckTokenUserService }
+export { GetAllEmployeesService }
 // Middlewares
 export { onError }
 export { mustBeUser }

@@ -43,7 +43,7 @@
     "dev": "nodemon dist/src/index.js",
     "start": "node dist/src/index.js",
     "testw": "set NODE_ENV=test&&nodemon --exec mocha dist/test --recursive",
-    "resetdb": "mongo kpi --eval 'db.dropDatabase()'"
+    "resetdb": "mongo dental --eval 'db.dropDatabase()'"
   },
   "engines": {
     "node": "8.12.0"

@@ -1,6 +1,6 @@
 import faker from 'faker';
 import { User } from '../../src/models/user.model';
-import { ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, DEFAULT_PASSWORD, SID_START_AT, CreateBranchService, BRANCH_MASTER_NAME, SetRoleInBranchService, Role, Branch } from '../../src/refs';
+import { ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, DEFAULT_PASSWORD, SID_START_AT, BRANCH_MASTER_NAME, SetRoleInBranchService, Role, Branch, CreateBranchService } from '../../src/refs';
 import { hash } from 'bcryptjs';
 
 export async function initDatabase() {
@@ -10,8 +10,11 @@ export async function initDatabase() {
 }
 
 export async function prepareDataInit() {
-   const rootUser = await createRootUser();
-   await createBranchMaster(rootUser._id);
+    const rootUser = await createRootUser();
+    await createBranchMaster(rootUser._id);
+    // TODO: TEST FRONT_END
+    const branch2 = await CreateBranchService.create(rootUser._id, 'CN GO VAP', 'govap@gmail.com', '09999', 'HCM', 'GO VAP');
+    await SetRoleInBranchService.set(rootUser._id, branch2._id, [Role.DIRECTOR]);
 }
 
 export async function createRootUser() {
@@ -34,5 +37,5 @@ export async function createBranchMaster(rootUserId: string) {
         createBy: rootUserId
     });
     await branchMaster.save();
-    return await SetRoleInBranchService.set(rootUserId, branchMaster._id, [Role.CHAIRMAN]);
+    return await SetRoleInBranchService.set(rootUserId, branchMaster._id, [Role.CHAIRMAN, Role.DIRECTOR]);
 }

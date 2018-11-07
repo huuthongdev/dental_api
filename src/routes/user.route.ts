@@ -1,12 +1,20 @@
 import { Router } from "express";
-import { CreateUserService, LoginService, ChangePasswordService, mustBeUser, SetRoleInBranchService } from "../refs";
+import { CreateUserService, LoginService, ChangePasswordService, mustBeUser, SetRoleInBranchService, CheckTokenUserService, GetAllEmployeesService } from "../refs";
 
 export const userRouter = Router();
 
+// Check user
+userRouter.get('/check', (req, res: any) => {
+    CheckTokenUserService.check(req.headers.token as string)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+
 // Login
 userRouter.post('/log-in', (req, res: any) => {
-    const { email, phone, password } = req.body;
-    LoginService.login(phone, email, password)
+    const { loginInfo, password } = req.body;
+    LoginService.login(loginInfo, password)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
@@ -36,3 +44,10 @@ userRouter.put('/set-role-in-branch', (req, res: any) => {
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
+
+userRouter.get('/employees', (req, res: any) => {
+    GetAllEmployeesService.getAll(req.query.userId, req.query.branchId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+

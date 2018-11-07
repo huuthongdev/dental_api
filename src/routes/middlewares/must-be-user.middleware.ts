@@ -11,6 +11,7 @@ export async function mustBeUser(req: Request, res: any, next: NextFunction) {
         req.query.userId = _id;
         // Branch
         const branchId = req.headers.branch as string;
+        mustExist(branchId, BranchError.BRANCH_ID_MUST_BE_PROVIDED);
         const branch = await Branch.findById(branchId);
         mustExist(branch, BranchError.CANNOT_FIND_BRANCH);
         req.query.branchId = branchId;

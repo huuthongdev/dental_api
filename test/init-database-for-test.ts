@@ -3,7 +3,7 @@ import { LoginService, ROOT_EMAIL, DEFAULT_PASSWORD, ROOT_PHONE, CreateBranchSer
 export class InititalDatabaseForTest {
     static async loginRootAccount() {
         const branchMaster = await Branch.findOne({ isMaster: true }) as Branch;
-        const rootUser = await LoginService.login(ROOT_PHONE, undefined, DEFAULT_PASSWORD) as User;
+        const rootUser = await LoginService.login(ROOT_PHONE, DEFAULT_PASSWORD) as User;
         return { rootUser, branchMaster };
     }
 
@@ -48,7 +48,7 @@ export class InititalDatabaseForTest {
         await SetRoleInBranchService.set(user6._id, normalBranch._id, [Role.ACCOUNTING_MANAGER]);
         await SetRoleInBranchService.set(user7._id, normalBranch._id, [Role.DENTIST]);
         await CreateUserService.create(rootUser._id, 'Director', 'director@gmail.com', '08', 'password');
-        const userDirect = await LoginService.login('08', undefined, 'password');
+        const userDirect = await LoginService.login('08', 'password');
         await SetRoleInBranchService.set(userDirect._id, normalBranch._id, [Role.DIRECTOR]);
         // const check = await User.findById(userDirect._id);
         // console.log(check);
@@ -65,7 +65,7 @@ export class InititalDatabaseForTest {
         const dentist = await CreateUserService.create(rootUser._id, 'Dentist', 'dentist@gmail.com', '0999999', 'password');
         await SetRoleInBranchService.set(dentist._id, normalBranch._id, [Role.DENTIST]);
         await CreateUserService.create(rootUser._id, 'Staff', 'staff@gmail.com', '222222', 'password');
-        const staffCustomerCase = await LoginService.login(undefined, 'staff@gmail.com', 'password') as User;
+        const staffCustomerCase = await LoginService.login('staff@gmail.com', 'password') as User;
         await SetRoleInBranchService.set(staffCustomerCase._id, normalBranch._id, [Role.CUSTOMER_CARE]);
         return { rootUser, branchMaster, normalBranch, client, services: [service1, service2, service3, service4, service5] as Service[], dentist, staffCustomerCase }
     }
@@ -96,7 +96,7 @@ export class InititalDatabaseForTest {
         const dentist = await CreateUserService.create(rootUser._id, 'Dentist', 'dentist@gmail.com', '0999999', 'password');
         await SetRoleInBranchService.set(dentist._id, normalBranch._id, [Role.DENTIST]);
         await CreateUserService.create(rootUser._id, 'Staff', 'staff@gmail.com', '0999999111', 'password');
-        const staff = await LoginService.login(undefined, 'staff@gmail.com', 'password');
+        const staff = await LoginService.login('staff@gmail.com', 'password');
         await SetRoleInBranchService.set(staff._id, normalBranch._id, [Role.CUSTOMER_CARE]);
         return { rootUser, branchMaster, normalBranch, staff, dentist };
     }
