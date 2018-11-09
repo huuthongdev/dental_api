@@ -6,6 +6,6 @@ export class CheckTokenUserService {
         const { _id, version } = obj;
         const user = await User.findOne({ _id, passwordVersion: version }) as User;
         mustExist(user, UserError.USER_INFO_EXPIRED);
-        return await GetUserInfo.get(user._id);
+        return await GetUserInfo.get(user._id, true);
     }
 }

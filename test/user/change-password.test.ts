@@ -26,22 +26,10 @@ describe('POST /user/change-password', () => {
             email: ROOT_EMAIL,
             phone: ROOT_PHONE,
             __v: 0,
-            modifieds: [{
-                _id: result.modifieds[0]._id,
-                dataBackup: JSON.stringify(oldUser),
-                updateAt: result.modifieds[0].updateAt,
-                updateBy: userId
-            }],
+            modifieds: result.modifieds,
             createAt: result.createAt,
-            roleInBranchs:
-                [{
-                    _id: result.roleInBranchs[0]._id,
-                    branch: result.roleInBranchs[0].branch,
-                    __v: 0,
-                    roles: [Role.CHAIRMAN]
-                }],
-            isActive: true,
-            passwordVersion: 2
+            roleInBranchs: result.roleInBranchs,
+            isActive: true
         };
         deepEqual(result, resExpected);
     });

@@ -17,7 +17,7 @@ export class LoginService {
         mustExist(user, UserError.INVALID_LOG_IN_INFO);
         const isMatch = await compare(password, user.password);
         makeSure(isMatch, UserError.INVALID_LOG_IN_INFO);
-        return GetUserInfo.get(user._id);
+        return GetUserInfo.get(user._id, true);
     }
 
     static async loginWithEmail(email: string, password: string) {
@@ -25,7 +25,7 @@ export class LoginService {
         mustExist(user, UserError.INVALID_LOG_IN_INFO);
         const isMatch = await compare(password, user.password);
         makeSure(isMatch, UserError.INVALID_LOG_IN_INFO);
-        return GetUserInfo.get(user._id);
+        return GetUserInfo.get(user._id, true);
     }
 
     // static async getUserInfoWithToken(user: User) {

@@ -1,17 +1,18 @@
 import { AccessorieItem, mustExist, ServiceError, Service, makeSure, SID_START_AT } from "../../../src/refs";
 
 export class CreateService {
-    static async validate(name: string, suggestedRetailerPrice: number, basicProcedure: string[], accessories: AccessorieItem[]) {
+    static async validate(name: string, suggestedRetailerPrice: number, basicProcedure: string[], accessories: AccessorieItem[], unit: string) {
         mustExist(suggestedRetailerPrice, ServiceError.SUGGESTED_RETAILER_PRICE_MUST_BE_PROVIDED);
         mustExist(name, ServiceError.NAME_MUST_BE_PROVIDED);
+        mustExist(unit, ServiceError.UNIT_MUST_BE_PROVIDED);
         const checkNameUnique = await Service.count({ name });
         makeSure(checkNameUnique === 0, ServiceError.NAME_IS_EXISTED);
     }
 
-    static async create(userId: string, name: string, suggestedRetailerPrice: number, basicProcedure: string[], accessories: AccessorieItem[]) {
-        await this.validate(name, suggestedRetailerPrice, basicProcedure, accessories);
+    static async create(userId: string, name: string, suggestedRetailerPrice: number, basicProcedure: string[], accessories: AccessorieItem[], unit: string) {
+        await this.validate(name, suggestedRetailerPrice, basicProcedure, accessories, unit);
         const sid = await this.getSid();
-        const service = new Service({ sid, name, suggestedRetailerPrice, basicProcedure, accessories, createBy: userId });
+        const service = new Service({ sid, name, suggestedRetailerPrice, basicProcedure, accessories, createBy: userId, unit });
         await service.save();
         return await this.getServiceInfo(service._id);
     }

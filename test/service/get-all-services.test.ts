@@ -12,7 +12,7 @@ describe('GET /service', () => {
         serviceId = dataInitial.service._id.toString();
         branchId = dataInitial.branchMaster._id.toString();
         // Create more services
-        await CreateService.create(userId, 'Service 1', 100, [], []);
+        await CreateService.create(userId, 'Service 1', 100, [], [], 'Unit');
     });
 
     it('Can get all services', async () => {
@@ -33,7 +33,8 @@ describe('GET /service', () => {
             isActive: true,
             serviceMetaes: [],
             accessories: [],
-            basicProcedure: ['Quy trinh']
+            basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
         },
         {
             _id: result[1]._id,
@@ -47,7 +48,8 @@ describe('GET /service', () => {
             isActive: true,
             serviceMetaes: [],
             accessories: [],
-            basicProcedure: []
+            basicProcedure: [],
+            unit: 'Unit'
         }];
         deepEqual(result, resExpected);
     });

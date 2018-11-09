@@ -35,14 +35,8 @@ describe('POST /user/set-role-in-branch/:branchId', () => {
             __v: 0,
             modifieds: [],
             createAt: result.createAt,
-            roleInBranchs: [{
-                _id: result.roleInBranchs[0]._id,
-                branch: { _id: branchId, sid: SID_START_AT, name: branchName },
-                __v: 0,
-                roles: [Role.CHAIRMAN, Role.ACCOUNTANT, Role.CUSTOMER_CARE_MANAGER]
-            }],
+            roleInBranchs: result.roleInBranchs,
             isActive: true,
-            passwordVersion: 1
         }
         deepEqual(result, resExpected);
     });
@@ -67,25 +61,8 @@ describe('POST /user/set-role-in-branch/:branchId', () => {
             __v: 0,
             modifieds: [],
             createAt: result.createAt,
-            roleInBranchs: [{
-                _id: result.roleInBranchs[0]._id,
-                branch: { _id: branchId, sid: SID_START_AT, name: branchName },
-                __v: 0,
-                roles: [Role.CHAIRMAN]
-            },
-            {
-                _id: result.roleInBranchs[1]._id,
-                branch:
-                {
-                    _id: normalBranchId,
-                    sid: SID_START_AT + 1,
-                    name: normalBranchName
-                },
-                __v: 0,
-                roles: [Role.ACCOUNTANT, Role.CUSTOMER_CARE_MANAGER]
-            }],
+            roleInBranchs: result.roleInBranchs,
             isActive: true,
-            passwordVersion: 1
         }
         deepEqual(result, resExpected);
     });

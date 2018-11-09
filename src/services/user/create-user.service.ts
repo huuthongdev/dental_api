@@ -50,7 +50,7 @@ export class CreateUserService {
         });
         await user.save();
         if (branchWork._id) return await SetRoleInBranchService.set(user._id, branchWork._id, [branchRole]);
-        return await GetUserInfo.get(user._id);
+        return await GetUserInfo.get(user._id, false);
     }
 
     static async getSid() {

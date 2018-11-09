@@ -17,6 +17,7 @@ describe('POST /service', () => {
             name: 'Service Name',
             suggestedRetailerPrice: 100,
             basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
             // accessories: []
         }
         const response = await request(app)
@@ -36,7 +37,8 @@ describe('POST /service', () => {
             serviceMetaes: [],
             accessories: [],
             isActive: true,
-            basicProcedure: ['Quy trinh']
+            basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
         };
         deepEqual(result, resExpected);
     });
@@ -49,7 +51,8 @@ describe('POST /service', () => {
             name: 'Service Name',
             suggestedRetailerPrice: 100,
             basicProcedure: ['Quy trinh'],
-            accessories
+            accessories,
+            unit: 'Unit'
         }
         const response = await request(app)
             .post('/service').set({ token, branch: branchId }).send(dataSend);
@@ -89,7 +92,8 @@ describe('POST /service', () => {
                 qty: 3,
                 _id: result.accessories[1]._id
             }],
-            basicProcedure: ['Quy trinh']
+            basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
         };
         deepEqual(result, resExpected);
     });
@@ -99,6 +103,7 @@ describe('POST /service', () => {
             // name: 'Service Name',
             suggestedRetailerPrice: 100,
             basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
             // accessories: []
         }
         const response = await request(app)
@@ -114,6 +119,7 @@ describe('POST /service', () => {
             name: 'Service Name',
             // suggestedRetailerPrice: 100,
             basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
             // accessories: []
         }
         const response = await request(app)
@@ -124,12 +130,29 @@ describe('POST /service', () => {
         equal(message, ServiceError.SUGGESTED_RETAILER_PRICE_MUST_BE_PROVIDED);
     });
 
-    it('Cannot create new Service with twice a name', async () => {
-        await CreateService.create(userId, 'Service Name', 200, [], []);
+    it('Cannot create new Service without unit', async () => {
         const dataSend = {
             name: 'Service Name',
             suggestedRetailerPrice: 100,
             basicProcedure: ['Quy trinh'],
+            // unit: 'Unit'
+            // accessories: []
+        }
+        const response = await request(app)
+            .post('/service').set({ token, branch: branchId }).send(dataSend);
+        const { success, message } = response.body;
+        equal(success, false);
+        equal(response.status, 400);
+        equal(message, ServiceError.UNIT_MUST_BE_PROVIDED);
+    });
+
+    it('Cannot create new Service with twice a name', async () => {
+        await CreateService.create(userId, 'Service Name', 200, [], [], 'Unit');
+        const dataSend = {
+            name: 'Service Name',
+            suggestedRetailerPrice: 100,
+            basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
             // accessories: []
         }
         const response = await request(app)

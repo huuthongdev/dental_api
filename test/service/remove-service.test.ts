@@ -31,7 +31,8 @@ describe('DELETE /service/:serviceId', () => {
             isActive: true,
             serviceMetaes: [],
             accessories: [],
-            basicProcedure: ['Quy trinh']
+            basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
         };
         deepEqual(result, resExpected);
         // Check database

@@ -24,7 +24,10 @@ export class SetRoleInBranchService {
 
     static async updateRoleInCurrentBranch(roleInBranchId: string, roles: Role[], userId: string) {
         await RoleInBranch.findByIdAndUpdate(roleInBranchId, { roles }, { new: true });
-        return await GetUserInfo.get(userId);
+        let res = await GetUserInfo.get(userId) as User;
+        delete res.token;
+        delete res.passwordVersion;
+        return res;
     }
 
     static async addNewRoleInBranch(branchId: string, roles: Role[], userId: string) {
@@ -35,6 +38,9 @@ export class SetRoleInBranchService {
         });
         await newRoleInBranch.save();
         const user = await User.findByIdAndUpdate(userId, { $addToSet: { roleInBranchs: newRoleInBranch._id } }, { new: true });
-        return await GetUserInfo.get(user._id);
+        let res = await GetUserInfo.get(user._id) as User;
+        delete res.token;
+        delete res.passwordVersion;
+        return res;
     }
 }

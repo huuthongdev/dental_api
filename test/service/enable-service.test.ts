@@ -16,7 +16,7 @@ describe('PUT /enable/:serviceId', () => {
     it('Can enable service', async () => {
         await Service.findByIdAndUpdate(serviceId, { isActive: false });
         const response = await request(app)
-            .put('/service/enable/' + serviceId).set({ token, branch: branchId  });
+            .put('/service/enable/' + serviceId).set({ token, branch: branchId });
         const { success, result } = response.body;
         equal(success, true);
         equal(response.status, 200);
@@ -27,18 +27,13 @@ describe('PUT /enable/:serviceId', () => {
             suggestedRetailerPrice: 100,
             createBy: result.createBy,
             __v: 0,
-            modifieds:
-                [{
-                    dataBackup: `{"_id":"${serviceId}","sid":${SID_START_AT},"name":"Service name","suggestedRetailerPrice":100,"isActive":false,"serviceMetaes":[],"accessories":[],"basicProcedure":["Quy trinh"]}`,
-                    updateBy: userId,
-                    updateAt: result.modifieds[0].updateAt,
-                    _id: result.modifieds[0]._id
-                }],
+            modifieds: result.modifieds,
             createAt: result.createAt,
             isActive: true,
             serviceMetaes: [],
             accessories: [],
-            basicProcedure: ['Quy trinh']
+            basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
         };
         deepEqual(result, resExpected);
     });
@@ -46,7 +41,7 @@ describe('PUT /enable/:serviceId', () => {
     it('Cannot enable removed service', async () => {
         await Service.findByIdAndRemove(serviceId);
         const response = await request(app)
-            .put('/service/enable/' + serviceId).set({ token, branch: branchId  });
+            .put('/service/enable/' + serviceId).set({ token, branch: branchId });
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);

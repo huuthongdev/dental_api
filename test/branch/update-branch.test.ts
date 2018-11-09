@@ -29,7 +29,7 @@ describe('PUT /branch/:branchId', () => {
         equal(success, true);
         const resExpected: any = {
             _id: normalBranchId,
-            sid: SID_START_AT + 1,
+            sid: SID_START_AT + 2,
             name: 'Name update',
             email: 'branchupdate@gmail.com',
             phone: '0908508136 update',

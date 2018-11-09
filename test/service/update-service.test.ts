@@ -18,6 +18,7 @@ describe('PUT /service/:serviceId', () => {
             name: 'Service Name Update',
             suggestedRetailerPrice: 200,
             basicProcedure: ['Quy trinh update'],
+            unit: 'Unit'
             // accessories: []
         }
         const response = await request(app)
@@ -42,7 +43,8 @@ describe('PUT /service/:serviceId', () => {
             serviceMetaes: [],
             accessories: null,
             basicProcedure: ['Quy trinh update'],
-            isActive: true
+            isActive: true,
+            unit: 'Unit'
         };
         deepEqual(result, resExpected);
     });
@@ -52,7 +54,8 @@ describe('PUT /service/:serviceId', () => {
             // name: 'Service Name',
             suggestedRetailerPrice: 100,
             basicProcedure: ['Quy trinh'],
-            accessories: [] as []
+            accessories: [] as [],
+            unit: 'Unit'
         }
         const res1 = await request(app)
             .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend1);
@@ -64,7 +67,8 @@ describe('PUT /service/:serviceId', () => {
             name: 'Service Name',
             // suggestedRetailerPrice: 100,
             basicProcedure: ['Quy trinh'],
-            accessories: [] as []
+            accessories: [] as [],
+            unit: 'Unit'
         }
         const res2 = await request(app)
             .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend2);
@@ -74,11 +78,12 @@ describe('PUT /service/:serviceId', () => {
     });
 
     it('Cannot update with a existed name', async () => {
-        await CreateService.create(userId, 'Exited Name', 200, [], []);
+        await CreateService.create(userId, 'Exited Name', 200, [], [], 'Unit');
         const dataSend = {
             name: 'Exited Name',
             suggestedRetailerPrice: 200,
             basicProcedure: ['Quy trinh update'],
+            unit: 'Unit'
             // accessories: []
         }
         const response = await request(app)
@@ -95,6 +100,7 @@ describe('PUT /service/:serviceId', () => {
             name: 'Name update',
             suggestedRetailerPrice: 200,
             basicProcedure: ['Quy trinh update'],
+            unit: 'Unit'
             // accessories: []
         }
         const response = await request(app)
@@ -103,5 +109,37 @@ describe('PUT /service/:serviceId', () => {
         equal(success, false);
         equal(response.status, 400);
         equal(message, ServiceError.CANNOT_FIND_SERVICE);
+    });
+
+    it('Cannot update without name', async () => {
+        const dataSend = {
+            // name: 'Name update',
+            suggestedRetailerPrice: 200,
+            basicProcedure: ['Quy trinh update'],
+            unit: 'Unit'
+            // accessories: []
+        }
+        const response = await request(app)
+            .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend);
+        const { success, message } = response.body;
+        equal(success, false);
+        equal(response.status, 400);
+        equal(message, ServiceError.NAME_MUST_BE_PROVIDED);
+    });
+
+    it('Cannot update without unit', async () => {
+        const dataSend = {
+            name: 'Name update',
+            suggestedRetailerPrice: 200,
+            basicProcedure: ['Quy trinh update'],
+            // unit: 'Unit'
+            // accessories: []
+        }
+        const response = await request(app)
+            .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend);
+        const { success, message } = response.body;
+        equal(success, false);
+        equal(response.status, 400);
+        equal(message, ServiceError.UNIT_MUST_BE_PROVIDED);
     });
 });

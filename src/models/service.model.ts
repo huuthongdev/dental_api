@@ -6,6 +6,7 @@ const serviceSchema = new Schema({
     name: { type: String, required: true, trim: true, unique: true },
     suggestedRetailerPrice: { type: Number, required: true },
     basicProcedure: [{ type: String, trim: true }],
+    unit: { type: String, trim: true, required: true },
     accessories: [{
         product: { type: Schema.Types.ObjectId, ref: 'Product' },
         qty: { type: Number }
@@ -30,6 +31,7 @@ export class Service extends ServiceModel {
     name: string;
     suggestedRetailerPrice: number;
     basicProcedure: string[];
+    unit: string;
     accessories: AccessorieItem[];
     serviceMetaes: ServiceMeta[];
     //  Create Related

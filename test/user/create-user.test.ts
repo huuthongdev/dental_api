@@ -46,7 +46,6 @@ describe('POST /user/', () => {
             modifieds: [],
             createAt: result.createAt,
             roleInBranchs: [],
-            passwordVersion: 1
         };
         deepEqual(result, resExpected);
     });
@@ -92,12 +91,12 @@ describe('POST /user/', () => {
                 {
                     _id: branchId,
                     sid: SID_START_AT,
-                    name: 'Branch Name'
+                    name: 'Branch Name',
+                    isMaster: true
                 },
                 __v: 0,
                 roles: ['CUSTOMER_CARE_MANAGER']
-            }],
-            passwordVersion: 1
+            }]
         };
         deepEqual(result, resExpected);
     });

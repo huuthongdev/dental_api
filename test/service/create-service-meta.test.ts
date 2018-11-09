@@ -42,7 +42,8 @@ describe('POST /service/service-meta/:serviceId', () => {
                     __v: 0
                 }],
             accessories: [],
-            basicProcedure: ['Quy trinh']
+            basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
         };
         deepEqual(result, resExpected);
     });

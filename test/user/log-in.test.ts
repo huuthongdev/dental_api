@@ -20,7 +20,6 @@ describe('POST /user/log-in', () => {
             createAt: result.createAt,
             roleInBranchs: result.roleInBranchs,
             isActive: true,
-            passwordVersion: 1,
             token: result.token
         }
         deepEqual(response.body.result, resExpected);
@@ -43,7 +42,6 @@ describe('POST /user/log-in', () => {
             createAt: result.createAt,
             roleInBranchs: result.roleInBranchs,
             isActive: true,
-            passwordVersion: 1,
             token: result.token
         }
         deepEqual(response.body.result, resExpected);

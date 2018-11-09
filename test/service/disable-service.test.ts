@@ -26,18 +26,13 @@ describe('PUT /disable/:serviceId', () => {
             suggestedRetailerPrice: 100,
             createBy: result.createBy,
             __v: 0,
-            modifieds:
-                [{
-                    dataBackup: `{"_id":"${serviceId}","sid":${SID_START_AT},"name":"Service name","suggestedRetailerPrice":100,"isActive":true,"serviceMetaes":[],"accessories":[],"basicProcedure":["Quy trinh"]}`,
-                    updateBy: userId,
-                    updateAt: result.modifieds[0].updateAt,
-                    _id: result.modifieds[0]._id
-                }],
+            modifieds: result.modifieds,
             createAt: result.createAt,
             isActive: false,
             serviceMetaes: [],
             accessories: [],
-            basicProcedure: ['Quy trinh']
+            basicProcedure: ['Quy trinh'],
+            unit: 'Unit'
         };
         deepEqual(result, resExpected);
     });
