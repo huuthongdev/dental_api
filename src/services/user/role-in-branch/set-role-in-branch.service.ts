@@ -8,9 +8,10 @@ export class SetRoleInBranchService {
         const branch = await Branch.findById(branchId);
         mustExist(branch, BranchError.CANNOT_FIND_BRANCH);
         const roleInBranch = await RoleInBranch.findOne({ branch: branchId, user: userId });
+        // Check valid roles
         for (let i = 0; i < roles.length; i++) {
-            const { ACCOUNTANT, ACCOUNTING_MANAGER, CHAIRMAN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST } = Role;
-            const rolesArr = [ACCOUNTANT, ACCOUNTING_MANAGER, CHAIRMAN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST];
+            const { ACCOUNTANT, ACCOUNTING_MANAGER, ADMIN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST } = Role;
+            const rolesArr = [ACCOUNTANT, ACCOUNTING_MANAGER, ADMIN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST];
             makeSure(rolesArr.includes(roles[i]), RoleInBranchError.INVALID_ROLE);
         }
         return roleInBranch;
@@ -24,10 +25,7 @@ export class SetRoleInBranchService {
 
     static async updateRoleInCurrentBranch(roleInBranchId: string, roles: Role[], userId: string) {
         await RoleInBranch.findByIdAndUpdate(roleInBranchId, { roles }, { new: true });
-        let res = await GetUserInfo.get(userId) as User;
-        delete res.token;
-        delete res.passwordVersion;
-        return res;
+        return await GetUserInfo.get(userId) as User;
     }
 
     static async addNewRoleInBranch(branchId: string, roles: Role[], userId: string) {
@@ -37,10 +35,7 @@ export class SetRoleInBranchService {
             roles
         });
         await newRoleInBranch.save();
-        const user = await User.findByIdAndUpdate(userId, { $addToSet: { roleInBranchs: newRoleInBranch._id } }, { new: true });
-        let res = await GetUserInfo.get(user._id) as User;
-        delete res.token;
-        delete res.passwordVersion;
-        return res;
+        await User.findByIdAndUpdate(userId, { $addToSet: { roleInBranchs: newRoleInBranch._id } }, { new: true });
+        return await GetUserInfo.get(userId) as User;
     }
 }

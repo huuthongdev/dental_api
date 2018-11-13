@@ -44,8 +44,8 @@ describe('POST /service', () => {
     });
 
     it('Can create new Service with accessories', async () => {
-        const product1 = await CreateProductService.create(userId, 'Product 1', 100, 'VN', 50);
-        const product2 = await CreateProductService.create(userId, 'Product 2', 200, 'VN', 100);
+        const product1 = await CreateProductService.create(userId, 'Product 1', 100, 'VN', 'Unit', 50);
+        const product2 = await CreateProductService.create(userId, 'Product 2', 200, 'VN', 'Unit', 100);
         const accessories: AccessorieItem[] = [{ product: product1._id, qty: 2 }, { product: product2._id, qty: 3 }];
         const dataSend = {
             name: 'Service Name',
@@ -147,7 +147,7 @@ describe('POST /service', () => {
     });
 
     it('Cannot create new Service with twice a name', async () => {
-        await CreateService.create(userId, 'Service Name', 200, [], [], 'Unit');
+        await CreateService.create(userId, 'Service Name', 200, [], [], 'Unit', 200);
         const dataSend = {
             name: 'Service Name',
             suggestedRetailerPrice: 100,

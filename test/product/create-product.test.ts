@@ -16,7 +16,8 @@ describe('POST /product', () => {
         const dataSend = {
             name: 'Product name',
             suggestedRetailerPrice: 300,
-            origin: 'VN'
+            origin: 'VN',
+            unit: 'Unit'
         }
         const response = await request(app)
             .post('/product').set({ token, branch: branchId }).send(dataSend);
@@ -35,7 +36,8 @@ describe('POST /product', () => {
             createAt: result.createAt,
             isActive: true,
             productMetaes: [],
-            cost: 0
+            cost: 0,
+            unit: 'Unit'
         }
         deepEqual(result, resExpected);
     });
@@ -44,7 +46,8 @@ describe('POST /product', () => {
         const dataSend1 = {
             // name: 'Service Name',
             suggestedRetailerPrice: 100,
-            origin: 'VN'
+            origin: 'VN',
+            unit: 'Unit'
         }
         const res1 = await request(app)
             .post('/product').set({ token, branch: branchId }).send(dataSend1);
@@ -55,7 +58,8 @@ describe('POST /product', () => {
         const dataSend2 = {
             name: 'Service Name',
             // suggestedRetailerPrice: 100,
-            origin: 'VN'
+            origin: 'VN',
+            unit: 'Unit'
         }
         const res2 = await request(app)
             .post('/product').set({ token, branch: branchId }).send(dataSend2);
@@ -65,11 +69,12 @@ describe('POST /product', () => {
     });
 
     it('Cannot create product with errors unique', async () => {
-        await CreateProductService.create(userId, 'Product Name', 100, 'VN', 20);
+        await CreateProductService.create(userId, 'Product Name', 100, 'VN', 'Unit', 20);
         const dataSend = {
             name: 'Product Name',
             suggestedRetailerPrice: 300,
-            origin: 'VN'
+            origin: 'VN',
+            unit: 'Unit'
         }
         const response = await request(app)
             .post('/product').set({ token, branch: branchId }).send(dataSend);

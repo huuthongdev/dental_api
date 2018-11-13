@@ -27,17 +27,12 @@ describe('PUT /product/disable/:productId', () => {
             origin: 'VN',
             createBy: userId,
             __v: 0,
-            modifieds:
-                [{
-                    dataBackup: `{"_id":"${productId}","sid":${SID_START_AT},"name":"Product Name","suggestedRetailerPrice":100,"origin":"VN","isActive":true,"cost":200,"productMetaes":[]}`,
-                    updateBy: userId,
-                    updateAt: result.modifieds[0].updateAt,
-                    _id: result.modifieds[0]._id
-                }],
+            modifieds: result.modifieds,
             createAt: result.createAt,
             isActive: false,
             cost: 200,
-            productMetaes: []
+            productMetaes: [],
+            unit: 'Unit'
         };
         deepEqual(result, resExpected);
     });
@@ -45,7 +40,7 @@ describe('PUT /product/disable/:productId', () => {
     it('Cannot disable removed service', async () => {
         await Product.findByIdAndRemove(productId);
         const response = await request(app)
-            .put('/product/disable/' + productId).set({ token, branch: branchId  });
+            .put('/product/disable/' + productId).set({ token, branch: branchId });
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);

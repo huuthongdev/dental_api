@@ -19,8 +19,6 @@ const userSchema = new Schema({
     district: { type: String, trim: true },
     address: { type: String, trim: true },
     homeTown: { type: String, trim: true },
-    // Role In Branch
-    roleInBranchs: [{ type: ObjectId, ref: 'RoleInBranch' }],
     //  Create Related
     createAt: { type: Number, default: Date.now() },
     createBy: { type: ObjectId, ref: 'User' },
@@ -29,7 +27,9 @@ const userSchema = new Schema({
         updateAt: { type: Number },
         updateBy: { type: ObjectId, ref: 'User' },
         dataBackup: { type: String }
-    }]
+    }],
+    // Role In Branch
+    roleInBranchs: [{ type: ObjectId, ref: 'RoleInBranch' }]
 });
 
 const UserModel = model('User', userSchema);
@@ -50,7 +50,7 @@ export class User extends UserModel {
     address: string;
     homeTown: string;
     // Role In Branch
-    roleInBranchs: RoleInBranch[];
+    roleInBranchs: RoleInBranch[] | string[];
     //  Create Related
     createAt: number;
     createBy: User;

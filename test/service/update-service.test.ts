@@ -78,7 +78,7 @@ describe('PUT /service/:serviceId', () => {
     });
 
     it('Cannot update with a existed name', async () => {
-        await CreateService.create(userId, 'Exited Name', 200, [], [], 'Unit');
+        await CreateService.create(userId, 'Exited Name', 200, [], [], 'Unit', 200);
         const dataSend = {
             name: 'Exited Name',
             suggestedRetailerPrice: 200,

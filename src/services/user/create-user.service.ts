@@ -18,8 +18,8 @@ export class CreateUserService {
         makeSure(phoneCount === 0, UserError.PHONE_IS_EXISTED);
         // Check Role
         if (branchWorkId && branchRole) {
-            const { ACCOUNTANT, ACCOUNTING_MANAGER, CHAIRMAN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST } = Role;
-            const rolesArr = [ACCOUNTANT, ACCOUNTING_MANAGER, CHAIRMAN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST];
+            const { ACCOUNTANT, ACCOUNTING_MANAGER, ADMIN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST } = Role;
+            const rolesArr = [ACCOUNTANT, ACCOUNTING_MANAGER, ADMIN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST];
             makeSure(rolesArr.includes(branchRole), RoleInBranchError.INVALID_ROLE);
             const branchWork = await Branch.findById(branchWorkId) as Branch;
             mustExist(branchWork, BranchError.CANNOT_FIND_BRANCH);
@@ -50,7 +50,7 @@ export class CreateUserService {
         });
         await user.save();
         if (branchWork._id) return await SetRoleInBranchService.set(user._id, branchWork._id, [branchRole]);
-        return await GetUserInfo.get(user._id, false);
+        return await GetUserInfo.get(user._id);
     }
 
     static async getSid() {

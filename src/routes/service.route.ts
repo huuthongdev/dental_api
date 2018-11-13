@@ -16,16 +16,16 @@ serviceRouter.post('/service-meta/:serviceId', (req, res: any) => {
 
 // Create new Service
 serviceRouter.post('/', (req, res: any) => {
-    const { name, suggestedRetailerPrice, basicProcedure, accessories, unit } = req.body;
-    CreateService.create(req.query.userId, name, suggestedRetailerPrice, basicProcedure, accessories, unit)
+    const { name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost } = req.body;
+    CreateService.create(req.query.userId, name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
 
 // Update service
 serviceRouter.put('/:serviceId', (req, res: any) => {
-    const { name, suggestedRetailerPrice, basicProcedure, accessories, unit } = req.body;
-    UpdateService.update(req.query.userId, req.params.serviceId, name, suggestedRetailerPrice, basicProcedure, accessories, unit)
+    const { name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost } = req.body;
+    UpdateService.update(req.query.userId, req.params.serviceId, name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

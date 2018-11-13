@@ -28,7 +28,7 @@ describe('POST /branch/', () => {
         equal(success, true);
         const resExpected: any = {
             __v: 0,
-            sid: SID_START_AT + 2,
+            sid: SID_START_AT + 1,
             name: 'Name branch',
             email: 'branch@gmail.com',
             phone: '0908508136',

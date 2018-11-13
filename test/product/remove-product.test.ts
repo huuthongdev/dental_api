@@ -31,7 +31,8 @@ describe('DELETE /product/:productId', () => {
             createAt: result.createAt,
             isActive: true,
             cost: 200,
-            productMetaes: []
+            productMetaes: [],
+            unit: 'Unit'
         };
         deepEqual(result, resExpected);
         // Check database

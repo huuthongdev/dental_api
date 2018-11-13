@@ -39,6 +39,7 @@ import { CreateServiceMeta } from './services/service/create-service-meta.servic
 import { CreateProductService } from './services/product/create-product.service';
 import { UpdateProductService } from './services/product/update-product.service';
 import { RemoveProductService } from './services/product/remove-product.service';
+import { GetAllProductService } from './services/product/get-all-product.service';
 import { CreateClientService } from './services/client/create-client.service';
 import { UpdateClientService } from './services/client/update-client.service';
 import { RemoveClientService } from './services/client/remove-client.service';
@@ -56,6 +57,7 @@ import { GetBranchDetailDataService } from './services/branch/get-branch-detail-
 import { onError } from './routes/middlewares/on-error.middleware';
 import { mustBeUser } from './routes/middlewares/must-be-user.middleware';
 // Routes
+import { devRouter } from './routes/development-test.route';
 import { calendarDentistRouter } from './routes/calendar-dentist.route';
 import { receiptVoucherRouter } from './routes/receipt-voucher.route';
 import { productRouter } from './routes/product.route';
@@ -125,6 +127,7 @@ export { CreateServiceMeta }
 export { CreateProductService }
 export { UpdateProductService }
 export { RemoveProductService }
+export { GetAllProductService }
 export { GetAllUSerInCurrentBranch }
 export { CreateClientService }
 export { UpdateClientService }
@@ -142,6 +145,7 @@ export { GetBranchDetailDataService }
 export { onError }
 export { mustBeUser }
 // Routes
+export { devRouter }
 export { calendarDentistRouter }
 export { receiptVoucherRouter }
 export { productRouter }

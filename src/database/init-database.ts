@@ -13,8 +13,8 @@ export async function prepareDataInit() {
     const rootUser = await createRootUser();
     await createBranchMaster(rootUser._id);
     // TODO: TEST FRONT_END
-    const branch2 = await CreateBranchService.create(rootUser._id, 'CN GO VAP', 'govap@gmail.com', '09999', 'HCM', 'GO VAP');
-    await SetRoleInBranchService.set(rootUser._id, branch2._id, [Role.DIRECTOR]);
+    // const branch2 = await CreateBranchService.create(rootUser._id, 'CN GO VAP', 'govap@gmail.com', '09999', 'HCM', 'GO VAP');
+    // await SetRoleInBranchService.set(rootUser._id, branch2._id, [Role.DIRECTOR]);
 }
 
 export async function createRootUser() {
@@ -37,5 +37,5 @@ export async function createBranchMaster(rootUserId: string) {
         createBy: rootUserId
     });
     await branchMaster.save();
-    return await SetRoleInBranchService.set(rootUserId, branchMaster._id, [Role.CHAIRMAN, Role.DIRECTOR]);
+    return await SetRoleInBranchService.set(rootUserId, branchMaster._id, [Role.ADMIN, Role.DIRECTOR]);
 }

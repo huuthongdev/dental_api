@@ -1,7 +1,8 @@
-import { Service, mustExist, ServiceError, modifiedSelect, ModifiedService } from "../../../src/refs";
+import { Service, mustExist, ServiceError, modifiedSelect, ModifiedService, mustBeObjectId } from "../../../src/refs";
 
 export class RemoveService {
     static async validate(serviceId: string) {
+        mustBeObjectId(serviceId);
         const oldService = await Service.findById(serviceId).select(modifiedSelect) as Service;
         mustExist(oldService, ServiceError.CANNOT_FIND_SERVICE);
         return oldService;

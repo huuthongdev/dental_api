@@ -13,9 +13,9 @@ export class UpdateService {
         return oldService;
     }
 
-    static async update(userId: string, serviceId: string, name: string, suggestedRetailerPrice: number, basicProcedure: string[], accessories: AccessorieItem[], unit: string) {
+    static async update(userId: string, serviceId: string, name: string, suggestedRetailerPrice: number, basicProcedure: string[], accessories: AccessorieItem[], unit: string, cost: number) {
         const oldService = await this.validate(userId, serviceId, name, suggestedRetailerPrice, basicProcedure, accessories, unit) as Service;
-        await Service.findByIdAndUpdate(serviceId, { name, suggestedRetailerPrice, basicProcedure, accessories, unit });
+        await Service.findByIdAndUpdate(serviceId, { name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost });
         return await ModifiedService.service(serviceId, userId, oldService);
     }
 }

@@ -12,7 +12,7 @@ describe('GET /service', () => {
         serviceId = dataInitial.service._id.toString();
         branchId = dataInitial.branchMaster._id.toString();
         // Create more services
-        await CreateService.create(userId, 'Service 1', 100, [], [], 'Unit');
+        await CreateService.create(userId, 'Service 1', 100, [], [], 'Unit', 200);
     });
 
     it('Can get all services', async () => {

@@ -4,14 +4,13 @@ export class GetAllEmployeesService {
     static async getAll(userId: string, branchId: string) {
         let roleInBranchs = await RoleInBranch.find({ user: userId, branch: branchId });
         roleInBranchs = roleInBranchs.map(v => v._id);
-        return await User.find({}).populate({
-            path: 'roleInBranchs',
-            select: { user: false },
-            populate: {
-                path: 'branch',
-                select: 'name sid'
-            }
-        }).select({ password: false });
+        let users = await User.find({}).select({ password: false }) as any[];
+        users = users.map(v => v = v.toObject());
+        for (let i = 0; i < users.length; i++) {
+            let roleInBranchs = await RoleInBranch.find({ user: users[i]._id }).populate({ path: 'branch', select: 'sid name isMaster' })
+            users[i].roleInBranchs = roleInBranchs;
+        }
+        return users;
     }
 
     static async getEmployeeInOneBranch(branchId: string) {

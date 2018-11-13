@@ -2,7 +2,7 @@ import { Product } from "./refs";
 
 export enum Role {
     // Chủ tịch
-    CHAIRMAN = 'CHAIRMAN',
+    ADMIN = 'ADMIN',
     // Giám đốc điều hành chi nhánh
     DIRECTOR = 'DIRECTOR',
     // Chăm sóc khách hàng

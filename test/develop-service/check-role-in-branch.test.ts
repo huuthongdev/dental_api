@@ -17,8 +17,8 @@ describe('Check Role In Branch', () => {
         equal(check, true);
     });
 
-    it('Check role chairman', async () => {
-        await SetRoleInBranchService.set(userCheckId, normalBranchId, [Role.CHAIRMAN]);
+    it('Check role admin', async () => {
+        await SetRoleInBranchService.set(userCheckId, normalBranchId, [Role.ADMIN]);
         const check = await CheckRoleInBranchService.check(userCheckId, normalBranchId, [Role.DENTIST]);
         equal(check, true);
     });

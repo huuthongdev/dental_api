@@ -29,17 +29,12 @@ describe('PUT /product/enable/:productId', () => {
             origin: 'VN',
             createBy: userId,
             __v: 0,
-            modifieds:
-                [{
-                    dataBackup: `{"_id":"${productId}","sid":${SID_START_AT},"name":"Product Name","suggestedRetailerPrice":100,"origin":"VN","isActive":false,"cost":200,"productMetaes":[]}`,
-                    updateBy: userId,
-                    updateAt: result.modifieds[0].updateAt,
-                    _id: result.modifieds[0]._id
-                }],
+            modifieds: result.modifieds,
             createAt: result.createAt,
             isActive: true,
             cost: 200,
-            productMetaes: []
+            productMetaes: [],
+            unit: 'Unit'
         };
         deepEqual(result, resExpected);
     });

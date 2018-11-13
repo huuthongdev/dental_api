@@ -1,22 +1,29 @@
 import { Router } from "express";
-import { CreateProductService, UpdateProductService, RemoveProductService, mustBeUser } from "../../src/refs";
+import { CreateProductService, UpdateProductService, RemoveProductService, mustBeUser, GetAllProductService } from "../../src/refs";
 
 export const productRouter = Router();
 
 productRouter.use(mustBeUser);
 
+// Get product
+productRouter.get('/', (req, res: any) => {
+    GetAllProductService.get()
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
 // Create product
 productRouter.post('/', (req, res: any) => {
-    const { name, suggestedRetailerPrice, origin, cost } = req.body;
-    CreateProductService.create(req.query.userId, name, suggestedRetailerPrice, origin, cost)
+    const { name, suggestedRetailerPrice, origin, cost, unit } = req.body;
+    CreateProductService.create(req.query.userId, name, suggestedRetailerPrice, origin, unit, cost)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
 
 // Update product
 productRouter.put('/:productId', (req, res: any) => {
-    const { name, suggestedRetailerPrice, origin, cost } = req.body;
-    UpdateProductService.update(req.params.productId, req.query.userId, name, suggestedRetailerPrice, origin, cost)
+    const { name, suggestedRetailerPrice, origin, cost, unit } = req.body;
+    UpdateProductService.update(req.params.productId, req.query.userId, name, suggestedRetailerPrice, origin, unit, cost)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

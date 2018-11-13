@@ -8,6 +8,7 @@ const productSchema = new Schema({
     origin: { type: String, trim: true },
     productMetaes: [{ type: Schema.Types.ObjectId, ref: 'ProductMeta' }],
     cost: { type: Number, default: 0 },
+    unit: { type: String, trim: true, required: true },
     //  Create Related
     isActive: { type: Boolean, default: true },
     createAt: { type: Number, default: Date.now() },

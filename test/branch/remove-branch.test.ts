@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
 import { InititalDatabaseForTest } from '../../test/init-database-for-test';
-import { app, Branch, BranchError, SID_START_AT } from '../../src/refs';
+import { app, Branch, BranchError, SID_START_AT, SetRoleInBranchService, Role, User, GetUserInfo } from '../../src/refs';
 
 describe('PUT /remove/:branchId', () => {
     let userId: string, token: string, branchId: string, branchMasterId: string, normalBranchId: string;
@@ -22,7 +22,7 @@ describe('PUT /remove/:branchId', () => {
         equal(response.status, 200);
         const resExpected: any = {
             _id: normalBranchId,
-            sid: SID_START_AT + 2,
+            sid: SID_START_AT + 1,
             name: 'Normal Branch',
             email: 'normalbranch@gmail.com',
             phone: '0123',
@@ -40,6 +40,20 @@ describe('PUT /remove/:branchId', () => {
         // Check database
         const branchDb = await Branch.findById(normalBranchId);
         equal(branchDb, undefined);
+    });
+
+    it('Can remove branch and check data related', async () => {
+        await SetRoleInBranchService.set(userId, normalBranchId, [Role.DENTIST, Role.CUSTOMER_CARE]);
+        const userDbBefore: any = await GetUserInfo.get(userId);
+        equal(userDbBefore.roleInBranchs.length, 2);
+        const response = await request(app)
+            .delete('/branch/' + normalBranchId)
+            .set({ token, branch: branchId });
+        const { success, result } = response.body;
+        equal(success, true);
+        equal(response.status, 200);
+        const userDbAfter: any = await GetUserInfo.get(userId);
+        equal(userDbAfter.roleInBranchs.length, 1);
     });
 
     it('Cannot remove removed branch', async () => {

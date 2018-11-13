@@ -15,13 +15,13 @@ export class InititalDatabaseForTest {
 
     static async createService() {
         const { rootUser, branchMaster, normalBranch } = await this.createNormalBranch();
-        const service = await CreateService.create(rootUser._id, 'Service name', 100, ['Quy trinh'], [], 'Unit');
+        const service = await CreateService.create(rootUser._id, 'Service name', 100, ['Quy trinh'], [], 'Unit', 200);
         return { rootUser, branchMaster, service, normalBranch }
     }
 
     static async createProduct() {
         const { rootUser, branchMaster, normalBranch } = await this.createNormalBranch();
-        const product = await CreateProductService.create(rootUser._id, 'Product Name', 100, 'VN', 200);
+        const product = await CreateProductService.create(rootUser._id, 'Product Name', 100, 'VN', 'Unit', 200);
         return { rootUser, branchMaster, normalBranch, product };
     }
 
@@ -57,11 +57,11 @@ export class InititalDatabaseForTest {
 
     static async testCreateTicket() {
         const { rootUser, branchMaster, normalBranch, client } = await this.createClient();
-        const service1 = await CreateService.create(rootUser._id, 'Service 1', 100, [], [], 'Unit');
-        const service2 = await CreateService.create(rootUser._id, 'Service 2', 200, [], [], 'Unit');
-        const service3 = await CreateService.create(rootUser._id, 'Service 3', 300, [], [], 'Unit');
-        const service4 = await CreateService.create(rootUser._id, 'Service 4', 400, [], [], 'Unit');
-        const service5 = await CreateService.create(rootUser._id, 'Service 5', 500, [], [], 'Unit');
+        const service1 = await CreateService.create(rootUser._id, 'Service 1', 100, [], [], 'Unit', 100);
+        const service2 = await CreateService.create(rootUser._id, 'Service 2', 200, [], [], 'Unit', 100);
+        const service3 = await CreateService.create(rootUser._id, 'Service 3', 300, [], [], 'Unit', 100);
+        const service4 = await CreateService.create(rootUser._id, 'Service 4', 400, [], [], 'Unit', 100);
+        const service5 = await CreateService.create(rootUser._id, 'Service 5', 500, [], [], 'Unit', 100);
         const dentist = await CreateUserService.create(rootUser._id, 'Dentist', 'dentist@gmail.com', '0999999', 'password');
         await SetRoleInBranchService.set(dentist._id, normalBranch._id, [Role.DENTIST]);
         await CreateUserService.create(rootUser._id, 'Staff', 'staff@gmail.com', '222222', 'password');

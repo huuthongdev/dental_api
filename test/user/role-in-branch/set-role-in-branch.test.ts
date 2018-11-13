@@ -19,7 +19,7 @@ describe('POST /user/set-role-in-branch/:branchId', () => {
         const dataSend = {
             userId,
             branchId,
-            roles: [Role.CHAIRMAN, Role.ACCOUNTANT, Role.CUSTOMER_CARE_MANAGER]
+            roles: [Role.ADMIN, Role.ACCOUNTANT, Role.CUSTOMER_CARE_MANAGER]
         }
         const response = await request(app)
             .put('/user/set-role-in-branch').set({ token, branch: branchId }).send(dataSend);
@@ -91,7 +91,7 @@ describe('POST /user/set-role-in-branch/:branchId', () => {
         const response = await request(app)
             .put('/user/set-role-in-branch').set({ token, branch: branchId }).send(dataSend1);
         equal(response.body.success, false);
-        equal(response.status, 404);
+        equal(response.status, 400);
         equal(response.body.message, UserError.CANNOT_FIND_USER);
     });
 
