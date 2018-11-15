@@ -11,11 +11,15 @@ export class UpdateBranchService {
         // Make Sure
         const checkUniqueName = await Branch.count({ name, _id: { $ne: branchId } });
         makeSure(checkUniqueName === 0, BranchError.NAME_IS_EXISTED);
+        
+        email = email ? email : undefined;
         if (email) {
             makeSure(validateEmail(email), BranchError.EMAIL_INCORRECT);
             const checkUniqueEmail = await Branch.count({ email, _id: { $ne: branchId } });
             makeSure(checkUniqueEmail === 0, BranchError.EMAIL_IS_EXISTED);
         }
+        
+        phone = phone ? phone : undefined;
         if (phone) {
             const checkUniquePhone = await Branch.count({ phone, _id: { $ne: branchId } });
             makeSure(checkUniquePhone === 0, BranchError.PHONE_IS_EXISTED);

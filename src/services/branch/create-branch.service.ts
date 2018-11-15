@@ -11,15 +11,20 @@ export class CreateBranchService {
             const isMasterCheck = await Branch.count({ isMaster: true });
             makeSure(isMasterCheck === 0, BranchError.ONLY_ONE_MASTER_BRANCH);
         }
+
+        email = email ? email : undefined;
         if (email) {
             makeSure(validateEmail(email), BranchError.EMAIL_INCORRECT);
             const checkUniqueEmail = await Branch.count({ email });
             makeSure(checkUniqueEmail === 0, BranchError.EMAIL_IS_EXISTED);
         }
+
+        phone = phone ? phone : undefined;
         if (phone) {
             const checkUniquePhone = await Branch.count({ phone });
             makeSure(checkUniquePhone === 0, BranchError.PHONE_IS_EXISTED);
         }
+        
         const checkUniqueName = await Branch.count({ name });
         makeSure(checkUniqueName === 0, BranchError.NAME_IS_EXISTED);
     }
