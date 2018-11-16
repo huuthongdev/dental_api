@@ -41,7 +41,7 @@
   "scripts": {
     "test": "NODE_ENV=test nodemon --exec mocha dist/test --recursive",
     "dev": "nodemon dist/src/index.js",
-    "start": "node dist/src/index.js",
+    "start": "NODE_ENV=production node dist/src/index.js",
     "testw": "set NODE_ENV=test&&nodemon --exec mocha dist/test --recursive",
     "resetdb": "mongo dental --eval 'db.dropDatabase()'"
   },

@@ -15,8 +15,8 @@ const testingConfig = {
     BRANCH_MASTER_NAME: 'Branch Name'
 };
 const developmentConfig = {
-    DATABASE_URI: `mongodb://localhost/${nameProject.toLowerCase()}`,
-    // DATABASE_URI: 'mongodb://huuthongdev:dentalapplication@huuthongdev-shard-00-00-gumev.mongodb.net:27017,huuthongdev-shard-00-01-gumev.mongodb.net:27017,huuthongdev-shard-00-02-gumev.mongodb.net:27017/test?ssl=true&replicaSet=huuthongdev-shard-0&authSource=admin&retryWrites=true',
+    // DATABASE_URI: `mongodb://localhost/${nameProject.toLowerCase()}`,
+    DATABASE_URI: 'mongodb://huuthongdev:huuthongdev@huuthongdev-shard-00-00-gumev.mongodb.net:27017,huuthongdev-shard-00-01-gumev.mongodb.net:27017,huuthongdev-shard-00-02-gumev.mongodb.net:27017/test?ssl=true&replicaSet=huuthongdev-shard-0&authSource=admin&retryWrites=true',
     FRONT_END_URL: 'http://localhost:3000',
     JWT_TOKEN_SECRET_KEY: 'abc123',
     ROOT_NAME: 'admin',
@@ -28,7 +28,7 @@ const developmentConfig = {
     BRANCH_MASTER_NAME: 'Branch Name'
 };
 const staggingConfig = {
-    DATABASE_URI: 'mongodb://huuthongdev:dentalapplication@huuthongdev-shard-00-00-gumev.mongodb.net:27017,huuthongdev-shard-00-01-gumev.mongodb.net:27017,huuthongdev-shard-00-02-gumev.mongodb.net:27017/test?ssl=true&replicaSet=huuthongdev-shard-0&authSource=admin&retryWrites=true',
+    DATABASE_URI: 'mongodb://huuthongdev:huuthongdev@huuthongdev-shard-00-00-gumev.mongodb.net:27017,huuthongdev-shard-00-01-gumev.mongodb.net:27017,huuthongdev-shard-00-02-gumev.mongodb.net:27017/test?ssl=true&replicaSet=huuthongdev-shard-0&authSource=admin&retryWrites=true',
     FRONT_END_URL: 'http://localhost:3000',
     JWT_TOKEN_SECRET_KEY: 'abc123',
     ROOT_EMAIL: 'admin@gmail.com',
