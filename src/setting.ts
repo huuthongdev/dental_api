@@ -28,8 +28,8 @@ const testingConfig: ServerConfig = {
 }
 
 const developmentConfig: ServerConfig = {
-    // DATABASE_URI: `mongodb://localhost/${nameProject.toLowerCase()}`,
-    DATABASE_URI: 'mongodb://huuthongdev:Huuthongdev123@ds163176.mlab.com:63176/dentalapi',
+    DATABASE_URI: `mongodb://localhost/${nameProject.toLowerCase()}`,
+    // DATABASE_URI: 'mongodb://huuthongdev:Huuthongdev123@ds163176.mlab.com:63176/dentalapi',
     FRONT_END_URL: 'http://localhost:3000',
     JWT_TOKEN_SECRET_KEY: 'abc123',
     ROOT_NAME: 'admin',
