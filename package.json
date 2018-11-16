@@ -46,6 +46,6 @@
     "resetdb": "mongo dental --eval 'db.dropDatabase()'"
   },
   "engines": {
-    "node": "10.13.0"
+    "node": "8.12.0"
   }
 }
