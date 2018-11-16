@@ -1,7 +1,5 @@
 node_modules
 
-# dist
-
 yarn-error.log
 
-package-lock.json
+.env
