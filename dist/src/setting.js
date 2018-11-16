@@ -35,7 +35,7 @@ const staggingConfig = {
     ROOT_PHONE: '0908508136',
     ROOT_NAME: 'admin',
     DEFAULT_PASSWORD: 'admin',
-    SERVER_URL: 'https://api-kpibsc.herokuapp.com',
+    SERVER_URL: 'https://dentalapi.herokuapp.com',
     SID_START_AT: 10000,
     BRANCH_MASTER_NAME: 'Branch Name'
 };
