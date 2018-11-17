@@ -119,6 +119,8 @@ const get_all_employee_service_1 = require("./services/user/get-all-employee.ser
 exports.GetAllEmployeesService = get_all_employee_service_1.GetAllEmployeesService;
 const get_branch_detail_data_service_1 = require("./services/branch/get-branch-detail-data.service");
 exports.GetBranchDetailDataService = get_branch_detail_data_service_1.GetBranchDetailDataService;
+const get_user_detail_data_service_1 = require("./services/user/get-user-detail-data.service");
+exports.GetUserDetailDataService = get_user_detail_data_service_1.GetUserDetailDataService;
 // Middlewares
 const on_error_middleware_1 = require("./routes/middlewares/on-error.middleware");
 exports.onError = on_error_middleware_1.onError;

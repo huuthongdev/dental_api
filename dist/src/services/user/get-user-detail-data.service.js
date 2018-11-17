@@ -9,17 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const refs_1 = require("../../../src/refs");
-class GetBranchDetailDataService {
-    static get(branchId) {
+class GetUserDetailDataService {
+    static get(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const branchDb = yield refs_1.Branch.findById(branchId);
-            let branch = branchDb.toObject();
-            // Get Employees
-            let employees = yield refs_1.GetAllEmployeesService.getEmployeeInOneBranch(branchId);
-            employees = employees ? employees : [];
-            branch.detail = { employees };
-            return branch;
+            const userInfo = yield refs_1.User.findById(userId).select({ password: false })
+                .populate({
+                path: 'roleInBranchs',
+                select: { user: false },
+                populate: {
+                    path: 'branch',
+                    select: 'sid name isMaster'
+                }
+            });
+            let user = userInfo.toObject();
+            user.detail = {};
+            return user;
         });
     }
 }
-exports.GetBranchDetailDataService = GetBranchDetailDataService;
+exports.GetUserDetailDataService = GetUserDetailDataService;

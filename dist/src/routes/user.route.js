@@ -17,6 +17,18 @@ exports.userRouter.post('/log-in', (req, res) => {
         .catch(res.onError);
 });
 exports.userRouter.use(refs_1.mustBeUser);
+// Get all employees
+exports.userRouter.get('/employees', (req, res) => {
+    refs_1.GetAllEmployeesService.getAll(req.query.userId, req.query.branchId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+// Get user detail data
+exports.userRouter.get('/detail/:_id', (req, res) => {
+    refs_1.GetUserDetailDataService.get(req.params._id)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
 // Create new user
 exports.userRouter.post('/', (req, res) => {
     const { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole } = req.body;
@@ -35,11 +47,6 @@ exports.userRouter.post('/change-password', (req, res) => {
 exports.userRouter.put('/set-role-in-branch', (req, res) => {
     const { roles, userId, branchId } = req.body;
     refs_1.SetRoleInBranchService.set(userId, branchId, roles)
-        .then(result => res.send({ success: true, result }))
-        .catch(res.onError);
-});
-exports.userRouter.get('/employees', (req, res) => {
-    refs_1.GetAllEmployeesService.getAll(req.query.userId, req.query.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

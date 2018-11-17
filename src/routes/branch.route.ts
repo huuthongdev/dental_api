@@ -12,6 +12,13 @@ branchRouter.get('/', (req, res: any) => {
         .catch(res.onError);
 });
 
+// Get branch detail data
+branchRouter.get('/detail/:branchId', (req, res: any) => {
+    GetBranchDetailDataService.get(req.params.branchId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
 // Get user in current branch
 branchRouter.get('/user-in-current-branch', (req, res: any) => {
     GetAllUSerInCurrentBranch.getAll(req.query.branchId)
@@ -56,9 +63,3 @@ branchRouter.delete('/:branchId', (req, res: any) => {
         .catch(res.onError);
 });
 
-// Get branch detail data
-branchRouter.get('/detail/:branchId', (req, res: any) => {
-    GetBranchDetailDataService.get(req.params.branchId)
-        .then(result => res.send({ success: true, result }))
-        .catch(res.onError);
-});

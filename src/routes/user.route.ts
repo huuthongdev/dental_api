@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CreateUserService, LoginService, ChangePasswordService, mustBeUser, SetRoleInBranchService, CheckTokenUserService, GetAllEmployeesService } from "../refs";
+import { CreateUserService, LoginService, ChangePasswordService, mustBeUser, SetRoleInBranchService, CheckTokenUserService, GetAllEmployeesService, GetUserDetailDataService } from "../refs";
 
 export const userRouter = Router();
 
@@ -10,7 +10,6 @@ userRouter.get('/check', (req, res: any) => {
         .catch(res.onError);
 });
 
-
 // Login
 userRouter.post('/log-in', (req, res: any) => {
     const { loginInfo, password } = req.body;
@@ -20,6 +19,20 @@ userRouter.post('/log-in', (req, res: any) => {
 });
 
 userRouter.use(mustBeUser);
+
+// Get all employees
+userRouter.get('/employees', (req, res: any) => {
+    GetAllEmployeesService.getAll(req.query.userId, req.query.branchId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+// Get user detail data
+userRouter.get('/detail/:_id', (req, res: any) => {
+    GetUserDetailDataService.get(req.params._id)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
 
 // Create new user
 userRouter.post('/', (req, res: any) => {
@@ -45,9 +58,5 @@ userRouter.put('/set-role-in-branch', (req, res: any) => {
         .catch(res.onError);
 });
 
-userRouter.get('/employees', (req, res: any) => {
-    GetAllEmployeesService.getAll(req.query.userId, req.query.branchId)
-        .then(result => res.send({ success: true, result }))
-        .catch(res.onError);
-});
+
 
