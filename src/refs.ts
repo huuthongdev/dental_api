@@ -55,6 +55,7 @@ import { GetAllEmployeesService } from './services/user/get-all-employee.service
 import { GetBranchDetailDataService } from './services/branch/get-branch-detail-data.service';
 import { GetUserDetailDataService } from './services/user/get-user-detail-data.service';
 import { UpdateProfileUserService, UpdateProfileUserInput } from './services/user/update-profile-user.service';
+import { GetAllClientsService } from './services/client/get-all-client';
 
 // Middlewares
 import { onError } from './routes/middlewares/on-error.middleware';
@@ -147,6 +148,7 @@ export { CheckTokenUserService }
 export { GetAllEmployeesService }
 export { GetBranchDetailDataService }
 export { GetUserDetailDataService }
+export { GetAllClientsService }
 // Middlewares
 export { onError }
 export { mustBeUser }

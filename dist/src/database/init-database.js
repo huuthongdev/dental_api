@@ -25,6 +25,7 @@ function prepareDataInit() {
         const rootUser = yield createRootUser();
         yield createBranchMaster(rootUser._id);
         yield createService(rootUser._id);
+        yield createProduct(rootUser._id);
         // TODO: TEST FRONT_END
         // const branch2 = await CreateBranchService.create(rootUser._id, 'CN GO VAP', 'govap@gmail.com', '09999', 'HCM', 'GO VAP');
         // await SetRoleInBranchService.set(rootUser._id, branch2._id, [Role.DIRECTOR]);
@@ -88,3 +89,11 @@ function createService(userId) {
     });
 }
 exports.createService = createService;
+function createProduct(userId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield refs_1.CreateProductService.create(userId, 'Khẩu trang y tế', 10000, 'VN', 'gói');
+        yield refs_1.CreateProductService.create(userId, 'Máy vệ sinh nướu tại nhà', 7000000, 'VN', 'máy');
+        yield refs_1.CreateProductService.create(userId, 'Efferalgan - thuốc giảm đau', 7000, 'VN', 'viên');
+    });
+}
+exports.createProduct = createProduct;

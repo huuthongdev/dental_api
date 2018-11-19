@@ -1,6 +1,6 @@
 import faker from 'faker';
 import { User } from '../../src/models/user.model';
-import { ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, DEFAULT_PASSWORD, SID_START_AT, BRANCH_MASTER_NAME, SetRoleInBranchService, Role, Branch, CreateBranchService, CreateService } from '../../src/refs';
+import { ROOT_NAME, ROOT_EMAIL, ROOT_PHONE, DEFAULT_PASSWORD, SID_START_AT, BRANCH_MASTER_NAME, SetRoleInBranchService, Role, Branch, CreateBranchService, CreateService, CreateProductService } from '../../src/refs';
 import { hash } from 'bcryptjs';
 
 export async function initDatabase() {
@@ -13,6 +13,7 @@ export async function prepareDataInit() {
     const rootUser = await createRootUser();
     await createBranchMaster(rootUser._id);
     await createService(rootUser._id);
+    await createProduct(rootUser._id);
     // TODO: TEST FRONT_END
     // const branch2 = await CreateBranchService.create(rootUser._id, 'CN GO VAP', 'govap@gmail.com', '09999', 'HCM', 'GO VAP');
     // await SetRoleInBranchService.set(rootUser._id, branch2._id, [Role.DIRECTOR]);
@@ -67,4 +68,10 @@ export async function createService(userId: string) {
     await CreateService.create(userId, 'Mặt Dán Sứ veneer Emax', 6000000, [], [], 'răng');
     await CreateService.create(userId, 'Mặt Dán Sứ Nano', 7000000, [], [], 'răng');
     await CreateService.create(userId, 'Răng Sứ LaVa Plus USA', 7000000, [], [], 'răng');
+}
+
+export async function createProduct(userId: string) {
+    await CreateProductService.create(userId, 'Khẩu trang y tế', 10000, 'VN', 'gói');
+    await CreateProductService.create(userId, 'Máy vệ sinh nướu tại nhà', 7000000, 'VN', 'máy');
+    await CreateProductService.create(userId, 'Efferalgan - thuốc giảm đau', 7000, 'VN', 'viên');
 }

@@ -4,6 +4,12 @@ const express_1 = require("express");
 const refs_1 = require("../../src/refs");
 exports.clientRouter = express_1.Router();
 exports.clientRouter.use(refs_1.mustBeUser);
+// Get all clients
+exports.clientRouter.get('/', (req, res) => {
+    refs_1.GetAllClientsService.get()
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
 // Create client
 exports.clientRouter.post('/', (req, res) => {
     const { name, phone, email, birthday, medicalHistory, city, district, address, homeTown } = req.body;

@@ -11,7 +11,7 @@ export class CreateProductService {
         makeSure(checkUniqueName === 0, ProductError.NAME_IS_EXISTED);
     }
 
-    static async create(userId: string, name: string, suggestedRetailerPrice: number, origin: string, unit: string, cost: number) {
+    static async create(userId: string, name: string, suggestedRetailerPrice: number, origin: string, unit: string, cost?: number) {
         await this.validate(userId, name, suggestedRetailerPrice, unit, origin);
         const sid = await this.getSid();
         const product = new Product({ sid, name, suggestedRetailerPrice, origin, createBy: userId, cost, unit });

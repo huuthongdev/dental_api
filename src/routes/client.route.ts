@@ -1,9 +1,16 @@
 import { Router } from "express";
-import { mustBeUser, CreateClientService, UpdateClientService, RemoveClientService } from "../../src/refs";
+import { mustBeUser, CreateClientService, UpdateClientService, RemoveClientService, GetAllClientsService } from "../../src/refs";
 
 export const clientRouter = Router();
 
 clientRouter.use(mustBeUser);
+
+// Get all clients
+clientRouter.get('/', (req, res: any) => {
+    GetAllClientsService.get()
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
 
 // Create client
 clientRouter.post('/', (req, res: any) => {
