@@ -12,9 +12,9 @@ const refs_1 = require("../../../../src/refs");
 class CheckRoleInBranchService {
     static check(userId, branchId, roleRequired) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Check chairmain
-            const checkChairmain = yield refs_1.RoleInBranch.findOne({ user: userId, roles: { $eq: refs_1.Role.ADMIN } });
-            if (checkChairmain)
+            // Check admin
+            const checkAdmin = yield refs_1.RoleInBranch.findOne({ user: userId, roles: { $eq: refs_1.Role.ADMIN } });
+            if (checkAdmin)
                 return true;
             // Check Roles
             const userRolesInCurrentBranch = yield refs_1.RoleInBranch.findOne({ branch: branchId, user: userId });

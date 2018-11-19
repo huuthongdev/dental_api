@@ -48,13 +48,13 @@ class InititalDatabaseForTest {
     static testGetAllUserInCurrentBranch() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rootUser, branchMaster, normalBranch } = yield this.createNormalBranch();
-            const user1 = yield refs_1.CreateUserService.create(rootUser._id, 'User 1', 'user1@gmail.com', '01', 'password');
-            const user2 = yield refs_1.CreateUserService.create(rootUser._id, 'User 2', 'user2@gmail.com', '02', 'password');
-            const user3 = yield refs_1.CreateUserService.create(rootUser._id, 'User 3', 'user3@gmail.com', '03', 'password');
-            const user4 = yield refs_1.CreateUserService.create(rootUser._id, 'User 4', 'user4@gmail.com', '04', 'password');
-            const user5 = yield refs_1.CreateUserService.create(rootUser._id, 'User 5', 'user5@gmail.com', '05', 'password');
-            const user6 = yield refs_1.CreateUserService.create(rootUser._id, 'User 6', 'user6@gmail.com', '06', 'password');
-            const user7 = yield refs_1.CreateUserService.create(rootUser._id, 'User 7', 'user7@gmail.com', '07', 'password');
+            const user1 = yield refs_1.CreateUserService.create(rootUser._id, { name: 'User 1', email: 'user1@gmail.com', phone: '01', password: 'password' });
+            const user2 = yield refs_1.CreateUserService.create(rootUser._id, { name: 'User 2', email: 'user2@gmail.com', phone: '02', password: 'password' });
+            const user3 = yield refs_1.CreateUserService.create(rootUser._id, { name: 'User 3', email: 'user3@gmail.com', phone: '03', password: 'password' });
+            const user4 = yield refs_1.CreateUserService.create(rootUser._id, { name: 'User 4', email: 'user4@gmail.com', phone: '04', password: 'password' });
+            const user5 = yield refs_1.CreateUserService.create(rootUser._id, { name: 'User 5', email: 'user5@gmail.com', phone: '05', password: 'password' });
+            const user6 = yield refs_1.CreateUserService.create(rootUser._id, { name: 'User 6', email: 'user6@gmail.com', phone: '06', password: 'password' });
+            const user7 = yield refs_1.CreateUserService.create(rootUser._id, { name: 'User 7', email: 'user7@gmail.com', phone: '07', password: 'password' });
             yield refs_1.SetRoleInBranchService.set(user1._id, normalBranch._id, [refs_1.Role.CUSTOMER_CARE]);
             yield refs_1.SetRoleInBranchService.set(user2._id, normalBranch._id, [refs_1.Role.DENTIST]);
             yield refs_1.SetRoleInBranchService.set(user3._id, normalBranch._id, [refs_1.Role.DENTISTS_MANAGER]);
@@ -62,11 +62,9 @@ class InititalDatabaseForTest {
             yield refs_1.SetRoleInBranchService.set(user5._id, normalBranch._id, [refs_1.Role.ACCOUNTANT]);
             yield refs_1.SetRoleInBranchService.set(user6._id, normalBranch._id, [refs_1.Role.ACCOUNTING_MANAGER]);
             yield refs_1.SetRoleInBranchService.set(user7._id, normalBranch._id, [refs_1.Role.DENTIST]);
-            yield refs_1.CreateUserService.create(rootUser._id, 'Director', 'director@gmail.com', '08', 'password');
+            yield refs_1.CreateUserService.create(rootUser._id, { name: 'Director', email: 'director@gmail.com', phone: '08', password: 'password' });
             const userDirect = yield refs_1.LoginService.login('08', 'password');
             yield refs_1.SetRoleInBranchService.set(userDirect._id, normalBranch._id, [refs_1.Role.DIRECTOR]);
-            // const check = await User.findById(userDirect._id);
-            // console.log(check);
             return { rootUser, branchMaster, normalBranch, userDirect };
         });
     }
@@ -78,9 +76,9 @@ class InititalDatabaseForTest {
             const service3 = yield refs_1.CreateService.create(rootUser._id, 'Service 3', 300, [], [], 'Unit', 100);
             const service4 = yield refs_1.CreateService.create(rootUser._id, 'Service 4', 400, [], [], 'Unit', 100);
             const service5 = yield refs_1.CreateService.create(rootUser._id, 'Service 5', 500, [], [], 'Unit', 100);
-            const dentist = yield refs_1.CreateUserService.create(rootUser._id, 'Dentist', 'dentist@gmail.com', '0999999', 'password');
+            const dentist = yield refs_1.CreateUserService.create(rootUser._id, { name: 'Dentist', email: 'dentist@gmail.com', phone: '0999999', password: 'password' });
             yield refs_1.SetRoleInBranchService.set(dentist._id, normalBranch._id, [refs_1.Role.DENTIST]);
-            yield refs_1.CreateUserService.create(rootUser._id, 'Staff', 'staff@gmail.com', '222222', 'password');
+            yield refs_1.CreateUserService.create(rootUser._id, { name: 'Staff', email: 'staff@gmail.com', phone: '222222', password: 'password' });
             const staffCustomerCase = yield refs_1.LoginService.login('staff@gmail.com', 'password');
             yield refs_1.SetRoleInBranchService.set(staffCustomerCase._id, normalBranch._id, [refs_1.Role.CUSTOMER_CARE]);
             return { rootUser, branchMaster, normalBranch, client, services: [service1, service2, service3, service4, service5], dentist, staffCustomerCase };
@@ -89,7 +87,7 @@ class InititalDatabaseForTest {
     static testUpdateTicket() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rootUser, branchMaster, normalBranch, client, services, dentist, staffCustomerCase } = yield this.testCreateTicket();
-            const dentist2 = yield refs_1.CreateUserService.create(rootUser._id, 'Dentist2', 'dentist2@gmail.com', '09999992', 'password');
+            const dentist2 = yield refs_1.CreateUserService.create(rootUser._id, { name: 'Dentist2', email: 'dentist2@gmail.com', phone: '09999992', password: 'password' });
             yield refs_1.SetRoleInBranchService.set(dentist2._id, normalBranch._id, [refs_1.Role.DENTIST]);
             const items = [{
                     service: services[0]._id,
@@ -105,16 +103,16 @@ class InititalDatabaseForTest {
     static testCheckRoleInBranch() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rootUser, branchMaster, normalBranch } = yield this.createNormalBranch();
-            const checkUser = yield refs_1.CreateUserService.create(rootUser._id, 'Normal', 'normal@gmail.com', '0999999', 'password');
+            const checkUser = yield refs_1.CreateUserService.create(rootUser._id, { name: 'Normal', email: 'normal@gmail.com', phone: '0999999', password: 'password' });
             return { rootUser, branchMaster, normalBranch, checkUser };
         });
     }
     static testCreateCalendarDentist() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rootUser, branchMaster, normalBranch } = yield this.createNormalBranch();
-            const dentist = yield refs_1.CreateUserService.create(rootUser._id, 'Dentist', 'dentist@gmail.com', '0999999', 'password');
+            const dentist = yield refs_1.CreateUserService.create(rootUser._id, { name: 'Dentist', email: 'dentist@gmail.com', phone: '0999999', password: 'password' });
             yield refs_1.SetRoleInBranchService.set(dentist._id, normalBranch._id, [refs_1.Role.DENTIST]);
-            yield refs_1.CreateUserService.create(rootUser._id, 'Staff', 'staff@gmail.com', '0999999111', 'password');
+            yield refs_1.CreateUserService.create(rootUser._id, { name: 'Staff', email: 'staff@gmail.com', phone: '0999999111', password: 'password' });
             const staff = yield refs_1.LoginService.login('staff@gmail.com', 'password');
             yield refs_1.SetRoleInBranchService.set(staff._id, normalBranch._id, [refs_1.Role.CUSTOMER_CARE]);
             return { rootUser, branchMaster, normalBranch, staff, dentist };

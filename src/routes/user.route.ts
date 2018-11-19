@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CreateUserService, LoginService, ChangePasswordService, mustBeUser, SetRoleInBranchService, CheckTokenUserService, GetAllEmployeesService, GetUserDetailDataService } from "../refs";
+import { CreateUserService, LoginService, ChangePasswordService, mustBeUser, SetRoleInBranchService, CheckTokenUserService, GetAllEmployeesService, GetUserDetailDataService, mustHaveRole, Role, UpdateProfileUserInput, UpdateProfileUserService } from "../refs";
 
 export const userRouter = Router();
 
@@ -21,7 +21,7 @@ userRouter.post('/log-in', (req, res: any) => {
 userRouter.use(mustBeUser);
 
 // Get all employees
-userRouter.get('/employees', (req, res: any) => {
+userRouter.get('/employees', mustHaveRole([Role.ADMIN]), (req, res: any) => {
     GetAllEmployeesService.getAll(req.query.userId, req.query.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
@@ -37,7 +37,8 @@ userRouter.get('/detail/:_id', (req, res: any) => {
 // Create new user
 userRouter.post('/', (req, res: any) => {
     const { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole } = req.body;
-    CreateUserService.create(req.query.userId, name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole)
+    const createUserInput = { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole };
+    CreateUserService.create(req.query.userId, createUserInput)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
@@ -57,6 +58,17 @@ userRouter.put('/set-role-in-branch', (req, res: any) => {
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
+
+// Update user profile
+userRouter.put('/:userUpdateId', mustHaveRole([Role.ADMIN]), (req, res: any) => {
+    const { name, email, phone, city, district, address, homeTown, birthday } = req.body;
+    const updateProfileUserInput = { name, email, phone, city, district, address, homeTown, birthday } as UpdateProfileUserInput;
+    UpdateProfileUserService.update(req.query.userId, req.params.userUpdateId, updateProfileUserInput)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+
 
 
 

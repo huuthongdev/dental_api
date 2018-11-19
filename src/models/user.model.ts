@@ -8,7 +8,7 @@ const userSchema = new Schema({
     sid: { type: Number, required: true, trim: true, unique: true },
     // Personal Information
     name: { type: String, required: true, trim: true },
-    birthday: { type: Number, trim: true },
+    birthday: { type: Number, trim: true, sparse: true},
     email: { type: String, required: true, trim: true, lowercase: true, unique: true },
     phone: { type: String, required: true, trim: true, unique: true },
     password: { type: String, required: true, trim: true },

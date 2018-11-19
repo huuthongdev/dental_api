@@ -9,7 +9,7 @@ export class CreateService {
         makeSure(checkNameUnique === 0, ServiceError.NAME_IS_EXISTED);
     }
 
-    static async create(userId: string, name: string, suggestedRetailerPrice: number, basicProcedure: string[], accessories: AccessorieItem[], unit: string, cost: number) {
+    static async create(userId: string, name: string, suggestedRetailerPrice: number, basicProcedure: string[], accessories: AccessorieItem[], unit: string, cost?: number) {
         await this.validate(name, suggestedRetailerPrice, basicProcedure, accessories, unit);
         const sid = await this.getSid();
         const service = new Service({ sid, name, suggestedRetailerPrice, basicProcedure, accessories, createBy: userId, unit, cost });

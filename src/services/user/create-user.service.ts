@@ -1,9 +1,25 @@
 import { mustExist, User, makeSure, mustBeObjectId, UserError, validateEmail, RoleInBranch, SID_START_AT, Branch, Role, RoleInBranchError, BranchError, SetRoleInBranchService, GetUserInfo } from "../../refs";
 import { hash } from 'bcryptjs';
+
+export interface CreateUserInput {
+    name: string; 
+    email: string; 
+    phone: string; 
+    password: string; 
+    birthday?: number; 
+    city?: string; 
+    district?: string; 
+    address?: string; 
+    homeTown?: string; 
+    branchWorkId?: string; 
+    branchRole?: Role
+}
+
 export class CreateUserService {
 
-    static async validate(userId: string, name: string, email: string, phone: string, password: string, branchWorkId?: Branch, branchRole?: Role) {
+    static async validate(userId: string, createUserInput: CreateUserInput) {
         mustBeObjectId(userId);
+        const { name, email, phone, password, branchWorkId, branchRole } = createUserInput;
         // Check Exist
         mustExist(name, UserError.NAME_MUST_BE_PROVIDED);
         mustExist(email, UserError.EMAIL_MUST_BE_PROVIDED);
@@ -28,8 +44,9 @@ export class CreateUserService {
         return true;
     }
 
-    static async create(userId: string, name: string, email: string, phone: string, password: string, birthday?: number, city?: string, district?: string, address?: string, homeTown?: string, branchWorkId?: Branch, branchRole?: Role) {
-        const branchWork = await this.validate(userId, name, email, phone, password, branchWorkId, branchRole) as Branch;
+    static async create(userId: string, createUserInput: CreateUserInput) {
+        const branchWork = await this.validate(userId, createUserInput) as Branch;
+        const { name, email, phone, birthday, password, city, district, address, homeTown, branchRole } = createUserInput;
         const hashed = await hash(password, 8);
         const sid = await this.getSid();
         const user = new User({

@@ -11,9 +11,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const refs_1 = require("../../refs");
 const bcryptjs_1 = require("bcryptjs");
 class CreateUserService {
-    static validate(userId, name, email, phone, password, branchWorkId, branchRole) {
+    static validate(userId, createUserInput) {
         return __awaiter(this, void 0, void 0, function* () {
             refs_1.mustBeObjectId(userId);
+            const { name, email, phone, password, branchWorkId, branchRole } = createUserInput;
             // Check Exist
             refs_1.mustExist(name, refs_1.UserError.NAME_MUST_BE_PROVIDED);
             refs_1.mustExist(email, refs_1.UserError.EMAIL_MUST_BE_PROVIDED);
@@ -38,9 +39,10 @@ class CreateUserService {
             return true;
         });
     }
-    static create(userId, name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole) {
+    static create(userId, createUserInput) {
         return __awaiter(this, void 0, void 0, function* () {
-            const branchWork = yield this.validate(userId, name, email, phone, password, branchWorkId, branchRole);
+            const branchWork = yield this.validate(userId, createUserInput);
+            const { name, email, phone, birthday, password, city, district, address, homeTown, branchRole } = createUserInput;
             const hashed = yield bcryptjs_1.hash(password, 8);
             const sid = yield this.getSid();
             const user = new refs_1.User({

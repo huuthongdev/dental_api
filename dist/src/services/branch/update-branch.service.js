@@ -20,12 +20,14 @@ class UpdateBranchService {
             // Make Sure
             const checkUniqueName = yield refs_1.Branch.count({ name, _id: { $ne: branchId } });
             refs_1.makeSure(checkUniqueName === 0, refs_1.BranchError.NAME_IS_EXISTED);
+            // Check Email
             email = email ? email : undefined;
             if (email) {
                 refs_1.makeSure(refs_1.validateEmail(email), refs_1.BranchError.EMAIL_INCORRECT);
                 const checkUniqueEmail = yield refs_1.Branch.count({ email, _id: { $ne: branchId } });
                 refs_1.makeSure(checkUniqueEmail === 0, refs_1.BranchError.EMAIL_IS_EXISTED);
             }
+            // Check Phone
             phone = phone ? phone : undefined;
             if (phone) {
                 const checkUniquePhone = yield refs_1.Branch.count({ phone, _id: { $ne: branchId } });

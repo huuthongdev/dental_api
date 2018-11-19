@@ -54,10 +54,12 @@ import { CheckTokenUserService } from './services/user/check-token-user.service'
 import { GetAllEmployeesService } from './services/user/get-all-employee.service';
 import { GetBranchDetailDataService } from './services/branch/get-branch-detail-data.service';
 import { GetUserDetailDataService } from './services/user/get-user-detail-data.service';
+import { UpdateProfileUserService, UpdateProfileUserInput } from './services/user/update-profile-user.service';
 
 // Middlewares
 import { onError } from './routes/middlewares/on-error.middleware';
 import { mustBeUser } from './routes/middlewares/must-be-user.middleware';
+import { mustHaveRole } from './routes/middlewares/must-have-role.middleware';
 // Routes
 import { devRouter } from './routes/development-test.route';
 import { calendarDentistRouter } from './routes/calendar-dentist.route';
@@ -111,6 +113,7 @@ export { CalendarDentist, CalendarStatus }
 export { Role, AccessorieItem }
 // Services
 export { CreateUserService }
+export { UpdateProfileUserService, UpdateProfileUserInput }
 export { LoginService }
 export { ModifiedService, ModifieldTicketMessage }
 export { ChangePasswordService }
@@ -147,6 +150,7 @@ export { GetUserDetailDataService }
 // Middlewares
 export { onError }
 export { mustBeUser }
+export { mustHaveRole }
 // Routes
 export { devRouter }
 export { calendarDentistRouter }

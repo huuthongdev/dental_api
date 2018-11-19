@@ -172,7 +172,7 @@ describe('POST /user/', () => {
         assert_1.equal(res4.body.message, refs_1.UserError.PASSWORD_MUST_BE_PROVIDED);
     }));
     it('Cannot create new user errors unique', () => __awaiter(this, void 0, void 0, function* () {
-        yield refs_1.CreateUserService.create(userId, 'Name unique', 'email@gmail.com', '090', 'Password');
+        yield refs_1.CreateUserService.create(userId, { name: 'Name unique', email: 'email@gmail.com', phone: '090', password: 'Password' });
         const dataSend1 = {
             name: 'user name',
             email: 'email@gmail.com',

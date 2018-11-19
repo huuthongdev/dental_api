@@ -18,7 +18,7 @@ exports.userRouter.post('/log-in', (req, res) => {
 });
 exports.userRouter.use(refs_1.mustBeUser);
 // Get all employees
-exports.userRouter.get('/employees', (req, res) => {
+exports.userRouter.get('/employees', refs_1.mustHaveRole([refs_1.Role.ADMIN]), (req, res) => {
     refs_1.GetAllEmployeesService.getAll(req.query.userId, req.query.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
@@ -32,7 +32,8 @@ exports.userRouter.get('/detail/:_id', (req, res) => {
 // Create new user
 exports.userRouter.post('/', (req, res) => {
     const { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole } = req.body;
-    refs_1.CreateUserService.create(req.query.userId, name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole)
+    const createUserInput = { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole };
+    refs_1.CreateUserService.create(req.query.userId, createUserInput)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
@@ -47,6 +48,14 @@ exports.userRouter.post('/change-password', (req, res) => {
 exports.userRouter.put('/set-role-in-branch', (req, res) => {
     const { roles, userId, branchId } = req.body;
     refs_1.SetRoleInBranchService.set(userId, branchId, roles)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+// Update user profile
+exports.userRouter.put('/:userUpdateId', refs_1.mustHaveRole([refs_1.Role.ADMIN]), (req, res) => {
+    const { name, email, phone, city, district, address, homeTown, birthday } = req.body;
+    const updateProfileUserInput = { name, email, phone, city, district, address, homeTown, birthday };
+    refs_1.UpdateProfileUserService.update(req.query.userId, req.params.userUpdateId, updateProfileUserInput)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

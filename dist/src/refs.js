@@ -121,11 +121,15 @@ const get_branch_detail_data_service_1 = require("./services/branch/get-branch-d
 exports.GetBranchDetailDataService = get_branch_detail_data_service_1.GetBranchDetailDataService;
 const get_user_detail_data_service_1 = require("./services/user/get-user-detail-data.service");
 exports.GetUserDetailDataService = get_user_detail_data_service_1.GetUserDetailDataService;
+const update_profile_user_service_1 = require("./services/user/update-profile-user.service");
+exports.UpdateProfileUserService = update_profile_user_service_1.UpdateProfileUserService;
 // Middlewares
 const on_error_middleware_1 = require("./routes/middlewares/on-error.middleware");
 exports.onError = on_error_middleware_1.onError;
 const must_be_user_middleware_1 = require("./routes/middlewares/must-be-user.middleware");
 exports.mustBeUser = must_be_user_middleware_1.mustBeUser;
+const must_have_role_middleware_1 = require("./routes/middlewares/must-have-role.middleware");
+exports.mustHaveRole = must_have_role_middleware_1.mustHaveRole;
 // Routes
 const development_test_route_1 = require("./routes/development-test.route");
 exports.devRouter = development_test_route_1.devRouter;

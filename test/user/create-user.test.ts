@@ -168,7 +168,7 @@ describe('POST /user/', () => {
     });
 
     it('Cannot create new user errors unique', async () => {
-        await CreateUserService.create(userId, 'Name unique', 'email@gmail.com', '090', 'Password');
+        await CreateUserService.create(userId, { name: 'Name unique', email: 'email@gmail.com', phone: '090', password: 'Password' });
         const dataSend1 = {
             name: 'user name',
             email: 'email@gmail.com',
