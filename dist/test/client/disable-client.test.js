@@ -53,7 +53,8 @@ describe('PUT /client/disable/:clientId', () => {
                 }],
             createAt: result.createAt,
             isActive: false,
-            medicalHistory: []
+            medicalHistory: [],
+            gender: refs_1.Gender.OTHER
         };
         assert_1.deepEqual(result, resExpected);
     }));

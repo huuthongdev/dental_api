@@ -38,7 +38,7 @@ describe('POST /service', () => {
         assert_1.equal(response.status, 200);
         const resExpected = {
             __v: 0,
-            sid: refs_1.SID_START_AT,
+            sid: result.sid,
             name: 'Service Name',
             suggestedRetailerPrice: 100,
             createBy: userId,
@@ -71,7 +71,7 @@ describe('POST /service', () => {
         assert_1.equal(response.status, 200);
         const resExpected = {
             _id: result._id,
-            sid: refs_1.SID_START_AT,
+            sid: result.sid,
             name: 'Service Name',
             suggestedRetailerPrice: 100,
             createBy: userId,
@@ -83,7 +83,7 @@ describe('POST /service', () => {
             accessories: [{
                     product: {
                         _id: product1._id.toString(),
-                        sid: refs_1.SID_START_AT,
+                        sid: result.accessories[0].product.sid,
                         name: 'Product 1',
                         cost: 50
                     },
@@ -93,7 +93,7 @@ describe('POST /service', () => {
                 {
                     product: {
                         _id: product2._id.toString(),
-                        sid: refs_1.SID_START_AT + 1,
+                        sid: result.accessories[1].product.sid,
                         name: 'Product 2',
                         cost: 100
                     },

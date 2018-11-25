@@ -41,7 +41,7 @@ class InititalDatabaseForTest {
     static createClient() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rootUser, branchMaster, normalBranch } = yield this.createNormalBranch();
-            const client = yield refs_1.CreateClientService.create(rootUser._id, 'Client', '0123', 'client@gmail.com', Date.now(), [], 'HCM', 'Phu Nhuan', '95/54 Huynh Van Banh', 'Phan Thiet');
+            const client = yield refs_1.CreateClientService.create(rootUser._id, { name: 'Client', phone: '0123', email: 'client@gmail.com', birthday: Date.now(), medicalHistory: [], city: 'HCM', district: 'Phu Nhuan', address: '95/54 Huynh Van Banh', homeTown: 'Phan Thiet' });
             return { rootUser, branchMaster, normalBranch, client };
         });
     }

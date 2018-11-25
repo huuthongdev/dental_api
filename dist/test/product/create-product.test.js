@@ -37,7 +37,7 @@ describe('POST /product', () => {
         assert_1.equal(response.status, 200);
         const resExpected = {
             __v: 0,
-            sid: refs_1.SID_START_AT,
+            sid: result.sid,
             name: 'Product name',
             suggestedRetailerPrice: 300,
             origin: 'VN',

@@ -10,8 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const refs_1 = require("../../../src/refs");
 class CreateClientService {
-    static validate(userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown) {
+    static validate(userId, createClientInput) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { name, email, phone } = createClientInput;
             refs_1.mustBeObjectId(userId);
             // Must Exist
             refs_1.mustExist(name, refs_1.ClientError.NAME_MUST_BE_PROVIDED);
@@ -26,11 +27,12 @@ class CreateClientService {
             refs_1.makeSure(checkPhone === 0, refs_1.ClientError.PHONE_IS_EXISTED);
         });
     }
-    static create(userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown) {
+    static create(userId, createClientInput) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.validate(userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown);
+            yield this.validate(userId, createClientInput);
+            const { name, email, phone, birthday, medicalHistory, city, district, address, homeTown, gender } = createClientInput;
             const sid = yield this.getSid();
-            const client = new refs_1.Client({ sid, createBy: userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown });
+            const client = new refs_1.Client({ sid, createBy: userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown, gender });
             return yield client.save();
         });
     }

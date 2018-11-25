@@ -7,6 +7,7 @@ import { ServerError } from './utils/server-error';
 import { makeSure, mustExist, mustBeObjectId, mustMatchReg } from './utils/asserts';
 import { verifyLogInToken, createToken } from './utils/jwt';
 import { validateEmail } from './utils/validate';
+import { convertToSave } from './utils/convert-to-save';
 // Models
 import { Client } from './models/client.model';
 import { User } from './models/user.model';
@@ -18,7 +19,7 @@ import { Ticket, TicketItem, TicketStatus } from './models/ticket.model';
 import { ReceiptVoucher, ReceiptVoucherType } from './models/receipt-voucher.model';
 import { CalendarDentist, CalendarStatus } from './models/calendar-dentist.model';
 // Types
-import { Role, AccessorieItem, ModifieldTicketMessage } from './types';
+import { Role, AccessorieItem, ModifieldTicketMessage, Gender } from './types';
 // Services
 import { ModifiedService } from './services/modified/modified.service';
 import { CreateUserService } from './services/user/create-user.service';
@@ -98,6 +99,7 @@ export { ServerError }
 export { makeSure, mustExist, mustBeObjectId, mustMatchReg }
 export { verifyLogInToken, createToken }
 export { validateEmail }
+export { convertToSave }
 // Models
 export { User }
 export { Branch }
@@ -111,7 +113,7 @@ export { Ticket, TicketItem, TicketStatus }
 export { ReceiptVoucher, ReceiptVoucherType }
 export { CalendarDentist, CalendarStatus }
 // Types
-export { Role, AccessorieItem }
+export { Role, AccessorieItem, Gender }
 // Services
 export { CreateUserService }
 export { UpdateProfileUserService, UpdateProfileUserInput }

@@ -8,6 +8,7 @@ const clientSchema = new mongoose_1.Schema({
     phone: { type: String, trim: true, unique: true, required: true },
     birthday: { type: Number },
     medicalHistory: [{ type: String, trim: true }],
+    gender: { type: String, enum: ['FEMALE', 'MALE', 'OTHER'], default: 'OTHER' },
     // Address
     city: { type: String, trim: true },
     district: { type: String, trim: true },

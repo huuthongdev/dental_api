@@ -54,7 +54,8 @@ describe('PUT /client/enable/:clientId', () => {
                 }],
             createAt: result.createAt,
             isActive: true,
-            medicalHistory: []
+            medicalHistory: [],
+            gender: refs_1.Gender.OTHER
         };
         assert_1.deepEqual(result, resExpected);
     }));

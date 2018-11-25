@@ -33,7 +33,7 @@ describe('PUT /enalble/:branchId', () => {
         assert_1.equal(response.status, 200);
         const resExpected = {
             _id: normalBranchId,
-            sid: refs_1.SID_START_AT + 1,
+            sid: result.sid,
             name: 'Normal Branch',
             email: 'normalbranch@gmail.com',
             phone: '0123',

@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
 import { InititalDatabaseForTest } from '../../test/init-database-for-test';
-import { app, SID_START_AT, ClientError, CreateClientService, Client, modifiedSelect } from '../../src/refs';
+import { app, SID_START_AT, ClientError, CreateClientService, Client, modifiedSelect, Gender } from '../../src/refs';
 
 describe('PUT /client/disable/:clientId', () => {
     let token: string, userId: string, branchId: string, normalBranchId: string, clientId: string;
@@ -43,7 +43,8 @@ describe('PUT /client/disable/:clientId', () => {
                 }],
             createAt: result.createAt,
             isActive: false,
-            medicalHistory: []
+            medicalHistory: [],
+            gender: Gender.OTHER
         };
         deepEqual(result, resExpected);
     });

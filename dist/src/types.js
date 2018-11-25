@@ -24,3 +24,9 @@ var ModifieldTicketMessage;
     ModifieldTicketMessage["UPDATE_ITEMS"] = "UPDATE_ITEMS";
     ModifieldTicketMessage["CHANGE_DENTIST_RESPONSIBLE"] = "CHANGE_DENTIST_RESPONSIBLE";
 })(ModifieldTicketMessage = exports.ModifieldTicketMessage || (exports.ModifieldTicketMessage = {}));
+var Gender;
+(function (Gender) {
+    Gender["MALE"] = "MALE";
+    Gender["FEMALE"] = "FEMALE";
+    Gender["OTHER"] = "OTHER";
+})(Gender = exports.Gender || (exports.Gender = {}));

@@ -12,15 +12,17 @@ exports.clientRouter.get('/', (req, res) => {
 });
 // Create client
 exports.clientRouter.post('/', (req, res) => {
-    const { name, phone, email, birthday, medicalHistory, city, district, address, homeTown } = req.body;
-    refs_1.CreateClientService.create(req.query.userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown)
+    const { name, phone, email, birthday, medicalHistory, city, district, address, homeTown, gender } = req.body;
+    const input = { name, phone, email, birthday, medicalHistory, city, district, address, homeTown, gender };
+    refs_1.CreateClientService.create(req.query.userId, input)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
 // Update client
 exports.clientRouter.put('/:clientId', (req, res) => {
-    const { name, phone, email, birthday, medicalHistory, city, district, address, homeTown } = req.body;
-    refs_1.UpdateClientService.update(req.params.clientId, req.query.userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown)
+    const { name, phone, email, birthday, medicalHistory, city, district, address, homeTown, gender } = req.body;
+    const updateClientInput = { name, email, phone, birthday, medicalHistory, gender, city, district, address, homeTown };
+    refs_1.UpdateClientService.update(req.params.clientId, req.query.userId, updateClientInput)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

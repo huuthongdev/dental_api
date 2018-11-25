@@ -48,7 +48,8 @@ describe('DELETE /client/:clientId', () => {
             modifieds: [],
             createAt: result.createAt,
             isActive: true,
-            medicalHistory: []
+            medicalHistory: [],
+            gender: refs_1.Gender.OTHER
         };
         assert_1.deepEqual(result, resExpected);
         // Check database

@@ -10,8 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const refs_1 = require("../../../src/refs");
 class UpdateClientService {
-    static validate(clientId, userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown) {
+    static validate(clientId, userId, updateClientInput) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { name, email, phone, birthday, medicalHistory, gender, city, district, address, homeTown } = updateClientInput;
             refs_1.mustBeObjectId(userId, clientId);
             // Must Exist
             refs_1.mustExist(name, refs_1.ClientError.NAME_MUST_BE_PROVIDED);
@@ -29,9 +30,10 @@ class UpdateClientService {
             return oldClient;
         });
     }
-    static update(clientId, userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown) {
+    static update(clientId, userId, updateClientInput) {
         return __awaiter(this, void 0, void 0, function* () {
-            const oldClient = yield this.validate(clientId, userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown);
+            const { name, email, phone, birthday, medicalHistory, gender, city, district, address, homeTown } = updateClientInput;
+            const oldClient = yield this.validate(clientId, userId, updateClientInput);
             yield refs_1.Client.findByIdAndUpdate(clientId, { name, phone, email, birthday, medicalHistory, city, district, address, homeTown }, { new: true });
             return yield refs_1.ModifiedService.client(clientId, userId, oldClient);
         });

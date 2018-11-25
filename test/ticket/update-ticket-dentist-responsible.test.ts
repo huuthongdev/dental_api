@@ -27,11 +27,11 @@ describe('PUT /ticket/dentist-reponsible/:ticketId', () => {
         equal(response.status, 200);
         const resExpected: any = {
             _id: ticketId,
-            sid: SID_START_AT,
+            sid: result.sid,
             client:
             {
                 _id: clientId,
-                sid: SID_START_AT,
+                sid: result.client.sid,
                 name: 'Client',
                 phone: '0123',
                 email: 'client@gmail.com'
@@ -40,7 +40,7 @@ describe('PUT /ticket/dentist-reponsible/:ticketId', () => {
             dentistResponsible:
             {
                 _id: dentist2Id,
-                sid: SID_START_AT + 3,
+                sid: result.dentistResponsible.sid,
                 name: 'Dentist2',
                 email: 'dentist2@gmail.com',
                 phone: '09999992'
@@ -62,7 +62,7 @@ describe('PUT /ticket/dentist-reponsible/:ticketId', () => {
                 service:
                 {
                     _id: services[0]._id.toString(),
-                    sid: SID_START_AT,
+                    sid: result.items[0].service.sid,
                     name: 'Service 1'
                 },
                 qty: 1,
@@ -72,7 +72,7 @@ describe('PUT /ticket/dentist-reponsible/:ticketId', () => {
                 service:
                 {
                     _id: services[1]._id.toString(),
-                    sid: SID_START_AT + 1,
+                    sid: result.items[1].service.sid,
                     name: 'Service 2'
                 },
                 qty: 2,

@@ -33,7 +33,7 @@ describe('PUT /enable/:serviceId', () => {
         assert_1.equal(response.status, 200);
         const resExpected = {
             _id: serviceId,
-            sid: refs_1.SID_START_AT,
+            sid: result.sid,
             name: 'Service name',
             suggestedRetailerPrice: 100,
             createBy: result.createBy,

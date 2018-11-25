@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
 import { InititalDatabaseForTest } from '../../test/init-database-for-test';
-import { app, SID_START_AT, ClientError, CreateClientService } from '../../src/refs';
+import { app, SID_START_AT, ClientError, CreateClientService, Gender } from '../../src/refs';
 
 describe('POST /client', () => {
     let token: string, userId: string, branchId: string, normalBranchId: string;
@@ -45,7 +45,8 @@ describe('POST /client', () => {
             modifieds: [],
             createAt: result.createAt,
             isActive: true,
-            medicalHistory: []
+            medicalHistory: [],
+            gender: Gender.OTHER
         }
         deepEqual(result, resExpected);
     });
@@ -85,7 +86,7 @@ describe('POST /client', () => {
     });
 
     it('Cannot create client with errors unique', async () => {
-        await CreateClientService.create(userId, 'Name', '0123', 'email@gmail.com', Date.now());
+        await CreateClientService.create(userId, { name: 'Name', phone: '0123', email: 'email@gmail.com', birthday: Date.now() });
         const dataSend1 = {
             name: 'Name',
             email: '2@gmail.com',

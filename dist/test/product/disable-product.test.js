@@ -32,7 +32,7 @@ describe('PUT /product/disable/:productId', () => {
         assert_1.equal(response.status, 200);
         const resExpected = {
             _id: productId,
-            sid: refs_1.SID_START_AT,
+            sid: result.sid,
             name: 'Product Name',
             suggestedRetailerPrice: 100,
             origin: 'VN',

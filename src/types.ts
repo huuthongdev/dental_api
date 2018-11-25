@@ -35,3 +35,9 @@ export enum ModifieldTicketMessage {
     UPDATE_ITEMS = 'UPDATE_ITEMS',
     CHANGE_DENTIST_RESPONSIBLE = 'CHANGE_DENTIST_RESPONSIBLE'
 }
+
+export enum Gender {
+    MALE = 'MALE',
+    FEMALE = 'FEMALE',
+    OTHER = 'OTHER'
+}

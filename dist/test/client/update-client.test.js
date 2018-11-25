@@ -63,7 +63,8 @@ describe('POST /client/:clientId', () => {
                 }],
             createAt: result.createAt,
             isActive: true,
-            medicalHistory: null
+            medicalHistory: null,
+            gender: refs_1.Gender.OTHER
         };
         assert_1.deepEqual(result, resExpected);
     }));
@@ -100,7 +101,7 @@ describe('POST /client/:clientId', () => {
         assert_1.equal(res2.body.message, refs_1.ClientError.PHONE_MUST_BE_PROVIDED);
     }));
     it('Cannot update client with errors unique', () => __awaiter(this, void 0, void 0, function* () {
-        yield refs_1.CreateClientService.create(userId, 'Name01', '012301', 'email01@gmail.com', Date.now());
+        yield refs_1.CreateClientService.create(userId, { name: 'Name01', phone: '012301', email: 'email01@gmail.com', birthday: Date.now() });
         const dataSend1 = {
             name: 'Name',
             email: '2@gmail.com',

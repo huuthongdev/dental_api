@@ -39,7 +39,7 @@ describe('PUT /service/:serviceId', () => {
         assert_1.equal(response.status, 200);
         const resExpected = {
             _id: serviceId,
-            sid: refs_1.SID_START_AT,
+            sid: result.sid,
             name: 'Service Name Update',
             suggestedRetailerPrice: 200,
             createBy: userId,

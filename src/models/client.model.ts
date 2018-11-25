@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { User } from "../../src/refs";
+import { User, Gender } from "../../src/refs";
 
 const clientSchema = new Schema({
     sid: { type: Number, required: true },
@@ -7,7 +7,8 @@ const clientSchema = new Schema({
     email: { type: String, trim: true, unique: true },
     phone: { type: String, trim: true, unique: true, required: true },
     birthday: { type: Number },
-    medicalHistory: [{ type: String, trim: true }], 
+    medicalHistory: [{ type: String, trim: true }],
+    gender: { type: String, enum: ['FEMALE', 'MALE', 'OTHER'], default: 'OTHER' },
     // Address
     city: { type: String, trim: true },
     district: { type: String, trim: true },
@@ -37,6 +38,7 @@ export class Client extends ClientModel {
     phone: string;
     birthday: number;
     medicalHistory: string[];
+    gender: Gender;
     // Address
     city: string;
     district: string;

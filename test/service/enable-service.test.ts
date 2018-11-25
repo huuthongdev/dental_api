@@ -22,7 +22,7 @@ describe('PUT /enable/:serviceId', () => {
         equal(response.status, 200);
         const resExpected: any = {
             _id: serviceId,
-            sid: SID_START_AT,
+            sid: result.sid,
             name: 'Service name',
             suggestedRetailerPrice: 100,
             createBy: result.createBy,

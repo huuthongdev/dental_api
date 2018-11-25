@@ -28,7 +28,7 @@ describe('PUT /product/:productId', () => {
         equal(response.status, 200);
         const resExpected: any = {
             _id: productId,
-            sid: SID_START_AT,
+            sid: result.sid,
             name: 'Product name update',
             suggestedRetailerPrice: 500,
             origin: 'USA',

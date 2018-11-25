@@ -21,7 +21,7 @@ describe('PUT /product/disable/:productId', () => {
         equal(response.status, 200);
         const resExpected: any = {
             _id: productId,
-            sid: SID_START_AT,
+            sid: result.sid,
             name: 'Product Name',
             suggestedRetailerPrice: 100,
             origin: 'VN',

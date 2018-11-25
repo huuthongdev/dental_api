@@ -43,7 +43,7 @@ describe('POST /ticket', () => {
         assert_1.equal(response.status, 200);
         const resExpected = {
             _id: result._id,
-            sid: refs_1.SID_START_AT,
+            sid: result.sid,
             client: {
                 _id: clientId,
                 sid: refs_1.SID_START_AT,
@@ -54,7 +54,7 @@ describe('POST /ticket', () => {
             staffCustomerCase: userId,
             dentistResponsible: {
                 _id: dentistId,
-                sid: refs_1.SID_START_AT + 1,
+                sid: result.dentistResponsible.sid,
                 name: 'Dentist',
                 email: 'dentist@gmail.com',
                 phone: '0999999'
@@ -69,7 +69,7 @@ describe('POST /ticket', () => {
             items: [{
                     service: {
                         _id: services[0]._id.toString(),
-                        sid: refs_1.SID_START_AT,
+                        sid: services[0].sid,
                         name: 'Service 1'
                     },
                     qty: 1,
@@ -78,7 +78,7 @@ describe('POST /ticket', () => {
                 {
                     service: {
                         _id: services[1]._id.toString(),
-                        sid: refs_1.SID_START_AT + 1,
+                        sid: services[1].sid,
                         name: 'Service 2'
                     },
                     qty: 2,
@@ -133,7 +133,7 @@ describe('POST /ticket', () => {
             items: [{
                     service: {
                         _id: services[0]._id.toString(),
-                        sid: refs_1.SID_START_AT,
+                        sid: services[0].sid,
                         name: 'Service 1'
                     },
                     qty: 1,
@@ -142,7 +142,7 @@ describe('POST /ticket', () => {
                 {
                     service: {
                         _id: services[1]._id.toString(),
-                        sid: refs_1.SID_START_AT + 1,
+                        sid: services[1].sid,
                         name: 'Service 2'
                     },
                     qty: 2,

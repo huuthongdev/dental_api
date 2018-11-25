@@ -26,6 +26,8 @@ exports.verifyLogInToken = jwt_1.verifyLogInToken;
 exports.createToken = jwt_1.createToken;
 const validate_1 = require("./utils/validate");
 exports.validateEmail = validate_1.validateEmail;
+const convert_to_save_1 = require("./utils/convert-to-save");
+exports.convertToSave = convert_to_save_1.convertToSave;
 // Models
 const client_model_1 = require("./models/client.model");
 exports.Client = client_model_1.Client;
@@ -52,6 +54,7 @@ exports.CalendarStatus = calendar_dentist_model_1.CalendarStatus;
 const types_1 = require("./types");
 exports.Role = types_1.Role;
 exports.ModifieldTicketMessage = types_1.ModifieldTicketMessage;
+exports.Gender = types_1.Gender;
 // Services
 const modified_service_1 = require("./services/modified/modified.service");
 exports.ModifiedService = modified_service_1.ModifiedService;

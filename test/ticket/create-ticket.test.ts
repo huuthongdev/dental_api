@@ -32,7 +32,7 @@ describe('POST /ticket', () => {
         equal(response.status, 200);
         const resExpected: any = {
             _id: result._id,
-            sid: SID_START_AT,
+            sid: result.sid,
             client:
             {
                 _id: clientId,
@@ -45,7 +45,7 @@ describe('POST /ticket', () => {
             dentistResponsible:
             {
                 _id: dentistId,
-                sid: SID_START_AT + 1,
+                sid: result.dentistResponsible.sid,
                 name: 'Dentist',
                 email: 'dentist@gmail.com',
                 phone: '0999999'
@@ -61,7 +61,7 @@ describe('POST /ticket', () => {
                 service:
                 {
                     _id: services[0]._id.toString(),
-                    sid: SID_START_AT,
+                    sid: services[0].sid,
                     name: 'Service 1'
                 },
                 qty: 1,
@@ -71,7 +71,7 @@ describe('POST /ticket', () => {
                 service:
                 {
                     _id: services[1]._id.toString(),
-                    sid: SID_START_AT + 1,
+                    sid: services[1].sid,
                     name: 'Service 2'
                 },
                 qty: 2,
@@ -130,7 +130,7 @@ describe('POST /ticket', () => {
                 service:
                 {
                     _id: services[0]._id.toString(),
-                    sid: SID_START_AT,
+                    sid: services[0].sid,
                     name: 'Service 1'
                 },
                 qty: 1,
@@ -140,7 +140,7 @@ describe('POST /ticket', () => {
                 service:
                 {
                     _id: services[1]._id.toString(),
-                    sid: SID_START_AT + 1,
+                    sid: services[1].sid,
                     name: 'Service 2'
                 },
                 qty: 2,

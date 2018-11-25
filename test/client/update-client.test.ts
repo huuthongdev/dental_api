@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
 import { InititalDatabaseForTest } from '../../test/init-database-for-test';
-import { app, SID_START_AT, ClientError, CreateClientService, Client, modifiedSelect } from '../../src/refs';
+import { app, SID_START_AT, ClientError, CreateClientService, Client, modifiedSelect, Gender } from '../../src/refs';
 
 describe('POST /client/:clientId', () => {
     let token: string, userId: string, branchId: string, normalBranchId: string, clientId: string;
@@ -52,7 +52,8 @@ describe('POST /client/:clientId', () => {
             }],
             createAt: result.createAt,
             isActive: true,
-            medicalHistory: null
+            medicalHistory: null,
+            gender: Gender.OTHER
         };
         deepEqual(result, resExpected);
     });
@@ -92,7 +93,7 @@ describe('POST /client/:clientId', () => {
     });
 
     it('Cannot update client with errors unique', async () => {
-        await CreateClientService.create(userId, 'Name01', '012301', 'email01@gmail.com', Date.now());
+        await CreateClientService.create(userId, { name: 'Name01', phone: '012301', email: 'email01@gmail.com', birthday: Date.now() });
         const dataSend1 = {
             name: 'Name',
             email: '2@gmail.com',

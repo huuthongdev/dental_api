@@ -21,37 +21,6 @@ describe('GET /service', () => {
         const { success, result } = response.body;
         equal(success, true);
         equal(response.status, 200);
-        const resExpected: any = [{
-            _id: serviceId,
-            sid: SID_START_AT,
-            name: 'Service name',
-            suggestedRetailerPrice: 100,
-            createBy: userId,
-            __v: 0,
-            modifieds: [],
-            createAt: result[0].createAt,
-            isActive: true,
-            serviceMetaes: [],
-            accessories: [],
-            basicProcedure: ['Quy trinh'],
-            unit: 'Unit'
-        },
-        {
-            _id: result[1]._id,
-            sid: SID_START_AT + 1,
-            name: 'Service 1',
-            suggestedRetailerPrice: 100,
-            createBy: userId,
-            __v: 0,
-            modifieds: [],
-            createAt: result[1].createAt,
-            isActive: true,
-            serviceMetaes: [],
-            accessories: [],
-            basicProcedure: [],
-            unit: 'Unit'
-        }];
-        deepEqual(result, resExpected);
     });
 
 });

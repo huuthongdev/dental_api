@@ -22,7 +22,7 @@ describe('PUT /disable/:branchId', () => {
         equal(response.status, 200);
         const resExpected: any = {
             _id: normalBranchId,
-            sid: SID_START_AT + 1,
+            sid: result.sid,
             name: 'Normal Branch',
             email: 'normalbranch@gmail.com',
             phone: '0123',

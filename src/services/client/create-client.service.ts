@@ -1,7 +1,21 @@
-import { mustBeObjectId, mustExist, ClientError, Client, makeSure, validateEmail, SID_START_AT } from "../../../src/refs";
+import { mustBeObjectId, mustExist, ClientError, Client, makeSure, validateEmail, SID_START_AT, Gender } from "../../../src/refs";
 
+export interface CreateClientInput {
+    name: string;
+    email: string;
+    phone: string;
+    birthday?: number;
+    medicalHistory?: string[];
+    gender?: Gender;
+    // Address
+    city?: string;
+    district?: string;
+    address?: string;
+    homeTown?: string;
+}
 export class CreateClientService {
-    static async validate(userId: string, name: string, phone: string, email?: string, birthday?: number, medicalHistory?: string[], city?: string, district?: string, address?: string, homeTown?: string) {
+    static async validate(userId: string, createClientInput: CreateClientInput) {
+        const { name, email, phone } = createClientInput;
         mustBeObjectId(userId);
         // Must Exist
         mustExist(name, ClientError.NAME_MUST_BE_PROVIDED);
@@ -15,10 +29,11 @@ export class CreateClientService {
         makeSure(checkPhone === 0, ClientError.PHONE_IS_EXISTED);
     }
 
-    static async create(userId: string, name: string, phone: string, email?: string, birthday?: number, medicalHistory?: string[], city?: string, district?: string, address?: string, homeTown?: string) {
-        await this.validate(userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown);
+    static async create(userId: string, createClientInput: CreateClientInput) {
+        await this.validate(userId, createClientInput);
+        const { name, email, phone, birthday, medicalHistory, city, district, address, homeTown, gender } = createClientInput;
         const sid = await this.getSid();
-        const client = new Client({ sid, createBy: userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown });
+        const client = new Client({ sid, createBy: userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown, gender });
         return await client.save();
     }
 
