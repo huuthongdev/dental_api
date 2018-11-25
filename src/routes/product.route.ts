@@ -14,16 +14,16 @@ productRouter.get('/', (req, res: any) => {
 
 // Create product
 productRouter.post('/', (req, res: any) => {
-    const { name, suggestedRetailerPrice, origin, cost, unit } = req.body;
-    CreateProductService.create(req.query.userId, name, suggestedRetailerPrice, origin, unit, cost)
+    const { name, suggestedRetailerPrice, origin, unit, cost } = req.body;
+    CreateProductService.create(req.query.userId, { name, suggestedRetailerPrice, origin, unit, cost })
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
 
 // Update product
 productRouter.put('/:productId', (req, res: any) => {
-    const { name, suggestedRetailerPrice, origin, cost, unit } = req.body;
-    UpdateProductService.update(req.params.productId, req.query.userId, name, suggestedRetailerPrice, origin, unit, cost)
+    const { name, suggestedRetailerPrice, origin, unit, cost } = req.body;
+    UpdateProductService.update(req.params.productId, req.query.userId, { name, suggestedRetailerPrice, origin, unit, cost })
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

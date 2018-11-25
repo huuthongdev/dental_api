@@ -1,7 +1,14 @@
 import { ServiceError, TicketItem, mustBeObjectId, Client, mustExist, ClientError, User, RoleInBranch, Role, TicketError, Branch, makeSure, Ticket, Service, TicketService, SID_START_AT, CheckRoleInBranchService, ServiceMeta } from "../../../src/refs";
 
+export interface CreateTicketInput {
+    clientId: string;
+    dentistId: string;
+    branchId: string;
+    items: TicketItem[];
+}
 export class CreateTicketService {
-    static async validate(clientId: string, userId: string, dentistId: string, branchId: string, items: TicketItem[]) {
+    static async validate(userId: string, createTicketInput: CreateTicketInput) {
+        const { clientId, dentistId, branchId, items } = createTicketInput;
         mustBeObjectId(clientId, userId, dentistId);
         // Must exist
         const client = await Client.findById(clientId);
@@ -22,10 +29,19 @@ export class CreateTicketService {
         return +totalAmount;
     }
 
-    static async create(clientId: string, userId: string, dentistId: string, branchId: string, items: TicketItem[]) {
-        const totalAmount = await this.validate(clientId, userId, dentistId, branchId, items);
+    static async create(userId: string, createTicketInput: CreateTicketInput) {
+        const { clientId, dentistId, branchId, items } = createTicketInput;
+        const totalAmount = await this.validate(userId, createTicketInput);
         const sid = await this.getSid();
-        const ticket = new Ticket({ sid, client: clientId, staffCustomerCase: userId, dentistResponsible: dentistId, branchRegister: branchId, items, totalAmount });
+        const ticket = new Ticket({
+            sid,
+            client: clientId,
+            staffCustomerCase: userId,
+            dentistResponsible: dentistId,
+            branchRegister: branchId,
+            items,
+            totalAmount
+        });
         await ticket.save();
         return await TicketService.getTicketInfo(ticket._id);
     }

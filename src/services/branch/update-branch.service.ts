@@ -1,9 +1,18 @@
-import { mustBeObjectId, BranchError, mustExist, Branch, makeSure, validateEmail, ModifiedService, modifiedSelect } from "../../../src/refs";
+import { mustBeObjectId, BranchError, mustExist, Branch, makeSure, validateEmail, ModifiedService, modifiedSelect, convertToSave } from "../../../src/refs";
 
+export interface UpdateBranchInput {
+    name: string;
+    email?: string;
+    phone?: string;
+    city?: string;
+    district?: string;
+    address?: string;
+}
 export class UpdateBranchService {
 
-    static async validate(userId: string, branchId: string, name: string, email?: string, phone?: string, city?: string, district?: string, address?: string) {
+    static async validate(userId: string, branchId: string, updateBranchInput: UpdateBranchInput) {
         mustBeObjectId(userId, branchId);
+        let { name, email, phone, city, district, address } = updateBranchInput;
         // Must Exist
         mustExist(name, BranchError.NAME_MUST_BE_PROVIDED);
         const oldBranch = await Branch.findById(branchId).select(modifiedSelect);
@@ -27,9 +36,17 @@ export class UpdateBranchService {
         return oldBranch;
     }
 
-    static async update(userId: string, branchId: string, name: string, email?: string, phone?: string, city?: string, district?: string, address?: string) {
-        const oldBranch = await this.validate(userId, branchId, name, email, phone, city, district, address) as Branch;
-        await Branch.findByIdAndUpdate(branchId, { name, email, phone, city, district, address }, { new: true });
+    static async update(userId: string, branchId: string, updateBranchInput: UpdateBranchInput) {
+        const { name, email, phone, city, district, address } = updateBranchInput;
+        const oldBranch = await this.validate(userId, branchId, updateBranchInput) as Branch;
+        await Branch.findByIdAndUpdate(branchId, {
+            name: convertToSave(name),
+            email: convertToSave(email),
+            phone: convertToSave(phone),
+            city: convertToSave(city),
+            district: convertToSave(district),
+            address: convertToSave(address)
+        }, { new: true });
         return await ModifiedService.branch(branchId, userId, oldBranch);
     }
 }

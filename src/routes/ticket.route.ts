@@ -8,7 +8,7 @@ ticketRouter.use(mustBeUser);
 // Create ticket
 ticketRouter.post('/', (req, res: any) => {
     const { clientId, dentistId, items } = req.body;
-    CreateTicketService.create(clientId, req.query.userId, dentistId, req.query.branchId, items)
+    CreateTicketService.create(req.query.userId, { clientId, dentistId, branchId: req.query.branchId, items })
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

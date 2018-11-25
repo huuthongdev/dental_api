@@ -54,8 +54,8 @@ describe('POST /service', () => {
         assert_1.deepEqual(result, resExpected);
     }));
     it('Can create new Service with accessories', () => __awaiter(this, void 0, void 0, function* () {
-        const product1 = yield refs_1.CreateProductService.create(userId, 'Product 1', 100, 'VN', 'Unit', 50);
-        const product2 = yield refs_1.CreateProductService.create(userId, 'Product 2', 200, 'VN', 'Unit', 100);
+        const product1 = yield refs_1.CreateProductService.create(userId, { name: 'Product 1', suggestedRetailerPrice: 100, origin: 'VN', unit: 'Unit', cost: 50 });
+        const product2 = yield refs_1.CreateProductService.create(userId, { name: 'Product 2', suggestedRetailerPrice: 200, origin: 'VN', unit: 'Unit', cost: 100 });
         const accessories = [{ product: product1._id, qty: 2 }, { product: product2._id, qty: 3 }];
         const dataSend = {
             name: 'Service Name',
@@ -149,7 +149,7 @@ describe('POST /service', () => {
         assert_1.equal(message, refs_1.ServiceError.UNIT_MUST_BE_PROVIDED);
     }));
     it('Cannot create new Service with twice a name', () => __awaiter(this, void 0, void 0, function* () {
-        yield refs_1.CreateService.create(userId, 'Service Name', 200, [], [], 'Unit', 200);
+        yield refs_1.CreateService.create(userId, { name: 'Service Name', suggestedRetailerPrice: 200, unit: 'Unit' });
         const dataSend = {
             name: 'Service Name',
             suggestedRetailerPrice: 100,

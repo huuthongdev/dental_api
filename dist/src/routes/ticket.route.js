@@ -7,7 +7,7 @@ exports.ticketRouter.use(refs_1.mustBeUser);
 // Create ticket
 exports.ticketRouter.post('/', (req, res) => {
     const { clientId, dentistId, items } = req.body;
-    refs_1.CreateTicketService.create(clientId, req.query.userId, dentistId, req.query.branchId, items)
+    refs_1.CreateTicketService.create(req.query.userId, { clientId, dentistId, branchId: req.query.branchId, items })
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

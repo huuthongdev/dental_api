@@ -82,7 +82,7 @@ describe('PUT /product/:productId', () => {
         assert_1.equal(res2.body.message, refs_1.ProductError.SUGGESTED_RETAILER_PRICE_MUST_BE_PROVIDED);
     }));
     it('Cannot update with errors unique', () => __awaiter(this, void 0, void 0, function* () {
-        yield refs_1.CreateProductService.create(userId, 'Product 2', 100, 'VN', 'Unit', 300);
+        yield refs_1.CreateProductService.create(userId, { name: 'Product 2', suggestedRetailerPrice: 100, origin: 'VN', unit: 'Unit', cost: 200 });
         const dataSend = {
             name: 'Product 2',
             suggestedRetailerPrice: 500,

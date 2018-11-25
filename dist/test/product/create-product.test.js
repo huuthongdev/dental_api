@@ -77,7 +77,7 @@ describe('POST /product', () => {
         assert_1.equal(res2.body.message, refs_1.ProductError.SUGGESTED_RETAILER_PRICE_MUST_BE_PROVIDED);
     }));
     it('Cannot create product with errors unique', () => __awaiter(this, void 0, void 0, function* () {
-        yield refs_1.CreateProductService.create(userId, 'Product Name', 100, 'VN', 'Unit', 20);
+        yield refs_1.CreateProductService.create(userId, { name: 'Product Name', suggestedRetailerPrice: 100, origin: 'VN', unit: 'Unit' });
         const dataSend = {
             name: 'Product Name',
             suggestedRetailerPrice: 300,

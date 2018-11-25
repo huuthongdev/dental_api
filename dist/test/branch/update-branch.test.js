@@ -84,7 +84,7 @@ describe('PUT /branch/:branchId', () => {
         assert_1.equal(res.body.message, refs_1.BranchError.NAME_MUST_BE_PROVIDED);
     }));
     it('Cannot create new Branch error unique', () => __awaiter(this, void 0, void 0, function* () {
-        yield refs_1.CreateBranchService.create(userId, 'Name', 'branch22@gmail.com', '0908557899222', 'HCM', 'Phu Nhuan', 'Address');
+        yield refs_1.CreateBranchService.create(userId, { name: 'Name', email: 'branch22@gmail.com', phone: '0908557899222', city: 'HCM', district: 'Phu Nhuan', address: 'Address' });
         const dataSend1 = {
             name: 'Name',
             email: 'branch2@gmail.com',

@@ -86,7 +86,7 @@ describe('PUT /service/:serviceId', () => {
         assert_1.equal(res2.body.message, refs_1.ServiceError.SUGGESTED_RETAILER_PRICE_MUST_BE_PROVIDED);
     }));
     it('Cannot update with a existed name', () => __awaiter(this, void 0, void 0, function* () {
-        yield refs_1.CreateService.create(userId, 'Exited Name', 200, [], [], 'Unit', 200);
+        yield refs_1.CreateService.create(userId, { name: 'Exited Name', suggestedRetailerPrice: 200, unit: 'Unit' });
         const dataSend = {
             name: 'Exited Name',
             suggestedRetailerPrice: 200,

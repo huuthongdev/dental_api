@@ -10,8 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const refs_1 = require("../../../src/refs");
 class UpdateProductService {
-    static validate(productId, userId, name, suggestedRetailerPrice, origin, unit, cost) {
+    static validate(productId, userId, updateProductInput) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { name, suggestedRetailerPrice, origin, unit, cost } = updateProductInput;
             refs_1.mustBeObjectId(productId, userId);
             refs_1.mustExist(name, refs_1.ProductError.NAME_MUST_BE_PROVIDED);
             refs_1.mustExist(unit, refs_1.ProductError.UNIT_MUST_BE_PROVIDED);
@@ -23,12 +24,19 @@ class UpdateProductService {
             return oldProduct;
         });
     }
-    static update(productId, userId, name, suggestedRetailerPrice, origin, unit, cost) {
+    static update(productId, userId, updateProductInput) {
         return __awaiter(this, void 0, void 0, function* () {
+            let { name, suggestedRetailerPrice, origin, unit, cost } = updateProductInput;
             if (!cost)
                 cost = 0;
-            const oldProduct = yield this.validate(productId, userId, name, suggestedRetailerPrice, origin, unit, cost);
-            yield refs_1.Product.findByIdAndUpdate(productId, { name, suggestedRetailerPrice, origin, cost, unit }, { new: true });
+            const oldProduct = yield this.validate(productId, userId, updateProductInput);
+            yield refs_1.Product.findByIdAndUpdate(productId, {
+                name: refs_1.convertToSave(name),
+                suggestedRetailerPrice: refs_1.convertToSave(suggestedRetailerPrice),
+                origin: refs_1.convertToSave(origin),
+                unit: refs_1.convertToSave(unit),
+                cost
+            }, { new: true });
             return yield refs_1.ModifiedService.product(productId, userId, oldProduct);
         });
     }

@@ -69,7 +69,7 @@ describe('POST /product', () => {
     });
 
     it('Cannot create product with errors unique', async () => {
-        await CreateProductService.create(userId, 'Product Name', 100, 'VN', 'Unit', 20);
+        await CreateProductService.create(userId, { name: 'Product Name', suggestedRetailerPrice: 100, origin: 'VN', unit: 'Unit' });
         const dataSend = {
             name: 'Product Name',
             suggestedRetailerPrice: 300,

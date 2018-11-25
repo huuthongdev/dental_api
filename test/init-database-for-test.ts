@@ -9,19 +9,19 @@ export class InititalDatabaseForTest {
 
     static async createNormalBranch() {
         const { rootUser, branchMaster } = await this.loginRootAccount();
-        const normalBranch = await CreateBranchService.create(rootUser._id, 'Normal Branch', 'normalbranch@gmail.com', '0123', 'HCM', 'Phu Nhuan', 'Address') as Branch;
+        const normalBranch = await CreateBranchService.create(rootUser._id, { name: 'Normal Branch', email: 'normalbranch@gmail.com', phone: '0123', city: 'HCM', district: 'Phu Nhuan', address: 'Address' }) as Branch;
         return { rootUser, branchMaster, normalBranch };
     }
 
     static async createService() {
         const { rootUser, branchMaster, normalBranch } = await this.createNormalBranch();
-        const service = await CreateService.create(rootUser._id, 'Service name', 100, ['Quy trinh'], [], 'Unit', 200);
+        const service = await CreateService.create(rootUser._id, { name: 'Service name', suggestedRetailerPrice: 100, basicProcedure: ['Quy trinh'], unit: 'Unit' });
         return { rootUser, branchMaster, service, normalBranch }
     }
 
     static async createProduct() {
         const { rootUser, branchMaster, normalBranch } = await this.createNormalBranch();
-        const product = await CreateProductService.create(rootUser._id, 'Product Name', 100, 'VN', 'Unit', 200);
+        const product = await CreateProductService.create(rootUser._id, { name: 'Product Name', suggestedRetailerPrice: 100, origin: 'VN', unit: 'Unit', cost: 200 });
         return { rootUser, branchMaster, normalBranch, product };
     }
 
@@ -55,11 +55,11 @@ export class InititalDatabaseForTest {
 
     static async testCreateTicket() {
         const { rootUser, branchMaster, normalBranch, client } = await this.createClient();
-        const service1 = await CreateService.create(rootUser._id, 'Service 1', 100, [], [], 'Unit', 100);
-        const service2 = await CreateService.create(rootUser._id, 'Service 2', 200, [], [], 'Unit', 100);
-        const service3 = await CreateService.create(rootUser._id, 'Service 3', 300, [], [], 'Unit', 100);
-        const service4 = await CreateService.create(rootUser._id, 'Service 4', 400, [], [], 'Unit', 100);
-        const service5 = await CreateService.create(rootUser._id, 'Service 5', 500, [], [], 'Unit', 100);
+        const service1 = await CreateService.create(rootUser._id, { name: 'Service 1', suggestedRetailerPrice: 100, unit: 'Unit' });
+        const service2 = await CreateService.create(rootUser._id, { name: 'Service 2', suggestedRetailerPrice: 200, unit: 'Unit' });
+        const service3 = await CreateService.create(rootUser._id, { name: 'Service 3', suggestedRetailerPrice: 300, unit: 'Unit' });
+        const service4 = await CreateService.create(rootUser._id, { name: 'Service 4', suggestedRetailerPrice: 400, unit: 'Unit' });
+        const service5 = await CreateService.create(rootUser._id, { name: 'Service 5', suggestedRetailerPrice: 500, unit: 'Unit' });
         const dentist = await CreateUserService.create(rootUser._id, { name: 'Dentist', email: 'dentist@gmail.com', phone: '0999999', password: 'password' });
         await SetRoleInBranchService.set(dentist._id, normalBranch._id, [Role.DENTIST]);
         await CreateUserService.create(rootUser._id, { name: 'Staff', email: 'staff@gmail.com', phone: '222222', password: 'password' });
@@ -79,7 +79,7 @@ export class InititalDatabaseForTest {
             service: services[1]._id,
             qty: 2
         }];
-        const ticket = await CreateTicketService.create(client._id, staffCustomerCase._id, dentist._id, normalBranch._id, items);
+        const ticket = await CreateTicketService.create(staffCustomerCase._id, { clientId: client._id, dentistId: dentist._id, branchId: normalBranch._id, items });
         return { ticket, rootUser, branchMaster, normalBranch, client, services, dentist, dentist2, staffCustomerCase }
     }
 

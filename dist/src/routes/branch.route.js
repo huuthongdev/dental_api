@@ -25,14 +25,14 @@ exports.branchRouter.get('/user-in-current-branch', (req, res) => {
 // Create new Branch
 exports.branchRouter.post('/', (req, res) => {
     const { name, email, phone, city, district, address, isMaster } = req.body;
-    refs_1.CreateBranchService.create(req.query.userId, name, email, phone, city, district, address, isMaster)
+    refs_1.CreateBranchService.create(req.query.userId, { name, email, phone, city, district, address }, isMaster)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
 // Update branch
 exports.branchRouter.put('/:branchId', (req, res) => {
     const { name, email, phone, city, district, address } = req.body;
-    refs_1.UpdateBranchService.update(req.query.userId, req.params.branchId, name, email, phone, city, district, address)
+    refs_1.UpdateBranchService.update(req.query.userId, req.params.branchId, { name, email, phone, city, district, address })
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

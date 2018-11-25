@@ -20,21 +20,21 @@ class InititalDatabaseForTest {
     static createNormalBranch() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rootUser, branchMaster } = yield this.loginRootAccount();
-            const normalBranch = yield refs_1.CreateBranchService.create(rootUser._id, 'Normal Branch', 'normalbranch@gmail.com', '0123', 'HCM', 'Phu Nhuan', 'Address');
+            const normalBranch = yield refs_1.CreateBranchService.create(rootUser._id, { name: 'Normal Branch', email: 'normalbranch@gmail.com', phone: '0123', city: 'HCM', district: 'Phu Nhuan', address: 'Address' });
             return { rootUser, branchMaster, normalBranch };
         });
     }
     static createService() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rootUser, branchMaster, normalBranch } = yield this.createNormalBranch();
-            const service = yield refs_1.CreateService.create(rootUser._id, 'Service name', 100, ['Quy trinh'], [], 'Unit', 200);
+            const service = yield refs_1.CreateService.create(rootUser._id, { name: 'Service name', suggestedRetailerPrice: 100, basicProcedure: ['Quy trinh'], unit: 'Unit' });
             return { rootUser, branchMaster, service, normalBranch };
         });
     }
     static createProduct() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rootUser, branchMaster, normalBranch } = yield this.createNormalBranch();
-            const product = yield refs_1.CreateProductService.create(rootUser._id, 'Product Name', 100, 'VN', 'Unit', 200);
+            const product = yield refs_1.CreateProductService.create(rootUser._id, { name: 'Product Name', suggestedRetailerPrice: 100, origin: 'VN', unit: 'Unit', cost: 200 });
             return { rootUser, branchMaster, normalBranch, product };
         });
     }
@@ -71,11 +71,11 @@ class InititalDatabaseForTest {
     static testCreateTicket() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rootUser, branchMaster, normalBranch, client } = yield this.createClient();
-            const service1 = yield refs_1.CreateService.create(rootUser._id, 'Service 1', 100, [], [], 'Unit', 100);
-            const service2 = yield refs_1.CreateService.create(rootUser._id, 'Service 2', 200, [], [], 'Unit', 100);
-            const service3 = yield refs_1.CreateService.create(rootUser._id, 'Service 3', 300, [], [], 'Unit', 100);
-            const service4 = yield refs_1.CreateService.create(rootUser._id, 'Service 4', 400, [], [], 'Unit', 100);
-            const service5 = yield refs_1.CreateService.create(rootUser._id, 'Service 5', 500, [], [], 'Unit', 100);
+            const service1 = yield refs_1.CreateService.create(rootUser._id, { name: 'Service 1', suggestedRetailerPrice: 100, unit: 'Unit' });
+            const service2 = yield refs_1.CreateService.create(rootUser._id, { name: 'Service 2', suggestedRetailerPrice: 200, unit: 'Unit' });
+            const service3 = yield refs_1.CreateService.create(rootUser._id, { name: 'Service 3', suggestedRetailerPrice: 300, unit: 'Unit' });
+            const service4 = yield refs_1.CreateService.create(rootUser._id, { name: 'Service 4', suggestedRetailerPrice: 400, unit: 'Unit' });
+            const service5 = yield refs_1.CreateService.create(rootUser._id, { name: 'Service 5', suggestedRetailerPrice: 500, unit: 'Unit' });
             const dentist = yield refs_1.CreateUserService.create(rootUser._id, { name: 'Dentist', email: 'dentist@gmail.com', phone: '0999999', password: 'password' });
             yield refs_1.SetRoleInBranchService.set(dentist._id, normalBranch._id, [refs_1.Role.DENTIST]);
             yield refs_1.CreateUserService.create(rootUser._id, { name: 'Staff', email: 'staff@gmail.com', phone: '222222', password: 'password' });
@@ -96,7 +96,7 @@ class InititalDatabaseForTest {
                     service: services[1]._id,
                     qty: 2
                 }];
-            const ticket = yield refs_1.CreateTicketService.create(client._id, staffCustomerCase._id, dentist._id, normalBranch._id, items);
+            const ticket = yield refs_1.CreateTicketService.create(staffCustomerCase._id, { clientId: client._id, dentistId: dentist._id, branchId: normalBranch._id, items });
             return { ticket, rootUser, branchMaster, normalBranch, client, services, dentist, dentist2, staffCustomerCase };
         });
     }

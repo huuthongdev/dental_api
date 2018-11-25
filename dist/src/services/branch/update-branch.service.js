@@ -10,9 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const refs_1 = require("../../../src/refs");
 class UpdateBranchService {
-    static validate(userId, branchId, name, email, phone, city, district, address) {
+    static validate(userId, branchId, updateBranchInput) {
         return __awaiter(this, void 0, void 0, function* () {
             refs_1.mustBeObjectId(userId, branchId);
+            let { name, email, phone, city, district, address } = updateBranchInput;
             // Must Exist
             refs_1.mustExist(name, refs_1.BranchError.NAME_MUST_BE_PROVIDED);
             const oldBranch = yield refs_1.Branch.findById(branchId).select(refs_1.modifiedSelect);
@@ -36,10 +37,18 @@ class UpdateBranchService {
             return oldBranch;
         });
     }
-    static update(userId, branchId, name, email, phone, city, district, address) {
+    static update(userId, branchId, updateBranchInput) {
         return __awaiter(this, void 0, void 0, function* () {
-            const oldBranch = yield this.validate(userId, branchId, name, email, phone, city, district, address);
-            yield refs_1.Branch.findByIdAndUpdate(branchId, { name, email, phone, city, district, address }, { new: true });
+            const { name, email, phone, city, district, address } = updateBranchInput;
+            const oldBranch = yield this.validate(userId, branchId, updateBranchInput);
+            yield refs_1.Branch.findByIdAndUpdate(branchId, {
+                name: refs_1.convertToSave(name),
+                email: refs_1.convertToSave(email),
+                phone: refs_1.convertToSave(phone),
+                city: refs_1.convertToSave(city),
+                district: refs_1.convertToSave(district),
+                address: refs_1.convertToSave(address)
+            }, { new: true });
             return yield refs_1.ModifiedService.branch(branchId, userId, oldBranch);
         });
     }

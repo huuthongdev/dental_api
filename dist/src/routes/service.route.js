@@ -13,15 +13,15 @@ exports.serviceRouter.post('/service-meta/:serviceId', (req, res) => {
 });
 // Create new Service
 exports.serviceRouter.post('/', (req, res) => {
-    const { name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost } = req.body;
-    refs_1.CreateService.create(req.query.userId, name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost)
+    const { name, suggestedRetailerPrice, basicProcedure, accessories, unit } = req.body;
+    refs_1.CreateService.create(req.query.userId, { name, suggestedRetailerPrice, basicProcedure, accessories, unit })
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
 // Update service
 exports.serviceRouter.put('/:serviceId', (req, res) => {
-    const { name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost } = req.body;
-    refs_1.UpdateService.update(req.query.userId, req.params.serviceId, name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost)
+    const { name, suggestedRetailerPrice, basicProcedure, accessories, unit } = req.body;
+    refs_1.UpdateService.update(req.query.userId, req.params.serviceId, { name, suggestedRetailerPrice, basicProcedure, accessories, unit })
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

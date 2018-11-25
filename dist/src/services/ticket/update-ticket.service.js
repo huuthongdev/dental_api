@@ -21,7 +21,9 @@ class UpdateTicketService {
             refs_1.makeSure(items && items.length !== 0, refs_1.TicketError.ITEMS_MUST_BE_PROVIDED);
             let totalAmount = 0;
             for (let i = 0; i < items.length; i++) {
-                const service = yield refs_1.Service.findById(items[i].service).select('serviceMetaes suggestedRetailerPrice').populate('serviceMetaes');
+                const service = yield refs_1.Service.findById(items[i].service)
+                    .select('serviceMetaes suggestedRetailerPrice')
+                    .populate('serviceMetaes');
                 refs_1.mustExist(service, refs_1.ServiceError.CANNOT_FIND_SERVICE);
                 const serviceMeta = yield refs_1.ServiceMeta.findOne({ branch: branchId, service: service._id });
                 if (serviceMeta)

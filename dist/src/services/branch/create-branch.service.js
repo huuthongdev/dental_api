@@ -10,8 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const refs_1 = require("../../refs");
 class CreateBranchService {
-    static validate(userId, name, email, phone, city, district, address, isMaster) {
+    static validate(userId, createBranchInput, isMaster) {
         return __awaiter(this, void 0, void 0, function* () {
+            let { name, email, phone, city, district, address } = createBranchInput;
             refs_1.mustBeObjectId(userId);
             // Must Exist
             refs_1.mustExist(name, refs_1.BranchError.NAME_MUST_BE_PROVIDED);
@@ -20,13 +21,13 @@ class CreateBranchService {
                 const isMasterCheck = yield refs_1.Branch.count({ isMaster: true });
                 refs_1.makeSure(isMasterCheck === 0, refs_1.BranchError.ONLY_ONE_MASTER_BRANCH);
             }
-            email = email ? email : undefined;
+            email = refs_1.convertToSave(email);
             if (email) {
                 refs_1.makeSure(refs_1.validateEmail(email), refs_1.BranchError.EMAIL_INCORRECT);
                 const checkUniqueEmail = yield refs_1.Branch.count({ email });
                 refs_1.makeSure(checkUniqueEmail === 0, refs_1.BranchError.EMAIL_IS_EXISTED);
             }
-            phone = phone ? phone : undefined;
+            phone = refs_1.convertToSave(phone);
             if (phone) {
                 const checkUniquePhone = yield refs_1.Branch.count({ phone });
                 refs_1.makeSure(checkUniquePhone === 0, refs_1.BranchError.PHONE_IS_EXISTED);
@@ -43,14 +44,21 @@ class CreateBranchService {
             return maxSid[0].sid + 1;
         });
     }
-    static create(userId, name, email, phone, city, district, address, isMaster) {
+    static create(userId, createBranchInput, isMaster) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.validate(userId, name, email, phone, city, district, address, isMaster);
-            email = email ? email : undefined;
-            phone = phone ? phone : undefined;
+            const { name, email, phone, city, district, address } = createBranchInput;
+            yield this.validate(userId, createBranchInput, isMaster);
             const sid = yield this.getSid();
             const branch = new refs_1.Branch({
-                sid, name, email, phone, city, district, address, isMaster, createBy: userId
+                sid,
+                name: refs_1.convertToSave(name),
+                email: refs_1.convertToSave(email),
+                phone: refs_1.convertToSave(phone),
+                city: refs_1.convertToSave(city),
+                district: refs_1.convertToSave(district),
+                address: refs_1.convertToSave(address),
+                isMaster,
+                createBy: userId
             });
             yield branch.save();
             return branch;

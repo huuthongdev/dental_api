@@ -63,7 +63,7 @@ describe('POST /branch/', () => {
     });
 
     it('Cannot create new Branch error unique', async () => {
-        await CreateBranchService.create(userId, 'Name', 'branch@gmail.com', '0908557899', 'HCM', 'Phu Nhuan', 'Address');
+        await CreateBranchService.create(userId, { name: 'Name', email: 'branch@gmail.com', phone: '0908557899', city: 'HCM', district: 'Phu Nhuan', address: 'Address' });
         const dataSend1 = {
             name: 'Name',
             email: 'branch2@gmail.com',

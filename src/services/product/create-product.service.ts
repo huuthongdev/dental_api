@@ -1,8 +1,17 @@
-import { mustBeObjectId, mustExist, Product, makeSure, SID_START_AT } from "../../../src/refs";
+import { mustBeObjectId, mustExist, Product, makeSure, SID_START_AT, convertToSave } from "../../../src/refs";
 import { ProductError } from "./product.errors";
 
+export interface CreateProductInput {
+    name: string;
+    suggestedRetailerPrice: number;
+    unit: string;
+    origin?: string;
+    cost?: number;
+}
+
 export class CreateProductService {
-    static async validate(userId: string, name: string, suggestedRetailerPrice: number, unit: string, origin: string) {
+    static async validate(userId: string, createProductInput: CreateProductInput) {
+        const { name, suggestedRetailerPrice, unit, origin, cost } = createProductInput;
         mustBeObjectId(userId);
         mustExist(name, ProductError.NAME_MUST_BE_PROVIDED);
         mustExist(unit, ProductError.UNIT_MUST_BE_PROVIDED);
@@ -11,10 +20,20 @@ export class CreateProductService {
         makeSure(checkUniqueName === 0, ProductError.NAME_IS_EXISTED);
     }
 
-    static async create(userId: string, name: string, suggestedRetailerPrice: number, origin: string, unit: string, cost?: number) {
-        await this.validate(userId, name, suggestedRetailerPrice, unit, origin);
+    static async create(userId: string, createProductInput: CreateProductInput) {
+        let { name, suggestedRetailerPrice, unit, origin, cost } = createProductInput;
+        if (!cost) cost = 0;
+        await this.validate(userId, createProductInput);
         const sid = await this.getSid();
-        const product = new Product({ sid, name, suggestedRetailerPrice, origin, createBy: userId, cost, unit });
+        const product = new Product({
+            sid,
+            name: convertToSave(name),
+            suggestedRetailerPrice: convertToSave(suggestedRetailerPrice),
+            origin: convertToSave(origin),
+            createBy: userId,
+            unit: convertToSave(unit),
+            cost: convertToSave(cost)
+        });
         return await product.save();
     }
 

@@ -13,7 +13,7 @@ export interface CreateUserInput {
     homeTown?: string; 
     branchWorkId?: string; 
     branchRole?: Role
-}
+} 
 
 export class CreateUserService {
 

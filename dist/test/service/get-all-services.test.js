@@ -24,7 +24,7 @@ describe('GET /service', () => {
         serviceId = dataInitial.service._id.toString();
         branchId = dataInitial.branchMaster._id.toString();
         // Create more services
-        yield refs_1.CreateService.create(userId, 'Service 1', 100, [], [], 'Unit', 200);
+        yield refs_1.CreateService.create(userId, { name: 'Service 1', suggestedRetailerPrice: 100, unit: 'Unit' });
     }));
     it('Can get all services', () => __awaiter(this, void 0, void 0, function* () {
         const response = yield supertest_1.default(refs_1.app)

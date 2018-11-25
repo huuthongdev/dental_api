@@ -61,39 +61,39 @@ function createBranchMaster(rootUserId) {
 exports.createBranchMaster = createBranchMaster;
 function createService(userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield refs_1.CreateService.create(userId, 'Chụp Phim Quanh Chóp KTS', 50000, [], [], 'phim');
-        yield refs_1.CreateService.create(userId, 'Cạo Vôi Răng & Đánh Bóng 2 Hàm', 200000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Cạo Vôi Răng nặng', 500000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Điều trị nha chu', 200000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Nhổ Răng Sữa', 20000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Nhổ Răng Vĩnh Viễn', 500000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Tiểu Phẫu Răng Khôn, Nạo Cắt Chóp', 1000000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Tẩy Trắng Răng tại Nhà', 900000, [], [], 'bộ');
-        yield refs_1.CreateService.create(userId, 'Tẩy Trắng Răng tại Phòng Khám', 1600000, [], [], '2 hàm');
-        yield refs_1.CreateService.create(userId, 'Trám Răng Sữa', 150000, [], [], 'xoang');
-        yield refs_1.CreateService.create(userId, 'Trám Răng Composite', 300000, [], [], 'xoang');
-        yield refs_1.CreateService.create(userId, 'Trám Răng Mẻ Góc', 200000, [], [], 'xoang');
-        yield refs_1.CreateService.create(userId, 'Đắp Mặt Răng - Đóng Kẽ Răng', 300000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Điều Trị Tủy', 700000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Cắm Chốt Kim Loại', 500000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Cắm Chốt Sợi trám composite', 1000000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Răng Sứ Kim Loại', 1000000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Răng Sứ Titan', 1600000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Inlay/onlay Sứ Ép', 2500000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Răng Sứ Zirconia', 3200000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Răng Sứ Khối Argen', 4000000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Răng Sứ cercon HT', 5000000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Mặt Dán Sứ veneer Emax', 6000000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Mặt Dán Sứ Nano', 7000000, [], [], 'răng');
-        yield refs_1.CreateService.create(userId, 'Răng Sứ LaVa Plus USA', 7000000, [], [], 'răng');
+        yield refs_1.CreateService.create(userId, { name: 'Chụp Phim Quanh Chóp KTS', suggestedRetailerPrice: 50000, unit: 'phim' });
+        yield refs_1.CreateService.create(userId, { name: 'Cạo Vôi Răng & Đánh Bóng 2 Hàm', suggestedRetailerPrice: 200000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Cạo Vôi Răng nặng', suggestedRetailerPrice: 500000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Điều trị nha chu', suggestedRetailerPrice: 200000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Nhổ Răng Sữa', suggestedRetailerPrice: 20000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Nhổ Răng Vĩnh Viễn', suggestedRetailerPrice: 500000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Tiểu Phẫu Răng Khôn, Nạo Cắt Chóp', suggestedRetailerPrice: 1000000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Tẩy Trắng Răng tại Nhà', suggestedRetailerPrice: 900000, unit: 'bộ' });
+        yield refs_1.CreateService.create(userId, { name: 'Tẩy Trắng Răng tại Phòng Khám', suggestedRetailerPrice: 1600000, unit: '2 hàm' });
+        yield refs_1.CreateService.create(userId, { name: 'Trám Răng Sữa', suggestedRetailerPrice: 150000, unit: 'xoang' });
+        yield refs_1.CreateService.create(userId, { name: 'Trám Răng Composite', suggestedRetailerPrice: 300000, unit: 'xoang' });
+        yield refs_1.CreateService.create(userId, { name: 'Trám Răng Mẻ Góc', suggestedRetailerPrice: 200000, unit: 'xoang' });
+        yield refs_1.CreateService.create(userId, { name: 'Đắp Mặt Răng - Đóng Kẽ Răng', suggestedRetailerPrice: 300000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Điều Trị Tủy', suggestedRetailerPrice: 700000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Cắm Chốt Kim Loại', suggestedRetailerPrice: 500000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Cắm Chốt Sợi trám composite', suggestedRetailerPrice: 1000000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Răng Sứ Kim Loại', suggestedRetailerPrice: 1000000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Răng Sứ Titan', suggestedRetailerPrice: 1600000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Inlay/onlay Sứ Ép', suggestedRetailerPrice: 2500000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Răng Sứ Zirconia', suggestedRetailerPrice: 3200000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Răng Sứ Khối Argen', suggestedRetailerPrice: 4000000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Răng Sứ cercon HT', suggestedRetailerPrice: 5000000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Mặt Dán Sứ veneer Emax', suggestedRetailerPrice: 6000000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Mặt Dán Sứ Nano', suggestedRetailerPrice: 7000000, unit: 'răng' });
+        yield refs_1.CreateService.create(userId, { name: 'Răng Sứ LaVa Plus USA', suggestedRetailerPrice: 7000000, unit: 'răng' });
     });
 }
 exports.createService = createService;
 function createProduct(userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield refs_1.CreateProductService.create(userId, 'Khẩu trang y tế', 10000, 'VN', 'gói');
-        yield refs_1.CreateProductService.create(userId, 'Máy vệ sinh nướu tại nhà', 7000000, 'VN', 'máy');
-        yield refs_1.CreateProductService.create(userId, 'Efferalgan - thuốc giảm đau', 7000, 'VN', 'viên');
+        yield refs_1.CreateProductService.create(userId, { name: 'Khẩu trang y tế', suggestedRetailerPrice: 10000, origin: 'VN', unit: 'gói' });
+        yield refs_1.CreateProductService.create(userId, { name: 'Máy vệ sinh nướu tại nhà', suggestedRetailerPrice: 7000000, origin: 'VN', unit: 'máy' });
+        yield refs_1.CreateProductService.create(userId, { name: 'Efferalgan - thuốc giảm đau', suggestedRetailerPrice: 7000, origin: 'VN', unit: 'viên' });
     });
 }
 exports.createProduct = createProduct;

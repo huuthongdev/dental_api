@@ -35,11 +35,11 @@ class UpdateProfileUserService {
         return __awaiter(this, void 0, void 0, function* () {
             const oldData = yield this.validate(userId, userUpdateId, updateProfileUserInput);
             let { name, email, phone, city, district, address, homeTown, birthday } = updateProfileUserInput;
-            city = city ? city : null;
-            district = district ? district : null;
-            address = address ? address : null;
-            homeTown = homeTown ? homeTown : null;
-            birthday = birthday ? birthday : null;
+            city = refs_1.convertToSave(city);
+            district = refs_1.convertToSave(district);
+            address = refs_1.convertToSave(address);
+            homeTown = refs_1.convertToSave(homeTown);
+            birthday = refs_1.convertToSave(birthday);
             yield refs_1.User.findByIdAndUpdate(userUpdateId, { name, email, phone, city, district, address, birthday, homeTown }, { new: true });
             yield refs_1.ModifiedService.user(userUpdateId, userId, oldData);
             return yield refs_1.GetUserInfo.get(userId);

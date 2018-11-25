@@ -22,7 +22,7 @@ describe('PUT /service/:serviceId', () => {
             // accessories: []
         }
         const response = await request(app)
-            .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend);
+            .put('/service/' + serviceId).set({ token, branch: branchId }).send(dataSend);
         const { success, result } = response.body;
         equal(success, true);
         equal(response.status, 200);
@@ -58,7 +58,7 @@ describe('PUT /service/:serviceId', () => {
             unit: 'Unit'
         }
         const res1 = await request(app)
-            .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend1);
+            .put('/service/' + serviceId).set({ token, branch: branchId }).send(dataSend1);
         equal(res1.body.success, false);
         equal(res1.status, 400);
         equal(res1.body.message, ServiceError.NAME_MUST_BE_PROVIDED);
@@ -71,14 +71,14 @@ describe('PUT /service/:serviceId', () => {
             unit: 'Unit'
         }
         const res2 = await request(app)
-            .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend2);
+            .put('/service/' + serviceId).set({ token, branch: branchId }).send(dataSend2);
         equal(res2.body.success, false);
         equal(res2.status, 400);
         equal(res2.body.message, ServiceError.SUGGESTED_RETAILER_PRICE_MUST_BE_PROVIDED);
     });
 
     it('Cannot update with a existed name', async () => {
-        await CreateService.create(userId, 'Exited Name', 200, [], [], 'Unit', 200);
+        await CreateService.create(userId, { name: 'Exited Name', suggestedRetailerPrice: 200, unit: 'Unit' });
         const dataSend = {
             name: 'Exited Name',
             suggestedRetailerPrice: 200,
@@ -87,7 +87,7 @@ describe('PUT /service/:serviceId', () => {
             // accessories: []
         }
         const response = await request(app)
-            .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend);
+            .put('/service/' + serviceId).set({ token, branch: branchId }).send(dataSend);
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);
@@ -104,7 +104,7 @@ describe('PUT /service/:serviceId', () => {
             // accessories: []
         }
         const response = await request(app)
-            .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend);
+            .put('/service/' + serviceId).set({ token, branch: branchId }).send(dataSend);
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);
@@ -120,7 +120,7 @@ describe('PUT /service/:serviceId', () => {
             // accessories: []
         }
         const response = await request(app)
-            .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend);
+            .put('/service/' + serviceId).set({ token, branch: branchId }).send(dataSend);
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);
@@ -136,7 +136,7 @@ describe('PUT /service/:serviceId', () => {
             // accessories: []
         }
         const response = await request(app)
-            .put('/service/' + serviceId).set({ token, branch: branchId  }).send(dataSend);
+            .put('/service/' + serviceId).set({ token, branch: branchId }).send(dataSend);
         const { success, message } = response.body;
         equal(success, false);
         equal(response.status, 400);

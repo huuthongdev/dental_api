@@ -10,8 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const refs_1 = require("../../../src/refs");
 class CreateTicketService {
-    static validate(clientId, userId, dentistId, branchId, items) {
+    static validate(userId, createTicketInput) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { clientId, dentistId, branchId, items } = createTicketInput;
             refs_1.mustBeObjectId(clientId, userId, dentistId);
             // Must exist
             const client = yield refs_1.Client.findById(clientId);
@@ -34,11 +35,20 @@ class CreateTicketService {
             return +totalAmount;
         });
     }
-    static create(clientId, userId, dentistId, branchId, items) {
+    static create(userId, createTicketInput) {
         return __awaiter(this, void 0, void 0, function* () {
-            const totalAmount = yield this.validate(clientId, userId, dentistId, branchId, items);
+            const { clientId, dentistId, branchId, items } = createTicketInput;
+            const totalAmount = yield this.validate(userId, createTicketInput);
             const sid = yield this.getSid();
-            const ticket = new refs_1.Ticket({ sid, client: clientId, staffCustomerCase: userId, dentistResponsible: dentistId, branchRegister: branchId, items, totalAmount });
+            const ticket = new refs_1.Ticket({
+                sid,
+                client: clientId,
+                staffCustomerCase: userId,
+                dentistResponsible: dentistId,
+                branchRegister: branchId,
+                items,
+                totalAmount
+            });
             yield ticket.save();
             return yield refs_1.TicketService.getTicketInfo(ticket._id);
         });

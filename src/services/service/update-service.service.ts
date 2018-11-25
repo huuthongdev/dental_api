@@ -1,7 +1,15 @@
-import { AccessorieItem, mustExist, ServiceError, Service, makeSure, ModifiedService } from "../../../src/refs";
+import { AccessorieItem, mustExist, ServiceError, Service, makeSure, ModifiedService, convertToSave } from "../../../src/refs";
 
+export interface UpdateServiceInput {
+    name: string;
+    suggestedRetailerPrice: number;
+    basicProcedure?: string[];
+    accessories?: AccessorieItem[];
+    unit: string;
+}
 export class UpdateService {
-    static async validate(userId: string, serviceId: string, name: string, suggestedRetailerPrice: number, basicProcedure: string[], accessories: AccessorieItem[], unit: string) {
+    static async validate(userId: string, serviceId: string, updateServiceInput: UpdateServiceInput) {
+        const { name, suggestedRetailerPrice, basicProcedure, accessories, unit } = updateServiceInput;
         mustExist(userId, serviceId);
         mustExist(suggestedRetailerPrice, ServiceError.SUGGESTED_RETAILER_PRICE_MUST_BE_PROVIDED);
         mustExist(name, ServiceError.NAME_MUST_BE_PROVIDED);
@@ -13,9 +21,16 @@ export class UpdateService {
         return oldService;
     }
 
-    static async update(userId: string, serviceId: string, name: string, suggestedRetailerPrice: number, basicProcedure: string[], accessories: AccessorieItem[], unit: string, cost: number) {
-        const oldService = await this.validate(userId, serviceId, name, suggestedRetailerPrice, basicProcedure, accessories, unit) as Service;
-        await Service.findByIdAndUpdate(serviceId, { name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost });
+    static async update(userId: string, serviceId: string, updateServiceInput: UpdateServiceInput) {
+        const { name, suggestedRetailerPrice, basicProcedure, accessories, unit } = updateServiceInput;
+        const oldService = await this.validate(userId, serviceId, updateServiceInput) as Service;
+        await Service.findByIdAndUpdate(serviceId, {
+            name: convertToSave(name),
+            suggestedRetailerPrice: convertToSave(suggestedRetailerPrice),
+            basicProcedure: convertToSave(basicProcedure),
+            accessories: convertToSave(accessories),
+            unit: convertToSave(unit)
+        });
         return await ModifiedService.service(serviceId, userId, oldService);
     }
 }

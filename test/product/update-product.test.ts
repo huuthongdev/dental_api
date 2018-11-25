@@ -75,7 +75,7 @@ describe('PUT /product/:productId', () => {
     });
 
     it('Cannot update with errors unique', async () => {
-        await CreateProductService.create(userId, 'Product 2', 100, 'VN', 'Unit' ,300);
+        await CreateProductService.create(userId, { name: 'Product 2', suggestedRetailerPrice: 100, origin: 'VN', unit: 'Unit', cost: 200 });
         const dataSend = {
             name: 'Product 2',
             suggestedRetailerPrice: 500,

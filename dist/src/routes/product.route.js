@@ -12,15 +12,15 @@ exports.productRouter.get('/', (req, res) => {
 });
 // Create product
 exports.productRouter.post('/', (req, res) => {
-    const { name, suggestedRetailerPrice, origin, cost, unit } = req.body;
-    refs_1.CreateProductService.create(req.query.userId, name, suggestedRetailerPrice, origin, unit, cost)
+    const { name, suggestedRetailerPrice, origin, unit, cost } = req.body;
+    refs_1.CreateProductService.create(req.query.userId, { name, suggestedRetailerPrice, origin, unit, cost })
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
 // Update product
 exports.productRouter.put('/:productId', (req, res) => {
-    const { name, suggestedRetailerPrice, origin, cost, unit } = req.body;
-    refs_1.UpdateProductService.update(req.params.productId, req.query.userId, name, suggestedRetailerPrice, origin, unit, cost)
+    const { name, suggestedRetailerPrice, origin, unit, cost } = req.body;
+    refs_1.UpdateProductService.update(req.params.productId, req.query.userId, { name, suggestedRetailerPrice, origin, unit, cost })
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

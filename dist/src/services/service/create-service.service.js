@@ -10,8 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const refs_1 = require("../../../src/refs");
 class CreateService {
-    static validate(name, suggestedRetailerPrice, basicProcedure, accessories, unit) {
+    static validate(userId, createServiceInput) {
         return __awaiter(this, void 0, void 0, function* () {
+            refs_1.mustBeObjectId(userId);
+            const { name, suggestedRetailerPrice, basicProcedure, accessories, unit } = createServiceInput;
             refs_1.mustExist(suggestedRetailerPrice, refs_1.ServiceError.SUGGESTED_RETAILER_PRICE_MUST_BE_PROVIDED);
             refs_1.mustExist(name, refs_1.ServiceError.NAME_MUST_BE_PROVIDED);
             refs_1.mustExist(unit, refs_1.ServiceError.UNIT_MUST_BE_PROVIDED);
@@ -19,11 +21,20 @@ class CreateService {
             refs_1.makeSure(checkNameUnique === 0, refs_1.ServiceError.NAME_IS_EXISTED);
         });
     }
-    static create(userId, name, suggestedRetailerPrice, basicProcedure, accessories, unit, cost) {
+    static create(userId, createServiceInput) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.validate(name, suggestedRetailerPrice, basicProcedure, accessories, unit);
+            const { name, suggestedRetailerPrice, basicProcedure, accessories, unit } = createServiceInput;
+            yield this.validate(userId, createServiceInput);
             const sid = yield this.getSid();
-            const service = new refs_1.Service({ sid, name, suggestedRetailerPrice, basicProcedure, accessories, createBy: userId, unit, cost });
+            const service = new refs_1.Service({
+                sid,
+                name: refs_1.convertToSave(name),
+                suggestedRetailerPrice: refs_1.convertToSave(suggestedRetailerPrice),
+                basicProcedure: refs_1.convertToSave(basicProcedure),
+                accessories: refs_1.convertToSave(accessories),
+                createBy: userId,
+                unit: refs_1.convertToSave(unit)
+            });
             yield service.save();
             return yield this.getServiceInfo(service._id);
         });

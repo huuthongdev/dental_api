@@ -1,4 +1,4 @@
-import { mustBeObjectId, UserError, mustExist, validateEmail, makeSure, User, ModifiedService, modifiedSelect, GetUserInfo } from "../../../src/refs";
+import { mustBeObjectId, UserError, mustExist, validateEmail, makeSure, User, ModifiedService, modifiedSelect, GetUserInfo, convertToSave } from "../../../src/refs";
 
 export interface UpdateProfileUserInput {
     name: string;
@@ -35,11 +35,11 @@ export class UpdateProfileUserService {
     static async update(userId: string, userUpdateId: string, updateProfileUserInput: UpdateProfileUserInput) {
         const oldData = await this.validate(userId, userUpdateId, updateProfileUserInput);
         let { name, email, phone, city, district, address, homeTown, birthday } = updateProfileUserInput;
-        city = city ? city : null;
-        district = district ? district : null;
-        address = address ? address : null;
-        homeTown = homeTown ? homeTown : null;
-        birthday = birthday ? birthday : null;
+        city = convertToSave(city);
+        district = convertToSave(district);
+        address = convertToSave(address);
+        homeTown = convertToSave(homeTown);
+        birthday = convertToSave(birthday);
         await User.findByIdAndUpdate(userUpdateId, { name, email, phone, city, district, address, birthday, homeTown }, { new: true });
         await ModifiedService.user(userUpdateId, userId, oldData);
         return await GetUserInfo.get(userId);
