@@ -44,3 +44,23 @@ exports.clientRouter.delete('/:clientId', (req, res) => {
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
+// Check Unique Client - Phone
+exports.clientRouter.post('/validate-phone', (req, res) => {
+    const { phone } = req.body;
+    refs_1.CheckUniqueClientService.phone(phone)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+// Check Unique Client - Email
+exports.clientRouter.post('/validate-email', (req, res) => {
+    const { email } = req.body;
+    refs_1.CheckUniqueClientService.email(email)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+// Get Client Detail
+exports.clientRouter.get('/detail/:clientId', (req, res) => {
+    refs_1.GetClientDetailDataService.get(req.params.clientId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});

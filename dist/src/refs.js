@@ -128,6 +128,10 @@ const update_profile_user_service_1 = require("./services/user/update-profile-us
 exports.UpdateProfileUserService = update_profile_user_service_1.UpdateProfileUserService;
 const get_all_client_1 = require("./services/client/get-all-client");
 exports.GetAllClientsService = get_all_client_1.GetAllClientsService;
+const check_unique_client_service_1 = require("./services/client/check-unique-client.service");
+exports.CheckUniqueClientService = check_unique_client_service_1.CheckUniqueClientService;
+const get_client_detail_data_service_1 = require("./services/client/get-client-detail-data.service");
+exports.GetClientDetailDataService = get_client_detail_data_service_1.GetClientDetailDataService;
 // Middlewares
 const on_error_middleware_1 = require("./routes/middlewares/on-error.middleware");
 exports.onError = on_error_middleware_1.onError;

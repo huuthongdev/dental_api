@@ -1,4 +1,4 @@
-import { mustBeObjectId, mustExist, ClientError, Client, makeSure, validateEmail, SID_START_AT, Gender } from "../../../src/refs";
+import { mustBeObjectId, mustExist, ClientError, Client, makeSure, validateEmail, SID_START_AT, Gender, convertToSave } from "../../../src/refs";
 
 export interface CreateClientInput {
     name: string;
@@ -33,7 +33,18 @@ export class CreateClientService {
         await this.validate(userId, createClientInput);
         const { name, email, phone, birthday, medicalHistory, city, district, address, homeTown, gender } = createClientInput;
         const sid = await this.getSid();
-        const client = new Client({ sid, createBy: userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown, gender });
+        const client = new Client({ sid, createBy: userId, 
+            name: convertToSave(name), 
+            gender: convertToSave(gender), 
+            phone: convertToSave(phone), 
+            email: convertToSave(email), 
+            birthday: convertToSave(birthday), 
+            medicalHistory: convertToSave(medicalHistory), 
+            city: convertToSave(city), 
+            district: convertToSave(district), 
+            address: convertToSave(address), 
+            homeTown: convertToSave(homeTown)
+        });
         return await client.save();
     }
 

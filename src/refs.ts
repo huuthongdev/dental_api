@@ -57,7 +57,8 @@ import { GetBranchDetailDataService } from './services/branch/get-branch-detail-
 import { GetUserDetailDataService } from './services/user/get-user-detail-data.service';
 import { UpdateProfileUserService, UpdateProfileUserInput } from './services/user/update-profile-user.service';
 import { GetAllClientsService } from './services/client/get-all-client';
-
+import { CheckUniqueClientService } from './services/client/check-unique-client.service';
+import { GetClientDetailDataService } from './services/client/get-client-detail-data.service';
 // Middlewares
 import { onError } from './routes/middlewares/on-error.middleware';
 import { mustBeUser } from './routes/middlewares/must-be-user.middleware';
@@ -140,6 +141,7 @@ export { GetAllUSerInCurrentBranch }
 export { CreateClientService }
 export { UpdateClientService }
 export { RemoveClientService }
+export { CheckUniqueClientService }
 export { TicketService }
 export { CreateTicketService }
 export { UpdateTicketService }
@@ -151,6 +153,7 @@ export { GetAllEmployeesService }
 export { GetBranchDetailDataService }
 export { GetUserDetailDataService }
 export { GetAllClientsService }
+export { GetClientDetailDataService }
 // Middlewares
 export { onError }
 export { mustBeUser }

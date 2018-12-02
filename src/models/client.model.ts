@@ -4,7 +4,7 @@ import { User, Gender } from "../../src/refs";
 const clientSchema = new Schema({
     sid: { type: Number, required: true },
     name: { type: String, required: true, trim: true },
-    email: { type: String, trim: true, unique: true },
+    email: { type: String, trim: true },
     phone: { type: String, trim: true, unique: true, required: true },
     birthday: { type: Number },
     medicalHistory: [{ type: String, trim: true }],

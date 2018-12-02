@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { mustBeUser, CreateClientService, UpdateClientService, RemoveClientService, GetAllClientsService } from "../../src/refs";
+import { mustBeUser, CreateClientService, UpdateClientService, RemoveClientService, GetAllClientsService, CheckUniqueClientService, GetClientDetailDataService } from "../../src/refs";
 
 export const clientRouter = Router();
 
@@ -47,6 +47,29 @@ clientRouter.put('/enable/:clientId', (req, res: any) => {
 // Remove client
 clientRouter.delete('/:clientId', (req, res: any) => {
     RemoveClientService.remove(req.params.clientId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+// Check Unique Client - Phone
+clientRouter.post('/validate-phone', (req, res: any) => {
+    const { phone } = req.body;
+    CheckUniqueClientService.phone(phone)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+// Check Unique Client - Email
+clientRouter.post('/validate-email', (req, res: any) => {
+    const { email } = req.body;
+    CheckUniqueClientService.email(email)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+// Get Client Detail
+clientRouter.get('/detail/:clientId', (req, res: any) => {
+    GetClientDetailDataService.get(req.params.clientId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

@@ -32,7 +32,18 @@ class CreateClientService {
             yield this.validate(userId, createClientInput);
             const { name, email, phone, birthday, medicalHistory, city, district, address, homeTown, gender } = createClientInput;
             const sid = yield this.getSid();
-            const client = new refs_1.Client({ sid, createBy: userId, name, phone, email, birthday, medicalHistory, city, district, address, homeTown, gender });
+            const client = new refs_1.Client({ sid, createBy: userId,
+                name: refs_1.convertToSave(name),
+                gender: refs_1.convertToSave(gender),
+                phone: refs_1.convertToSave(phone),
+                email: refs_1.convertToSave(email),
+                birthday: refs_1.convertToSave(birthday),
+                medicalHistory: refs_1.convertToSave(medicalHistory),
+                city: refs_1.convertToSave(city),
+                district: refs_1.convertToSave(district),
+                address: refs_1.convertToSave(address),
+                homeTown: refs_1.convertToSave(homeTown)
+            });
             return yield client.save();
         });
     }
