@@ -1,9 +1,16 @@
 import { Router } from "express";
-import { mustBeUser, CreateTicketService, UpdateTicketService } from "../../src/refs";
+import { mustBeUser, CreateTicketService, UpdateTicketService, GetAllTicketService } from "../../src/refs";
 
 export const ticketRouter = Router();
 
 ticketRouter.use(mustBeUser);
+
+// Get all ticket 
+ticketRouter.get('/', (req, res: any) => {
+    GetAllTicketService.getAll()
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+})
 
 // Create ticket
 ticketRouter.post('/', (req, res: any) => {

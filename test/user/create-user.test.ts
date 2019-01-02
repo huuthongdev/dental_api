@@ -62,7 +62,7 @@ describe('POST /user/', () => {
             address: 'User address',
             homeTown: 'User home town',
             branchWorkId: branchId,
-            branchRole: Role.CUSTOMER_CARE_MANAGER
+            branchRoles: [Role.CUSTOMER_CARE_MANAGER]
         }
         const response = await request(app)
             .post('/user').set({ token, branch: branchId }).send(dataSend);

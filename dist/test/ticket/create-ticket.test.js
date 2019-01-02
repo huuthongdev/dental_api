@@ -51,7 +51,7 @@ describe('POST /ticket', () => {
                 phone: '0123',
                 email: 'client@gmail.com'
             },
-            staffCustomerCase: userId,
+            staffCustomerCase: result.staffCustomerCase,
             dentistResponsible: {
                 _id: dentistId,
                 sid: result.dentistResponsible.sid,
@@ -59,7 +59,7 @@ describe('POST /ticket', () => {
                 email: 'dentist@gmail.com',
                 phone: '0999999'
             },
-            branchRegister: normalBranchId,
+            branchRegister: result.branchRegister,
             __v: 0,
             modifieds: [],
             createAt: result.createAt,
@@ -115,7 +115,7 @@ describe('POST /ticket', () => {
                 phone: '0123',
                 email: 'client@gmail.com'
             },
-            staffCustomerCase: userId,
+            staffCustomerCase: result.staffCustomerCase,
             dentistResponsible: {
                 _id: dentistId,
                 sid: refs_1.SID_START_AT + 1,
@@ -123,7 +123,7 @@ describe('POST /ticket', () => {
                 email: 'dentist@gmail.com',
                 phone: '0999999'
             },
-            branchRegister: normalBranchId,
+            branchRegister: result.branchRegister,
             __v: 0,
             modifieds: [],
             createAt: result.createAt,

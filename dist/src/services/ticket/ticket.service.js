@@ -18,12 +18,20 @@ class TicketService {
                 select: 'sid name email phone'
             })
                 .populate({
+                path: 'staffCustomerCase',
+                select: 'name email phone'
+            })
+                .populate({
                 path: 'dentistResponsible',
                 select: 'sid name email phone'
             })
                 .populate({
+                path: 'branchRegister',
+                select: 'name email phone'
+            })
+                .populate({
                 path: 'items.service',
-                select: 'name sid'
+                select: 'name sid unit'
             })
                 .populate({
                 path: 'receiptVoucher',

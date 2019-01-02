@@ -14,7 +14,7 @@ class GetAllEmployeesService {
         return __awaiter(this, void 0, void 0, function* () {
             let roleInBranchs = yield refs_1.RoleInBranch.find({ user: userId, branch: branchId });
             roleInBranchs = roleInBranchs.map(v => v._id);
-            let users = yield refs_1.User.find({}).select({ password: false });
+            let users = yield refs_1.User.find({}).select({ password: false }).sort({ createAt: -1 });
             users = users.map(v => v = v.toObject());
             for (let i = 0; i < users.length; i++) {
                 let roleInBranchs = yield refs_1.RoleInBranch.find({ user: users[i]._id }).populate({ path: 'branch', select: 'sid name isMaster' });

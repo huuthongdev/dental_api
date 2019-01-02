@@ -14,7 +14,7 @@ class CreateUserService {
     static validate(userId, createUserInput) {
         return __awaiter(this, void 0, void 0, function* () {
             refs_1.mustBeObjectId(userId);
-            const { name, email, phone, password, branchWorkId, branchRole } = createUserInput;
+            const { name, email, phone, password, branchWorkId, branchRoles } = createUserInput;
             // Check Exist
             refs_1.mustExist(name, refs_1.UserError.NAME_MUST_BE_PROVIDED);
             refs_1.mustExist(email, refs_1.UserError.EMAIL_MUST_BE_PROVIDED);
@@ -28,10 +28,12 @@ class CreateUserService {
             const phoneCount = yield refs_1.User.count({ phone });
             refs_1.makeSure(phoneCount === 0, refs_1.UserError.PHONE_IS_EXISTED);
             // Check Role
-            if (branchWorkId && branchRole) {
+            if (branchWorkId && branchRoles) {
                 const { ACCOUNTANT, ACCOUNTING_MANAGER, ADMIN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST } = refs_1.Role;
                 const rolesArr = [ACCOUNTANT, ACCOUNTING_MANAGER, ADMIN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST];
-                refs_1.makeSure(rolesArr.includes(branchRole), refs_1.RoleInBranchError.INVALID_ROLE);
+                for (let i = 0; i < branchRoles.length; i++) {
+                    refs_1.makeSure(rolesArr.includes(branchRoles[i]), refs_1.RoleInBranchError.INVALID_ROLE);
+                }
                 const branchWork = yield refs_1.Branch.findById(branchWorkId);
                 refs_1.mustExist(branchWork, refs_1.BranchError.CANNOT_FIND_BRANCH);
                 return branchWork;
@@ -42,7 +44,7 @@ class CreateUserService {
     static create(userId, createUserInput) {
         return __awaiter(this, void 0, void 0, function* () {
             const branchWork = yield this.validate(userId, createUserInput);
-            const { name, email, phone, birthday, password, city, district, address, homeTown, branchRole } = createUserInput;
+            const { name, email, phone, birthday, password, city, district, address, homeTown, branchRoles } = createUserInput;
             const hashed = yield bcryptjs_1.hash(password, 8);
             const sid = yield this.getSid();
             const user = new refs_1.User({
@@ -63,7 +65,7 @@ class CreateUserService {
             });
             yield user.save();
             if (branchWork._id)
-                return yield refs_1.SetRoleInBranchService.set(user._id, branchWork._id, [branchRole]);
+                return yield refs_1.SetRoleInBranchService.set(user._id, branchWork._id, branchRoles);
             return yield refs_1.GetUserInfo.get(user._id);
         });
     }

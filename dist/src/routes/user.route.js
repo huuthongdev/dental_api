@@ -31,8 +31,8 @@ exports.userRouter.get('/detail/:_id', (req, res) => {
 });
 // Create new user
 exports.userRouter.post('/', (req, res) => {
-    const { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole } = req.body;
-    const createUserInput = { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRole };
+    const { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRoles } = req.body;
+    const createUserInput = { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRoles };
     refs_1.CreateUserService.create(req.query.userId, createUserInput)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);

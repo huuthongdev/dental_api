@@ -12,7 +12,7 @@ const refs_1 = require("../../../src/refs");
 class GetAllService {
     static get() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield refs_1.Service.find({});
+            return yield refs_1.Service.find({}).sort({ createAt: -1 });
         });
     }
 }

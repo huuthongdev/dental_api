@@ -72,7 +72,7 @@ describe('POST /user/', () => {
             address: 'User address',
             homeTown: 'User home town',
             branchWorkId: branchId,
-            branchRole: refs_1.Role.CUSTOMER_CARE_MANAGER
+            branchRoles: [refs_1.Role.CUSTOMER_CARE_MANAGER]
         };
         const response = yield supertest_1.default(refs_1.app)
             .post('/user').set({ token, branch: branchId }).send(dataSend);

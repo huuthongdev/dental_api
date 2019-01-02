@@ -45,6 +45,7 @@ import { CreateClientService } from './services/client/create-client.service';
 import { UpdateClientService } from './services/client/update-client.service';
 import { RemoveClientService } from './services/client/remove-client.service';
 import { TicketService } from './services/ticket/ticket.service';
+import { GetAllTicketService } from './services/ticket/get-all-ticket.service';
 import { CreateTicketService } from './services/ticket/create-ticket.service';
 import { CheckRoleInBranchService } from './services/user/role-in-branch/check-role-in-branch.service';
 import { UpdateTicketService } from './services/ticket/update-ticket.service';
@@ -143,6 +144,7 @@ export { UpdateClientService }
 export { RemoveClientService }
 export { CheckUniqueClientService }
 export { TicketService }
+export { GetAllTicketService }
 export { CreateTicketService }
 export { UpdateTicketService }
 export { CreateTicketReceiptVoucherService }

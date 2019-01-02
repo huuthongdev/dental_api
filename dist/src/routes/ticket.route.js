@@ -4,6 +4,12 @@ const express_1 = require("express");
 const refs_1 = require("../../src/refs");
 exports.ticketRouter = express_1.Router();
 exports.ticketRouter.use(refs_1.mustBeUser);
+// Get all ticket 
+exports.ticketRouter.get('/', (req, res) => {
+    refs_1.GetAllTicketService.getAll()
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
 // Create ticket
 exports.ticketRouter.post('/', (req, res) => {
     const { clientId, dentistId, items } = req.body;

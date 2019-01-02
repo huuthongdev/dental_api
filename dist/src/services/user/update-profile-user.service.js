@@ -42,7 +42,7 @@ class UpdateProfileUserService {
             birthday = refs_1.convertToSave(birthday);
             yield refs_1.User.findByIdAndUpdate(userUpdateId, { name, email, phone, city, district, address, birthday, homeTown }, { new: true });
             yield refs_1.ModifiedService.user(userUpdateId, userId, oldData);
-            return yield refs_1.GetUserInfo.get(userId);
+            return yield refs_1.GetUserInfo.get(userUpdateId);
         });
     }
 }

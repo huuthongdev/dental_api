@@ -2,24 +2,24 @@ import { mustExist, User, makeSure, mustBeObjectId, UserError, validateEmail, Ro
 import { hash } from 'bcryptjs';
 
 export interface CreateUserInput {
-    name: string; 
-    email: string; 
-    phone: string; 
-    password: string; 
-    birthday?: number; 
-    city?: string; 
-    district?: string; 
-    address?: string; 
-    homeTown?: string; 
-    branchWorkId?: string; 
-    branchRole?: Role
-} 
+    name: string;
+    email: string;
+    phone: string;
+    password: string;
+    birthday?: number;
+    city?: string;
+    district?: string;
+    address?: string;
+    homeTown?: string;
+    branchWorkId?: string;
+    branchRoles?: Role[]
+}
 
 export class CreateUserService {
 
     static async validate(userId: string, createUserInput: CreateUserInput) {
         mustBeObjectId(userId);
-        const { name, email, phone, password, branchWorkId, branchRole } = createUserInput;
+        const { name, email, phone, password, branchWorkId, branchRoles } = createUserInput;
         // Check Exist
         mustExist(name, UserError.NAME_MUST_BE_PROVIDED);
         mustExist(email, UserError.EMAIL_MUST_BE_PROVIDED);
@@ -33,10 +33,14 @@ export class CreateUserService {
         const phoneCount = await User.count({ phone });
         makeSure(phoneCount === 0, UserError.PHONE_IS_EXISTED);
         // Check Role
-        if (branchWorkId && branchRole) {
+        if (branchWorkId && branchRoles) {
             const { ACCOUNTANT, ACCOUNTING_MANAGER, ADMIN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST } = Role;
             const rolesArr = [ACCOUNTANT, ACCOUNTING_MANAGER, ADMIN, DIRECTOR, CUSTOMER_CARE, CUSTOMER_CARE_MANAGER, X_RAY, DENTISTS_MANAGER, DENTIST];
-            makeSure(rolesArr.includes(branchRole), RoleInBranchError.INVALID_ROLE);
+
+            for (let i = 0; i < branchRoles.length; i++) {
+                makeSure(rolesArr.includes(branchRoles[i]), RoleInBranchError.INVALID_ROLE);
+            }
+
             const branchWork = await Branch.findById(branchWorkId) as Branch;
             mustExist(branchWork, BranchError.CANNOT_FIND_BRANCH);
             return branchWork;
@@ -46,7 +50,7 @@ export class CreateUserService {
 
     static async create(userId: string, createUserInput: CreateUserInput) {
         const branchWork = await this.validate(userId, createUserInput) as Branch;
-        const { name, email, phone, birthday, password, city, district, address, homeTown, branchRole } = createUserInput;
+        const { name, email, phone, birthday, password, city, district, address, homeTown, branchRoles } = createUserInput;
         const hashed = await hash(password, 8);
         const sid = await this.getSid();
         const user = new User({
@@ -66,7 +70,7 @@ export class CreateUserService {
             createBy: userId,
         });
         await user.save();
-        if (branchWork._id) return await SetRoleInBranchService.set(user._id, branchWork._id, [branchRole]);
+        if (branchWork._id) return await SetRoleInBranchService.set(user._id, branchWork._id, branchRoles);
         return await GetUserInfo.get(user._id);
     }
 

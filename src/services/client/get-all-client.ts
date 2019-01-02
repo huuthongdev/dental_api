@@ -2,6 +2,6 @@ import { Client } from "../../../src/refs";
 
 export class GetAllClientsService {
     static async get() {
-        return await Client.find({});
+        return await Client.find({}).sort({ createAt: -1 });
     }
 }

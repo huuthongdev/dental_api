@@ -30,7 +30,7 @@ export class UpdateProfileUserService {
         const phoneCount = await User.count({ phone, _id: { $ne: userUpdateId } });
         makeSure(phoneCount === 0, UserError.PHONE_IS_EXISTED);
         return oldData;
-    }
+    } 
 
     static async update(userId: string, userUpdateId: string, updateProfileUserInput: UpdateProfileUserInput) {
         const oldData = await this.validate(userId, userUpdateId, updateProfileUserInput);
@@ -42,6 +42,6 @@ export class UpdateProfileUserService {
         birthday = convertToSave(birthday);
         await User.findByIdAndUpdate(userUpdateId, { name, email, phone, city, district, address, birthday, homeTown }, { new: true });
         await ModifiedService.user(userUpdateId, userId, oldData);
-        return await GetUserInfo.get(userId);
+        return await GetUserInfo.get(userUpdateId);
     }
 }

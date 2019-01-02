@@ -1,8 +1,8 @@
 import { Ticket } from "../../../src/refs";
 
-export class TicketService {
-    static async getTicketInfo(ticketId: string) {
-        return await Ticket.findById(ticketId)
+export class GetAllTicketService {
+    static async getAll() {
+        return Ticket.find({}).sort({ createAt: -1 })
             .populate({
                 path: 'client',
                 select: 'sid name email phone'
