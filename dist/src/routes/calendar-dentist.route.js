@@ -18,3 +18,10 @@ exports.calendarDentistRouter.put('/change-status/:calendarDentistId', (req, res
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
+// Get dentist calendar
+exports.calendarDentistRouter.get('/:dentistId', (req, res) => {
+    const { dentistId } = req.params;
+    refs_1.GetCalendarDentist.get(dentistId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});

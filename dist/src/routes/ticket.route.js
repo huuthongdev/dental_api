@@ -10,6 +10,12 @@ exports.ticketRouter.get('/', (req, res) => {
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
+// Get ticket detail
+exports.ticketRouter.get('/:_id', (req, res) => {
+    refs_1.GetTicketDetailService.get(req.params._id)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
 // Create ticket
 exports.ticketRouter.post('/', (req, res) => {
     const { clientId, dentistId, items } = req.body;

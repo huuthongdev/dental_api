@@ -25,6 +25,7 @@ class CreateTicketService {
             let totalAmount = 0;
             for (let i = 0; i < items.length; i++) {
                 const service = yield refs_1.Service.findById(items[i].service).select('serviceMetaes suggestedRetailerPrice').populate('serviceMetaes');
+                refs_1.makeSure(items[i].qty > 0, refs_1.TicketError.QTY_MUST_BE_THAN_MORE_ONE);
                 refs_1.mustExist(service, refs_1.ServiceError.CANNOT_FIND_SERVICE);
                 const serviceMeta = yield refs_1.ServiceMeta.findOne({ branch: branchId, service: service._id });
                 if (serviceMeta)

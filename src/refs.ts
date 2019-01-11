@@ -52,6 +52,7 @@ import { UpdateTicketService } from './services/ticket/update-ticket.service';
 import { CreateTicketReceiptVoucherService } from './services/receipt-voucher/create-ticket-receipt-voucher.service';
 import { CreateCalendarDentistService } from './services/calendar-dentist/create-calendar-dentist.service';
 import { ChangeStatusCalendarDentistService } from './services/calendar-dentist/change-status-calendar-dentist.service';
+import { GetCalendarDentist } from './services/calendar-dentist/get-calendar-dentist';
 import { CheckTokenUserService } from './services/user/check-token-user.service';
 import { GetAllEmployeesService } from './services/user/get-all-employee.service';
 import { GetBranchDetailDataService } from './services/branch/get-branch-detail-data.service';
@@ -60,6 +61,7 @@ import { UpdateProfileUserService, UpdateProfileUserInput } from './services/use
 import { GetAllClientsService } from './services/client/get-all-client';
 import { CheckUniqueClientService } from './services/client/check-unique-client.service';
 import { GetClientDetailDataService } from './services/client/get-client-detail-data.service';
+import { GetTicketDetailService } from './services/ticket/get-ticket-detail.service';
 // Middlewares
 import { onError } from './routes/middlewares/on-error.middleware';
 import { mustBeUser } from './routes/middlewares/must-be-user.middleware';
@@ -150,12 +152,14 @@ export { UpdateTicketService }
 export { CreateTicketReceiptVoucherService }
 export { CreateCalendarDentistService }
 export { ChangeStatusCalendarDentistService }
+export { GetCalendarDentist }
 export { CheckTokenUserService }
 export { GetAllEmployeesService }
 export { GetBranchDetailDataService }
 export { GetUserDetailDataService }
 export { GetAllClientsService }
 export { GetClientDetailDataService }
+export { GetTicketDetailService }
 // Middlewares
 export { onError }
 export { mustBeUser }

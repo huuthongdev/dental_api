@@ -11,8 +11,7 @@ exports.app = express_1.default();
 exports.app.use(cors_1.default());
 exports.app.use(body_parser_1.json());
 exports.app.use(refs_1.onError);
-if (!process.env.NODE_ENV)
-    exports.app.use((req, res, next) => setTimeout(next, 500));
+// if (!process.env.NODE_ENV) app.use((req, res, next) => setTimeout(next, 50));
 exports.app.get('/', (req, res) => res.send({ success: true, server: 'DENTAL_APPLICATION' }));
 exports.app.use('/user', refs_1.userRouter);
 exports.app.use('/branch', refs_1.branchRouter);

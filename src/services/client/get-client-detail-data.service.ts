@@ -13,7 +13,9 @@ export class GetClientDetailDataService {
         mustExist(clientInfo, ClientError.CANNOT_FIND_CLIENT);
         const detail = await this.getDetailRelated(clientId);
         let client = clientInfo.toObject();
-        client.detail = detail;
-        return client;
+        return {
+            ...client,
+            ...detail
+        };
     }
 }

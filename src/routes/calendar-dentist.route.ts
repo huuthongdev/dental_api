@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { mustBeUser, CreateCalendarDentistService, ChangeStatusCalendarDentistService } from "../../src/refs";
+import { mustBeUser, CreateCalendarDentistService, ChangeStatusCalendarDentistService, GetCalendarDentist } from "../../src/refs";
 
 export const calendarDentistRouter = Router();
 
@@ -17,6 +17,14 @@ calendarDentistRouter.post('/', (req, res: any) => {
 calendarDentistRouter.put('/change-status/:calendarDentistId', (req, res: any) => {
     const { status } = req.body;
     ChangeStatusCalendarDentistService.change(req.query.userId, req.params.calendarDentistId, status)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+// Get dentist calendar
+calendarDentistRouter.get('/:dentistId', (req, res: any) => {
+    const { dentistId } = req.params;
+    GetCalendarDentist.get(dentistId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

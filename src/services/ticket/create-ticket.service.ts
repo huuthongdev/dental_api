@@ -21,6 +21,7 @@ export class CreateTicketService {
         let totalAmount = 0;
         for (let i = 0; i < items.length; i++) {
             const service = await Service.findById(items[i].service).select('serviceMetaes suggestedRetailerPrice').populate('serviceMetaes') as Service;
+            makeSure(items[i].qty > 0, TicketError.QTY_MUST_BE_THAN_MORE_ONE);
             mustExist(service, ServiceError.CANNOT_FIND_SERVICE);
             const serviceMeta = await ServiceMeta.findOne({ branch: branchId, service: service._id }) as ServiceMeta;
             if (serviceMeta) totalAmount += +serviceMeta.price * items[i].qty;

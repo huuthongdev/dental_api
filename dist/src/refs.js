@@ -118,6 +118,8 @@ const create_calendar_dentist_service_1 = require("./services/calendar-dentist/c
 exports.CreateCalendarDentistService = create_calendar_dentist_service_1.CreateCalendarDentistService;
 const change_status_calendar_dentist_service_1 = require("./services/calendar-dentist/change-status-calendar-dentist.service");
 exports.ChangeStatusCalendarDentistService = change_status_calendar_dentist_service_1.ChangeStatusCalendarDentistService;
+const get_calendar_dentist_1 = require("./services/calendar-dentist/get-calendar-dentist");
+exports.GetCalendarDentist = get_calendar_dentist_1.GetCalendarDentist;
 const check_token_user_service_1 = require("./services/user/check-token-user.service");
 exports.CheckTokenUserService = check_token_user_service_1.CheckTokenUserService;
 const get_all_employee_service_1 = require("./services/user/get-all-employee.service");
@@ -134,6 +136,8 @@ const check_unique_client_service_1 = require("./services/client/check-unique-cl
 exports.CheckUniqueClientService = check_unique_client_service_1.CheckUniqueClientService;
 const get_client_detail_data_service_1 = require("./services/client/get-client-detail-data.service");
 exports.GetClientDetailDataService = get_client_detail_data_service_1.GetClientDetailDataService;
+const get_ticket_detail_service_1 = require("./services/ticket/get-ticket-detail.service");
+exports.GetTicketDetailService = get_ticket_detail_service_1.GetTicketDetailService;
 // Middlewares
 const on_error_middleware_1 = require("./routes/middlewares/on-error.middleware");
 exports.onError = on_error_middleware_1.onError;
