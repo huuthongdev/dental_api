@@ -52,7 +52,7 @@ import { UpdateTicketService } from './services/ticket/update-ticket.service';
 import { CreateTicketReceiptVoucherService } from './services/receipt-voucher/create-ticket-receipt-voucher.service';
 import { CreateCalendarDentistService } from './services/calendar-dentist/create-calendar-dentist.service';
 import { ChangeStatusCalendarDentistService } from './services/calendar-dentist/change-status-calendar-dentist.service';
-import { GetCalendarDentist } from './services/calendar-dentist/get-calendar-dentist';
+import { GetCalendarDentist } from './services/calendar-dentist/get-calendar-dentist.service';
 import { CheckTokenUserService } from './services/user/check-token-user.service';
 import { GetAllEmployeesService } from './services/user/get-all-employee.service';
 import { GetBranchDetailDataService } from './services/branch/get-branch-detail-data.service';
@@ -62,6 +62,9 @@ import { GetAllClientsService } from './services/client/get-all-client';
 import { CheckUniqueClientService } from './services/client/check-unique-client.service';
 import { GetClientDetailDataService } from './services/client/get-client-detail-data.service';
 import { GetTicketDetailService } from './services/ticket/get-ticket-detail.service';
+import { GetReceiptVoucherService } from './services/receipt-voucher/get-receipt-voucher.service';
+import { GetMainDashboardInfoService } from './services/report/get-main-dashboard-info.service';
+import { UpdateStatusTicketService } from './services/ticket/update-status-ticket.service';
 // Middlewares
 import { onError } from './routes/middlewares/on-error.middleware';
 import { mustBeUser } from './routes/middlewares/must-be-user.middleware';
@@ -76,6 +79,7 @@ import { branchRouter } from './routes/branch.route';
 import { serviceRouter } from './routes/service.route';
 import { clientRouter } from './routes/client.route';
 import { ticketRouter } from './routes/ticket.route';
+import { mainRouter } from './routes/main.route';
 import { app } from './app';
 // Databases
 import { connectDatabase } from './database/connect-database';
@@ -160,6 +164,9 @@ export { GetUserDetailDataService }
 export { GetAllClientsService }
 export { GetClientDetailDataService }
 export { GetTicketDetailService }
+export { GetReceiptVoucherService }
+export { GetMainDashboardInfoService }
+export { UpdateStatusTicketService }
 // Middlewares
 export { onError }
 export { mustBeUser }
@@ -174,6 +181,7 @@ export { branchRouter }
 export { serviceRouter }
 export { clientRouter }
 export { ticketRouter }
+export { mainRouter }
 export { app }
 // Databases
 export { connectDatabase }

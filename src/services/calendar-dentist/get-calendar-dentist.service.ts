@@ -1,4 +1,4 @@
-import { CalendarDentist, mustBeObjectId } from "../../../src/refs";
+import { CalendarDentist, mustBeObjectId } from "../../refs";
 
 export class GetCalendarDentist {
     static async get(dentistId: string) {
@@ -6,11 +6,12 @@ export class GetCalendarDentist {
         const result = await CalendarDentist.find({ dentist: dentistId })
             .populate({
                 path: 'ticket',
+                select: 'client status',
                 populate: {
-                    path: 'ticket.client'
+                    path: 'client',
+                    select: 'sid name'
                 }
-
-            });
-        return result;
+            })
+        return { dentistId, calendar: result };
     }
 }

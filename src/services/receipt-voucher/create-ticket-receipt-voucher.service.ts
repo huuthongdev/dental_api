@@ -31,7 +31,9 @@ export class CreateTicketReceiptVoucherService {
             branchTransaction: branchId,
             cashier: userId,
             totalPayment,
-            content
+            content,
+            ticket: ticketId,
+            createAt: Date.now()
         });
         await receiptVoucher.save();
         await Ticket.findByIdAndUpdate(ticketId, { $addToSet: { receiptVoucher: receiptVoucher._id } }, { new: true });

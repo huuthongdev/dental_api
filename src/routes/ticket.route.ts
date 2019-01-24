@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { mustBeUser, CreateTicketService, UpdateTicketService, GetAllTicketService, GetTicketDetailService } from "../../src/refs";
+import { mustBeUser, CreateTicketService, UpdateTicketService, GetAllTicketService, GetTicketDetailService, UpdateStatusTicketService } from "../../src/refs";
 
 export const ticketRouter = Router();
 
@@ -19,7 +19,7 @@ ticketRouter.get('/:_id', (req, res: any) => {
         .catch(res.onError);
 })
 
-// Create ticket
+// Create ticket 
 ticketRouter.post('/', (req, res: any) => {
     const { clientId, dentistId, items } = req.body;
     CreateTicketService.create(req.query.userId, { clientId, dentistId, branchId: req.query.branchId, items })
@@ -42,3 +42,11 @@ ticketRouter.put('/dentist-responsible/:ticketId', (req, res: any) => {
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
+
+// Update ticket status TODO: Not Test
+ticketRouter.put('/status/:ticketId', (req, res: any) => {
+    const { status } = req.body;
+    UpdateStatusTicketService.update(req.query.userId, req.params.ticketId, status)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+})

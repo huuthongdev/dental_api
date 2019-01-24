@@ -28,8 +28,8 @@ const testingConfig: ServerConfig = {
 }
 
 const developmentConfig: ServerConfig = {
-    DATABASE_URI: `mongodb://localhost/${nameProject.toLowerCase()}`,
-    // DATABASE_URI: 'mongodb://huuthongdev:Huuthongdev123@ds163176.mlab.com:63176/dentalapi',
+    // DATABASE_URI: `mongodb://localhost/${nameProject.toLowerCase()}`,
+    DATABASE_URI: "mongodb://dental:dental123@ds211635.mlab.com:11635/dental_test",
     FRONT_END_URL: 'http://localhost:3000',
     JWT_TOKEN_SECRET_KEY: 'abc123',
     ROOT_NAME: 'admin',
@@ -42,9 +42,9 @@ const developmentConfig: ServerConfig = {
 };
 
 const staggingConfig: ServerConfig = {
-    DATABASE_URI: 'mongodb://huuthongdev:Huuthongdev123@ds163176.mlab.com:63176/dentalapi',
+    DATABASE_URI: 'mongodb://dental:dental123@ds211635.mlab.com:11635/dental_test',
     FRONT_END_URL: 'http://localhost:3000',
-    JWT_TOKEN_SECRET_KEY: 'abc123',
+    JWT_TOKEN_SECRET_KEY: 'dentalapplicationjwttokensecretkey@289917554876',
     ROOT_EMAIL: 'admin@gmail.com',
     ROOT_PHONE: '0908508136',
     ROOT_NAME: 'admin',

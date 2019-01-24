@@ -3,13 +3,20 @@ import { Ticket, mustBeObjectId, mustExist, TicketError, CalendarDentist } from 
 export class GetTicketDetailService {
     static async get(_id: string) {
         mustBeObjectId(_id);
-        const ticketInfo = await Ticket.findById(_id) 
+        const ticketInfo = await Ticket.findById(_id)
             .populate('client', 'sid name email phone gender city district address medicalHistory')
             .populate('staffCustomerCase', 'sid name email phone')
             .populate('dentistResponsible', 'sid name email phone')
             .populate('branchRegister', 'sid name email phone')
             .populate('items.service', 'name sid unit')
-            .populate('receiptVoucher', 'sid totalPayment')
+            .populate({
+                path: 'receiptVoucher',
+                select: 'sid totalPayment cashier createAt content',
+                populate: {
+                    path: 'cashier'
+                }
+            })
+            .select({ calendars: false });
         mustExist(ticketInfo, TicketError.CANNOT_FIND_TICKET);
         let ticket = ticketInfo.toObject();
         const dataRelated = await this.getDataRelated(_id);
@@ -21,8 +28,8 @@ export class GetTicketDetailService {
 
     static async getDataRelated(_id: string) {
         const calendar = await CalendarDentist.find({ ticket: _id })
-        .populate('dentist', 'sid name email phone')
-        .populate('createBy', 'sid name email phone');
+            .populate('dentist', 'sid name email phone')
+            .populate('createBy', 'sid name email phone');
         return { calendar };
     }
 }

@@ -1,4 +1,4 @@
-import { mustBeObjectId, mustExist, CalendarDentistError, makeSure, CalendarDentist, ServerError, User, CheckRoleInBranchService, Role, Ticket, TicketError } from "../../../src/refs";
+import { mustBeObjectId, mustExist, CalendarDentistError, makeSure, CalendarDentist, ServerError, User, CheckRoleInBranchService, Role, Ticket, TicketError, SID_START_AT } from "../../../src/refs";
 
 export class CreateCalendarDentistService {
     static async validate(userId: string, branchId: string, dentistId: string, startTime: number, endTime: number, content: string, ticketId?: string) {
@@ -19,12 +19,19 @@ export class CreateCalendarDentistService {
 
     static async create(userId: string, branchId: string, dentistId: string, startTime: number, endTime: number, content: string, ticketId?: string) {
         await this.validate(userId, branchId, dentistId, startTime, endTime, content, ticketId);
-        const calendarDentist = new CalendarDentist({ dentist: dentistId, ticket: ticketId, startTime, endTime, content, createBy: userId });
+        const sid = await this.getSid();
+        const calendarDentist = new CalendarDentist({ sid, branch: branchId, dentist: dentistId, ticket: ticketId, startTime, endTime, content, createBy: userId });
         await calendarDentist.save();
         if (ticketId) {
             await Ticket.findByIdAndUpdate(ticketId, { $addToSet: { calendars: calendarDentist._id } }, { new: true });
         }
         return calendarDentist;
+    }
+
+    static async getSid() {
+        const maxSid = await CalendarDentist.find({}).sort({ sid: -1 }).limit(1) as CalendarDentist[];
+        if (maxSid.length === 0) return SID_START_AT;
+        return maxSid[0].sid + 1;
     }
 
     static async checkTime(startTime: number, endTime: number, dentistId: string) {

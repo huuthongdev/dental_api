@@ -30,12 +30,21 @@ class CreateCalendarDentistService {
     static create(userId, branchId, dentistId, startTime, endTime, content, ticketId) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.validate(userId, branchId, dentistId, startTime, endTime, content, ticketId);
-            const calendarDentist = new refs_1.CalendarDentist({ dentist: dentistId, ticket: ticketId, startTime, endTime, content, createBy: userId });
+            const sid = yield this.getSid();
+            const calendarDentist = new refs_1.CalendarDentist({ sid, branch: branchId, dentist: dentistId, ticket: ticketId, startTime, endTime, content, createBy: userId });
             yield calendarDentist.save();
             if (ticketId) {
                 yield refs_1.Ticket.findByIdAndUpdate(ticketId, { $addToSet: { calendars: calendarDentist._id } }, { new: true });
             }
             return calendarDentist;
+        });
+    }
+    static getSid() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const maxSid = yield refs_1.CalendarDentist.find({}).sort({ sid: -1 }).limit(1);
+            if (maxSid.length === 0)
+                return refs_1.SID_START_AT;
+            return maxSid[0].sid + 1;
         });
     }
     static checkTime(startTime, endTime, dentistId) {

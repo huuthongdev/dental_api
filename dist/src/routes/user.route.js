@@ -24,7 +24,7 @@ exports.userRouter.get('/employees', refs_1.mustHaveRole([refs_1.Role.ADMIN]), (
         .catch(res.onError);
 });
 // Get user detail data
-exports.userRouter.get('/detail/:_id', (req, res) => {
+exports.userRouter.get('/:_id', (req, res) => {
     refs_1.GetUserDetailDataService.get(req.params._id)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);

@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import { Client, User, Branch, Service, ReceiptVoucher, CalendarDentist } from "../../src/refs";
 import { Modifield } from "../../src/types";
 
-const ticketSchema = new Schema({
+const ticketSchema = new Schema({ 
     sid: { type: Number, required: true, unique: true },
     // Personal Related
     client: { type: Schema.Types.ObjectId, ref: 'Client', required: true },

@@ -16,7 +16,7 @@ exports.ticketRouter.get('/:_id', (req, res) => {
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
-// Create ticket
+// Create ticket 
 exports.ticketRouter.post('/', (req, res) => {
     const { clientId, dentistId, items } = req.body;
     refs_1.CreateTicketService.create(req.query.userId, { clientId, dentistId, branchId: req.query.branchId, items })
@@ -34,6 +34,13 @@ exports.ticketRouter.put('/items/:ticketId', (req, res) => {
 exports.ticketRouter.put('/dentist-responsible/:ticketId', (req, res) => {
     const { dentistId } = req.body;
     refs_1.UpdateTicketService.dentistResponsible(req.params.ticketId, req.query.userId, req.query.branchId, dentistId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+// Update ticket status TODO: Not Test
+exports.ticketRouter.put('/status/:ticketId', (req, res) => {
+    const { status } = req.body;
+    refs_1.UpdateStatusTicketService.update(req.query.userId, req.params.ticketId, status)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

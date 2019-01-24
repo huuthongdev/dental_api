@@ -1,11 +1,15 @@
 import { model, Schema } from "mongoose";
-import { Ticket, User } from "../../src/refs";
+import { Ticket, User, Branch } from "../../src/refs";
 import { Modifield } from "../../src/types";
 
 const { ObjectId } = Schema.Types;
 
 const calendarDentistSchema = new Schema({
+    sid: { type: Number, required: true },
+
     dentist: { type: ObjectId, ref: 'User', required: true },
+    branch: { type: ObjectId, ref: 'Branch', required: true },
+
     ticket: { type: ObjectId, ref: 'Ticket' },
     startTime: { type: Number, required: true },
     endTime: { type: Number, required: true },
@@ -25,7 +29,9 @@ const calendarDentistSchema = new Schema({
 const CalendarDentistModel = model('CalendarDentist', calendarDentistSchema);
 
 export class CalendarDentist extends CalendarDentistModel {
+    sid: number;
     dentist: string | User;
+    branch: string | Branch;
     ticket: Ticket;
     startTime: number;
     endTime: number;

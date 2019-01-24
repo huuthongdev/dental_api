@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const { ObjectId } = mongoose_1.Schema.Types;
 const calendarDentistSchema = new mongoose_1.Schema({
+    sid: { type: Number, required: true },
     dentist: { type: ObjectId, ref: 'User', required: true },
+    branch: { type: ObjectId, ref: 'Branch', required: true },
     ticket: { type: ObjectId, ref: 'Ticket' },
     startTime: { type: Number, required: true },
     endTime: { type: Number, required: true },

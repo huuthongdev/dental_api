@@ -23,6 +23,7 @@ var ModifieldTicketMessage;
     ModifieldTicketMessage["PAYMENT"] = "PAYMENT";
     ModifieldTicketMessage["UPDATE_ITEMS"] = "UPDATE_ITEMS";
     ModifieldTicketMessage["CHANGE_DENTIST_RESPONSIBLE"] = "CHANGE_DENTIST_RESPONSIBLE";
+    ModifieldTicketMessage["UPDATE_TICKET_STATUS"] = "UPDATE_TICKET_STATUS";
 })(ModifieldTicketMessage = exports.ModifieldTicketMessage || (exports.ModifieldTicketMessage = {}));
 var Gender;
 (function (Gender) {

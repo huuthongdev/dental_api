@@ -10,6 +10,7 @@ const receiptVoucherSchema = new Schema({
     client: { type: ObjectId, ref: 'Client', required: true },
     branchTransaction: { type: ObjectId, ref: 'Branch', required: true },
     cashier: { type: ObjectId, ref: 'User', required: true },
+    createAt: { type: Number, default: Date.now() },
     totalPayment: { type: Number, required: true },
     // ======================= TYPE: FOR TICKET =======================
     ticket: { type: ObjectId, ref: 'Ticket' },

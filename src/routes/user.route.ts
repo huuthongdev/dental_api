@@ -28,7 +28,7 @@ userRouter.get('/employees', mustHaveRole([Role.ADMIN]), (req, res: any) => {
 });
 
 // Get user detail data
-userRouter.get('/detail/:_id', (req, res: any) => {
+userRouter.get('/:_id', (req, res: any) => {
     GetUserDetailDataService.get(req.params._id)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);

@@ -51,5 +51,5 @@ export class CreateTicketService {
         const maxSid = await Ticket.find({}).sort({ sid: -1 }).limit(1) as Ticket[];
         if (maxSid.length === 0) return SID_START_AT;
         return maxSid[0].sid + 1;
-    }
+    } 
 }
