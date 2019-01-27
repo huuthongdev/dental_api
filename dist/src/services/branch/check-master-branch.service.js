@@ -9,21 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const refs_1 = require("../../../src/refs");
-class GetAllTicketService {
-    static getAll(branchId) {
+class CheckMasterBranchService {
+    static check(branchId) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Chỉ lấy hồ sơ tại chi nhánh nhân sự đang làm việc
-            const checkMaster = yield refs_1.CheckMasterBranchService.check(branchId);
-            let query = {};
-            if (!checkMaster)
-                query = { branchRegister: branchId };
-            return refs_1.Ticket.find(query).sort({ createAt: -1 })
-                .select('sid client dentistResponsible status items totalAmount receiptVoucher')
-                .populate('client', 'name email phone')
-                .populate('dentistResponsible', 'name email phone')
-                .populate('items.service', 'name unit')
-                .populate('receiptVoucher');
+            return yield refs_1.Branch.findOne({ _id: branchId, isMaster: true });
         });
     }
 }
-exports.GetAllTicketService = GetAllTicketService;
+exports.CheckMasterBranchService = CheckMasterBranchService;

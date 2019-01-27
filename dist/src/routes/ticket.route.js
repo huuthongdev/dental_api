@@ -6,7 +6,7 @@ exports.ticketRouter = express_1.Router();
 exports.ticketRouter.use(refs_1.mustBeUser);
 // Get all ticket 
 exports.ticketRouter.get('/', (req, res) => {
-    refs_1.GetAllTicketService.getAll()
+    refs_1.GetAllTicketService.getAll(req.query.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

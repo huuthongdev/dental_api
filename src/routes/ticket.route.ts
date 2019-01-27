@@ -7,7 +7,7 @@ ticketRouter.use(mustBeUser);
 
 // Get all ticket 
 ticketRouter.get('/', (req, res: any) => {
-    GetAllTicketService.getAll()
+    GetAllTicketService.getAll(req.query.branchId)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

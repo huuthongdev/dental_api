@@ -19,7 +19,7 @@ export class CreateCalendarDentistService {
 
     static async create(userId: string, branchId: string, dentistId: string, startTime: number, endTime: number, content: string, ticketId?: string) {
         await this.validate(userId, branchId, dentistId, startTime, endTime, content, ticketId);
-        const sid = await this.getSid();
+        const sid = await this.getSid(); 
         const calendarDentist = new CalendarDentist({ sid, branch: branchId, dentist: dentistId, ticket: ticketId, startTime, endTime, content, createBy: userId });
         await calendarDentist.save();
         if (ticketId) {

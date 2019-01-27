@@ -19,10 +19,11 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
 
     it('Can create ticket receipt voucher', async () => {
         const response = await request(app)
-            .post('/receipt-voucher/ticket/' + ticketId).set({ token, branch: normalBranchId }).send({
+            .post('/receipt-voucher/ticket').set({ token, branch: normalBranchId }).send({
                 totalPayment: 500,
                 content: 'Thanh toan',
-                clientId
+                clientId,
+                ticketId
             });
         const { success, result } = response.body;
         equal(success, true);
@@ -38,7 +39,7 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
                 phone: '0123',
                 email: 'client@gmail.com'
             },
-            staffCustomerCase: userId,
+            staffCustomerCase: result.staffCustomerCase,
             dentistResponsible:
             {
                 _id: dentistId,
@@ -47,7 +48,7 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
                 email: 'dentist@gmail.com',
                 phone: '0999999'
             },
-            branchRegister: normalBranchId,
+            branchRegister: result.branchRegister,
             __v: 0,
             modifieds: [{
                 message: ModifieldTicketMessage.PAYMENT,
@@ -72,10 +73,11 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
 
     it('Cannot create with over payment limit', async () => {
         const response = await request(app)
-            .post('/receipt-voucher/ticket/' + ticketId).set({ token, branch: normalBranchId }).send({
+            .post('/receipt-voucher/ticket').set({ token, branch: normalBranchId }).send({
                 totalPayment: 800,
                 content: 'Thanh toan',
-                clientId
+                clientId,
+                ticketId
             });
         const { success, message } = response.body;
         equal(success, false);
@@ -86,10 +88,11 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
     it('Cannot create with ticket not existed', async () => {
         await Ticket.findByIdAndRemove(ticketId);
         const res1 = await request(app)
-            .post('/receipt-voucher/ticket/' + ticketId).set({ token, branch: normalBranchId }).send({
+            .post('/receipt-voucher/ticket').set({ token, branch: normalBranchId }).send({
                 totalPayment: 800,
                 content: 'Thanh toan',
-                clientId
+                clientId,
+                ticketId
             });
         equal(res1.body.success, false);
         equal(res1.status, 400);
@@ -99,10 +102,11 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
     it('Cannot create with client not existed', async () => {
         await Client.findByIdAndRemove(clientId);
         const res1 = await request(app)
-            .post('/receipt-voucher/ticket/' + ticketId).set({ token, branch: normalBranchId }).send({
+            .post('/receipt-voucher/ticket').set({ token, branch: normalBranchId }).send({
                 totalPayment: 800,
                 content: 'Thanh toan',
-                clientId
+                clientId,
+                ticketId
             });
         equal(res1.body.success, false);
         equal(res1.status, 400);

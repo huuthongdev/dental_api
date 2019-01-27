@@ -20,7 +20,7 @@ class CreateTicketReceiptVoucherService {
             refs_1.mustExist(client, refs_1.ClientError.CANNOT_FIND_CLIENT);
             // Make Sure
             refs_1.makeSure(totalPayment > 0, refs_1.ReceiptVoucherError.TOTAL_PAYMENT_IS_ZERO);
-            // Check Ticket 
+            // Check Ticket  
             refs_1.makeSure(totalPayment <= ticket.totalAmount, refs_1.ReceiptVoucherError.OVER_PAYMENT_LIMIT);
             const checkReceiptVoucherThisTicket = yield refs_1.ReceiptVoucher.find({ ticket: ticketId }).select('totalPayment');
             if (!checkReceiptVoucherThisTicket || checkReceiptVoucherThisTicket.length === 0)

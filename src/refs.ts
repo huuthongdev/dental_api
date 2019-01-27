@@ -65,6 +65,7 @@ import { GetTicketDetailService } from './services/ticket/get-ticket-detail.serv
 import { GetReceiptVoucherService } from './services/receipt-voucher/get-receipt-voucher.service';
 import { GetMainDashboardInfoService } from './services/report/get-main-dashboard-info.service';
 import { UpdateStatusTicketService } from './services/ticket/update-status-ticket.service';
+import { CheckMasterBranchService } from './services/branch/check-master-branch.service';
 // Middlewares
 import { onError } from './routes/middlewares/on-error.middleware';
 import { mustBeUser } from './routes/middlewares/must-be-user.middleware';
@@ -167,6 +168,7 @@ export { GetTicketDetailService }
 export { GetReceiptVoucherService }
 export { GetMainDashboardInfoService }
 export { UpdateStatusTicketService }
+export { CheckMasterBranchService }
 // Middlewares
 export { onError }
 export { mustBeUser }

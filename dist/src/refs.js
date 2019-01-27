@@ -144,6 +144,8 @@ const get_main_dashboard_info_service_1 = require("./services/report/get-main-da
 exports.GetMainDashboardInfoService = get_main_dashboard_info_service_1.GetMainDashboardInfoService;
 const update_status_ticket_service_1 = require("./services/ticket/update-status-ticket.service");
 exports.UpdateStatusTicketService = update_status_ticket_service_1.UpdateStatusTicketService;
+const check_master_branch_service_1 = require("./services/branch/check-master-branch.service");
+exports.CheckMasterBranchService = check_master_branch_service_1.CheckMasterBranchService;
 // Middlewares
 const on_error_middleware_1 = require("./routes/middlewares/on-error.middleware");
 exports.onError = on_error_middleware_1.onError;

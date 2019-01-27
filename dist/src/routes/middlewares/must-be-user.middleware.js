@@ -14,7 +14,7 @@ function mustBeUser(req, res, next) {
         try {
             // User
             const { _id, version } = yield refs_1.verifyLogInToken(req.headers.token);
-            const user = yield refs_1.User.findById(_id);
+            const user = yield refs_1.User.findById(_id).populate('roleInBranchs', 'branch roles');
             refs_1.mustExist(user, refs_1.UserError.CANNOT_FIND_USER);
             refs_1.makeSure(+version === +user.passwordVersion, refs_1.UserError.INVALID_USER_INFO, 404);
             req.query.userId = _id;
@@ -25,6 +25,9 @@ function mustBeUser(req, res, next) {
             refs_1.mustExist(branch, refs_1.BranchError.CANNOT_FIND_BRANCH);
             refs_1.makeSure(branch.isActive, refs_1.BranchError.BRANCH_IS_DISABLED);
             req.query.branchId = branchId;
+            // Role in branch
+            let branchRoles = user.toObject().roleInBranchs.find((v) => v.branch.toString() === branchId.toString());
+            req.query.roles = branchRoles.roles;
             // Next
             next();
         }

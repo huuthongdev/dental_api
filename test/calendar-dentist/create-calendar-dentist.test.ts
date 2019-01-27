@@ -24,14 +24,17 @@ describe('POST /calendar-dentist', () => {
             content: 'Tu van cho khach hang'
         };
         const response = await request(app)
-            .post('/calendar-dentist').set({ token, branch: branchId }).send(dataSend);
+            .post('/calendar-dentist')
+            .set({ token, branch: branchId }).send(dataSend);
         const { success, result } = response.body;
         equal(success, true);
         equal(response.status, 200);
         const resExpected: any = {
             __v: 0,
+            sid: result.sid,
             dentist: dentistId,
             startTime: startTime,
+            branch: branchId,
             endTime: endTime,
             content: 'Tu van cho khach hang',
             createBy: userId,

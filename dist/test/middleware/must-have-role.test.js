@@ -14,32 +14,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const assert_1 = require("assert");
 const refs_1 = require("../../src/refs");
-const init_database_for_test_1 = require("../init-database-for-test");
-describe('GET /user/employees', () => {
-    let token, branchMasterId, userId, tokenNormalUser, normalBranchId;
+const init_database_for_test_1 = require("../../test/init-database-for-test");
+describe('Check have role middleware', () => {
+    let token, branchId, userId, dentistId, normalBranchId;
     beforeEach('Prepare data for test', () => __awaiter(this, void 0, void 0, function* () {
         const dataInitial = yield init_database_for_test_1.InititalDatabaseForTest.testGetAllUserInCurrentBranch();
         token = dataInitial.rootUser.token.toString();
         userId = dataInitial.rootUser._id.toString();
-        branchMasterId = dataInitial.branchMaster._id.toString();
-        tokenNormalUser = dataInitial.userDirect.token.toString();
+        branchId = dataInitial.branchMaster._id.toString();
+        dentistId = dataInitial.dentist._id.toString();
         normalBranchId = dataInitial.normalBranch._id.toString();
     }));
-    it('Can get all employees with admin', () => __awaiter(this, void 0, void 0, function* () {
+    it('Can access with valid role with admin', () => __awaiter(this, void 0, void 0, function* () {
         const response = yield supertest_1.default(refs_1.app)
-            .get('/user/employees').set({ token: token, branch: branchMasterId });
-        const { success, result } = response.body;
+            .get('/dev/middleware/must-have-role')
+            .set({ token, branch: branchId });
+        const { error, success } = response.body;
         assert_1.equal(success, true);
-        assert_1.equal(response.status, 200);
-        assert_1.equal(result.length, 9);
     }));
-    it('Cannot get all employees with not admin', () => __awaiter(this, void 0, void 0, function* () {
+    it('Can access with valid role with dentist', () => __awaiter(this, void 0, void 0, function* () {
+        const dentist = yield refs_1.LoginService.login('user2@gmail.com', 'password');
         const response = yield supertest_1.default(refs_1.app)
-            .get('/user/employees').set({ token: tokenNormalUser, branch: normalBranchId });
-        const { success, result, message } = response.body;
-        assert_1.equal(success, false);
-        assert_1.equal(response.status, 400);
-        assert_1.equal(result, undefined);
-        assert_1.equal(message, refs_1.RoleInBranchError.CANNOT_ACCESS);
+            .get('/dev/middleware/must-have-role')
+            .set({ token: dentist.token, branch: normalBranchId });
+        const { error, success } = response.body;
+        assert_1.equal(success, true);
     }));
 });

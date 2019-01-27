@@ -46,7 +46,7 @@ describe('PUT /ticket/dentist-reponsible/:ticketId', () => {
                 phone: '0123',
                 email: 'client@gmail.com'
             },
-            staffCustomerCase: userId,
+            staffCustomerCase: result.staffCustomerCase,
             dentistResponsible: {
                 _id: dentist2Id,
                 sid: result.dentistResponsible.sid,
@@ -54,7 +54,7 @@ describe('PUT /ticket/dentist-reponsible/:ticketId', () => {
                 email: 'dentist2@gmail.com',
                 phone: '09999992'
             },
-            branchRegister: normalBranchId,
+            branchRegister: result.branchRegister,
             __v: 0,
             modifieds: [{
                     message: refs_1.ModifieldTicketMessage.CHANGE_DENTIST_RESPONSIBLE,
@@ -71,7 +71,8 @@ describe('PUT /ticket/dentist-reponsible/:ticketId', () => {
                     service: {
                         _id: services[0]._id.toString(),
                         sid: result.items[0].service.sid,
-                        name: 'Service 1'
+                        name: 'Service 1',
+                        unit: "Unit"
                     },
                     qty: 1,
                     _id: result.items[0]._id
@@ -80,7 +81,8 @@ describe('PUT /ticket/dentist-reponsible/:ticketId', () => {
                     service: {
                         _id: services[1]._id.toString(),
                         sid: result.items[1].service.sid,
-                        name: 'Service 2'
+                        name: 'Service 2',
+                        unit: "Unit"
                     },
                     qty: 2,
                     _id: result.items[1]._id

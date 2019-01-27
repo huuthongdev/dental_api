@@ -18,8 +18,8 @@ exports.userRouter.post('/log-in', (req, res) => {
 });
 exports.userRouter.use(refs_1.mustBeUser);
 // Get all employees
-exports.userRouter.get('/employees', refs_1.mustHaveRole([refs_1.Role.ADMIN]), (req, res) => {
-    refs_1.GetAllEmployeesService.getAll(req.query.userId, req.query.branchId)
+exports.userRouter.get('/employees', (req, res) => {
+    refs_1.GetAllEmployeesService.getAll(req.query.userId, req.query.branchId, req.query.roles)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
@@ -30,7 +30,7 @@ exports.userRouter.get('/:_id', (req, res) => {
         .catch(res.onError);
 });
 // Create new user
-exports.userRouter.post('/', (req, res) => {
+exports.userRouter.post('/', refs_1.mustHaveRole([refs_1.Role.DIRECTOR]), (req, res) => {
     const { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRoles } = req.body;
     const createUserInput = { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRoles };
     refs_1.CreateUserService.create(req.query.userId, createUserInput)
@@ -52,7 +52,7 @@ exports.userRouter.put('/set-role-in-branch', (req, res) => {
         .catch(res.onError);
 });
 // Update user profile
-exports.userRouter.put('/:userUpdateId', refs_1.mustHaveRole([refs_1.Role.ADMIN]), (req, res) => {
+exports.userRouter.put('/:userUpdateId', refs_1.mustHaveRole([refs_1.Role.DIRECTOR]), (req, res) => {
     const { name, email, phone, city, district, address, homeTown, birthday } = req.body;
     const updateProfileUserInput = { name, email, phone, city, district, address, homeTown, birthday };
     refs_1.UpdateProfileUserService.update(req.query.userId, req.params.userUpdateId, updateProfileUserInput)

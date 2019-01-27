@@ -4,12 +4,6 @@ const express_1 = require("express");
 const refs_1 = require("../refs");
 exports.branchRouter = express_1.Router();
 exports.branchRouter.use(refs_1.mustBeUser);
-// Get all branch
-exports.branchRouter.get('/', (req, res) => {
-    refs_1.GetAllBranchService.get()
-        .then(result => res.send({ success: true, result }))
-        .catch(res.onError);
-});
 // Get branch detail data
 exports.branchRouter.get('/detail/:branchId', (req, res) => {
     refs_1.GetBranchDetailDataService.get(req.params.branchId)
@@ -19,6 +13,13 @@ exports.branchRouter.get('/detail/:branchId', (req, res) => {
 // Get user in current branch
 exports.branchRouter.get('/user-in-current-branch', (req, res) => {
     refs_1.GetAllUSerInCurrentBranch.getAll(req.query.branchId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+exports.branchRouter.use(refs_1.mustHaveRole([refs_1.Role.ADMIN]));
+// Get all branch
+exports.branchRouter.get('/', (req, res) => {
+    refs_1.GetAllBranchService.get()
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

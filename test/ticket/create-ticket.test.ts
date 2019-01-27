@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { deepEqual, equal } from 'assert';
-import { app, Service, SID_START_AT, CreateServiceMeta, TicketService, TicketError, ClientError } from '../../src/refs';
+import { app, Service, SID_START_AT, CreateServiceMeta, TicketError, ClientError } from '../../src/refs';
 import { InititalDatabaseForTest } from '../init-database-for-test';
 
 describe('POST /ticket', () => {
@@ -62,7 +62,8 @@ describe('POST /ticket', () => {
                 {
                     _id: services[0]._id.toString(),
                     sid: services[0].sid,
-                    name: 'Service 1'
+                    name: 'Service 1',
+                    unit: "Unit"
                 },
                 qty: 1,
                 _id: result.items[0]._id
@@ -72,7 +73,8 @@ describe('POST /ticket', () => {
                 {
                     _id: services[1]._id.toString(),
                     sid: services[1].sid,
-                    name: 'Service 2'
+                    name: 'Service 2',
+                    unit: "Unit"
                 },
                 qty: 2,
                 _id: result.items[1]._id
@@ -131,7 +133,8 @@ describe('POST /ticket', () => {
                 {
                     _id: services[0]._id.toString(),
                     sid: services[0].sid,
-                    name: 'Service 1'
+                    name: 'Service 1',
+                    unit: "Unit"
                 },
                 qty: 1,
                 _id: result.items[0]._id
@@ -141,7 +144,8 @@ describe('POST /ticket', () => {
                 {
                     _id: services[1]._id.toString(),
                     sid: services[1].sid,
-                    name: 'Service 2'
+                    name: 'Service 2',
+                    unit: "Unit"
                 },
                 qty: 2,
                 _id: result.items[1]._id

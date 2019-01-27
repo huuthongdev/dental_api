@@ -16,7 +16,7 @@ describe('GET /user/employees', () => {
 
     it('Can get all employees with admin', async () => {
         const response = await request(app)
-        .get('/user/employees').set({ token: token, branch: normalBranchId });
+        .get('/user/employees').set({ token: token, branch: branchMasterId });
         const { success, result } = response.body;
         equal(success, true);
         equal(response.status, 200);
@@ -30,6 +30,6 @@ describe('GET /user/employees', () => {
         equal(success, false);
         equal(response.status, 400);
         equal(result, undefined);
-        equal(message, RoleInBranchError.INVALID_ROLE);
+        equal(message, RoleInBranchError.CANNOT_ACCESS);
     });
 });

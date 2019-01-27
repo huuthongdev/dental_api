@@ -21,8 +21,8 @@ userRouter.post('/log-in', (req, res: any) => {
 userRouter.use(mustBeUser);
 
 // Get all employees
-userRouter.get('/employees', mustHaveRole([Role.ADMIN]), (req, res: any) => {
-    GetAllEmployeesService.getAll(req.query.userId, req.query.branchId)
+userRouter.get('/employees', (req, res: any) => {
+    GetAllEmployeesService.getAll(req.query.userId, req.query.branchId, req.query.roles)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
@@ -35,7 +35,7 @@ userRouter.get('/:_id', (req, res: any) => {
 });
 
 // Create new user
-userRouter.post('/', (req, res: any) => {
+userRouter.post('/', mustHaveRole([Role.DIRECTOR]), (req, res: any) => {
     const { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRoles } = req.body;
     const createUserInput = { name, email, phone, password, birthday, city, district, address, homeTown, branchWorkId, branchRoles };
     CreateUserService.create(req.query.userId, createUserInput)
@@ -60,7 +60,7 @@ userRouter.put('/set-role-in-branch', (req, res: any) => {
 });
 
 // Update user profile
-userRouter.put('/:userUpdateId', mustHaveRole([Role.ADMIN]), (req, res: any) => {
+userRouter.put('/:userUpdateId', mustHaveRole([Role.DIRECTOR]), (req, res: any) => {
     const { name, email, phone, city, district, address, homeTown, birthday } = req.body;
     const updateProfileUserInput = { name, email, phone, city, district, address, homeTown, birthday } as UpdateProfileUserInput;
     UpdateProfileUserService.update(req.query.userId, req.params.userUpdateId, updateProfileUserInput)

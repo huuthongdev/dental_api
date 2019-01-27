@@ -30,10 +30,11 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
     }));
     it('Can create ticket receipt voucher', () => __awaiter(this, void 0, void 0, function* () {
         const response = yield supertest_1.default(refs_1.app)
-            .post('/receipt-voucher/ticket/' + ticketId).set({ token, branch: normalBranchId }).send({
+            .post('/receipt-voucher/ticket').set({ token, branch: normalBranchId }).send({
             totalPayment: 500,
             content: 'Thanh toan',
-            clientId
+            clientId,
+            ticketId
         });
         const { success, result } = response.body;
         assert_1.equal(success, true);
@@ -48,7 +49,7 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
                 phone: '0123',
                 email: 'client@gmail.com'
             },
-            staffCustomerCase: userId,
+            staffCustomerCase: result.staffCustomerCase,
             dentistResponsible: {
                 _id: dentistId,
                 sid: refs_1.SID_START_AT + 1,
@@ -56,7 +57,7 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
                 email: 'dentist@gmail.com',
                 phone: '0999999'
             },
-            branchRegister: normalBranchId,
+            branchRegister: result.branchRegister,
             __v: 0,
             modifieds: [{
                     message: refs_1.ModifieldTicketMessage.PAYMENT,
@@ -80,10 +81,11 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
     }));
     it('Cannot create with over payment limit', () => __awaiter(this, void 0, void 0, function* () {
         const response = yield supertest_1.default(refs_1.app)
-            .post('/receipt-voucher/ticket/' + ticketId).set({ token, branch: normalBranchId }).send({
+            .post('/receipt-voucher/ticket').set({ token, branch: normalBranchId }).send({
             totalPayment: 800,
             content: 'Thanh toan',
-            clientId
+            clientId,
+            ticketId
         });
         const { success, message } = response.body;
         assert_1.equal(success, false);
@@ -93,10 +95,11 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
     it('Cannot create with ticket not existed', () => __awaiter(this, void 0, void 0, function* () {
         yield refs_1.Ticket.findByIdAndRemove(ticketId);
         const res1 = yield supertest_1.default(refs_1.app)
-            .post('/receipt-voucher/ticket/' + ticketId).set({ token, branch: normalBranchId }).send({
+            .post('/receipt-voucher/ticket').set({ token, branch: normalBranchId }).send({
             totalPayment: 800,
             content: 'Thanh toan',
-            clientId
+            clientId,
+            ticketId
         });
         assert_1.equal(res1.body.success, false);
         assert_1.equal(res1.status, 400);
@@ -105,10 +108,11 @@ describe('POST /receipt-voucher/ticket/:ticketId', () => {
     it('Cannot create with client not existed', () => __awaiter(this, void 0, void 0, function* () {
         yield refs_1.Client.findByIdAndRemove(clientId);
         const res1 = yield supertest_1.default(refs_1.app)
-            .post('/receipt-voucher/ticket/' + ticketId).set({ token, branch: normalBranchId }).send({
+            .post('/receipt-voucher/ticket').set({ token, branch: normalBranchId }).send({
             totalPayment: 800,
             content: 'Thanh toan',
-            clientId
+            clientId,
+            ticketId
         });
         assert_1.equal(res1.body.success, false);
         assert_1.equal(res1.status, 400);

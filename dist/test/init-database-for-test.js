@@ -65,7 +65,7 @@ class InititalDatabaseForTest {
             yield refs_1.CreateUserService.create(rootUser._id, { name: 'Director', email: 'director@gmail.com', phone: '08', password: 'password' });
             const userDirect = yield refs_1.LoginService.login('08', 'password');
             yield refs_1.SetRoleInBranchService.set(userDirect._id, normalBranch._id, [refs_1.Role.DIRECTOR]);
-            return { rootUser, branchMaster, normalBranch, userDirect };
+            return { rootUser, branchMaster, normalBranch, userDirect, dentist: user2, accountant: user4 };
         });
     }
     static testCreateTicket() {

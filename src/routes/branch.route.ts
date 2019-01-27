@@ -1,16 +1,9 @@
 import { Router } from "express";
-import { CreateBranchService, UpdateBranchService, RemoveBranchService, GetAllUSerInCurrentBranch, mustBeUser, GetAllBranchService, GetBranchDetailDataService } from "../refs";
+import { CreateBranchService, UpdateBranchService, RemoveBranchService, GetAllUSerInCurrentBranch, mustBeUser, GetAllBranchService, GetBranchDetailDataService, Role, mustHaveRole } from "../refs";
 
 export const branchRouter = Router();
 
 branchRouter.use(mustBeUser);
-
-// Get all branch
-branchRouter.get('/', (req, res: any) => {
-    GetAllBranchService.get()
-        .then(result => res.send({ success: true, result }))
-        .catch(res.onError);
-});
 
 // Get branch detail data
 branchRouter.get('/detail/:branchId', (req, res: any) => {
@@ -22,6 +15,15 @@ branchRouter.get('/detail/:branchId', (req, res: any) => {
 // Get user in current branch
 branchRouter.get('/user-in-current-branch', (req, res: any) => {
     GetAllUSerInCurrentBranch.getAll(req.query.branchId)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+
+branchRouter.use(mustHaveRole([Role.ADMIN]));
+
+// Get all branch
+branchRouter.get('/', (req, res: any) => {
+    GetAllBranchService.get()
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });

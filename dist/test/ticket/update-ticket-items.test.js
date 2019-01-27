@@ -54,7 +54,7 @@ describe('PUT /ticket/items/:ticketId', () => {
                 phone: '0123',
                 email: 'client@gmail.com'
             },
-            staffCustomerCase: userId,
+            staffCustomerCase: result.staffCustomerCase,
             dentistResponsible: {
                 _id: dentistId,
                 sid: result.dentistResponsible.sid,
@@ -62,7 +62,7 @@ describe('PUT /ticket/items/:ticketId', () => {
                 email: 'dentist@gmail.com',
                 phone: '0999999'
             },
-            branchRegister: normalBranchId,
+            branchRegister: result.branchRegister,
             __v: 0,
             modifieds: [{
                     message: refs_1.ModifieldTicketMessage.UPDATE_ITEMS,
@@ -79,7 +79,8 @@ describe('PUT /ticket/items/:ticketId', () => {
                     service: {
                         _id: services[0]._id.toString(),
                         sid: services[0].sid,
-                        name: 'Service 1'
+                        name: 'Service 1',
+                        unit: 'Unit'
                     },
                     qty: 10,
                     _id: result.items[0]._id
@@ -88,7 +89,8 @@ describe('PUT /ticket/items/:ticketId', () => {
                     service: {
                         _id: services[1]._id.toString(),
                         sid: services[1].sid,
-                        name: 'Service 2'
+                        name: 'Service 2',
+                        unit: 'Unit'
                     },
                     qty: 3,
                     _id: result.items[1]._id

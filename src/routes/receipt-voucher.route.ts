@@ -11,7 +11,7 @@ receiptVoucherRouter.post('/ticket', (req, res: any) => {
     CreateTicketReceiptVoucherService.create(req.query.userId, req.query.branchId, clientId, totalPayment, ticketId, content)
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
-});
+}); 
 
 // Get all ticket in branch
 receiptVoucherRouter.get('/', (req, res: any) => {
