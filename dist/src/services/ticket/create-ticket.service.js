@@ -12,13 +12,15 @@ const refs_1 = require("../../../src/refs");
 class CreateTicketService {
     static validate(userId, createTicketInput) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { clientId, dentistId, branchId, items } = createTicketInput;
+            let { clientId, dentistId, branchId, items } = createTicketInput;
             refs_1.mustBeObjectId(clientId, userId, dentistId);
             // Must exist
             const client = yield refs_1.Client.findById(clientId);
             refs_1.mustExist(client, refs_1.ClientError.CANNOT_FIND_CLIENT);
             const dentist = yield refs_1.CheckRoleInBranchService.check(dentistId, branchId, [refs_1.Role.DENTIST, refs_1.Role.DENTISTS_MANAGER]);
             refs_1.mustExist(dentist, refs_1.TicketError.DENTIST_INFO_INVALID);
+            // Remove service with qty === 0
+            items = items.filter(v => v.qty !== 0 || v.qty < 0);
             // Make Sure
             refs_1.makeSure(items && items.length !== 0, refs_1.TicketError.ITEMS_MUST_BE_PROVIDED);
             // Get total amount

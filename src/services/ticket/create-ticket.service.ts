@@ -8,13 +8,15 @@ export interface CreateTicketInput {
 }
 export class CreateTicketService {
     static async validate(userId: string, createTicketInput: CreateTicketInput) {
-        const { clientId, dentistId, branchId, items } = createTicketInput;
+        let { clientId, dentistId, branchId, items } = createTicketInput;
         mustBeObjectId(clientId, userId, dentistId);
         // Must exist
         const client = await Client.findById(clientId);
         mustExist(client, ClientError.CANNOT_FIND_CLIENT);
         const dentist = await CheckRoleInBranchService.check(dentistId, branchId, [Role.DENTIST, Role.DENTISTS_MANAGER]);
         mustExist(dentist, TicketError.DENTIST_INFO_INVALID);
+        // Remove service with qty === 0
+        items = items.filter(v => v.qty !== 0 || v.qty < 0);
         // Make Sure
         makeSure(items && items.length !== 0, TicketError.ITEMS_MUST_BE_PROVIDED);
         // Get total amount
@@ -51,5 +53,5 @@ export class CreateTicketService {
         const maxSid = await Ticket.find({}).sort({ sid: -1 }).limit(1) as Ticket[];
         if (maxSid.length === 0) return SID_START_AT;
         return maxSid[0].sid + 1;
-    } 
+    }
 }

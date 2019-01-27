@@ -14,8 +14,10 @@ class GetMainDashboardInfoService {
         return __awaiter(this, void 0, void 0, function* () {
             // Get ticket today, get ticket not have calendar (This branch)
             const calendarsToday = yield this.getCalendarsToday(branchId);
+            const ticketNotHaveCanlendar = yield this.getTicketNotHaveCalendar(branchId);
             return {
-                calendarsToday
+                calendarsToday,
+                ticketNotHaveCanlendar
             };
         });
     }
@@ -37,6 +39,23 @@ class GetMainDashboardInfoService {
             const now = new Date().toLocaleDateString('en-GB');
             const calendarsToday = calendarsAll.filter(v => new Date(v.startTime).toLocaleDateString('en-GB') === now);
             return calendarsToday;
+        });
+    }
+    static getTicketNotHaveCalendar(branchId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Get các hò sơ điều trị mà chưa được tạo lịch hẹn
+            // (1) Get hồ sơ đang điều trị tại chi nhánh đó 
+            let ticketInThisBranchId = yield refs_1.Ticket.find({ branchRegister: branchId, status: 'WORKING' })
+                .select('sid client dentistResponsible status items totalAmount receiptVoucher calendars')
+                .populate('client', 'name email phone')
+                .populate('dentistResponsible', 'name email phone')
+                .populate('items.service', 'name unit')
+                .populate('receiptVoucher')
+                .populate('calendars', 'startTime endTime status');
+            // (2) Filter hồ sơ chưa có lịch hẹn hoặc có lịch hẹn mà đã quá hạn
+            ticketInThisBranchId = ticketInThisBranchId.filter(v => v.calendars.length === 0
+                || !v.calendars.find(v => +v.endTime > Date.now()));
+            return ticketInThisBranchId;
         });
     }
 }

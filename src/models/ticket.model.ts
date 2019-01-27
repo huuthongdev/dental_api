@@ -48,7 +48,7 @@ export class Ticket extends TicketModel {
     items: TicketItem[];
     totalAmount: number;
     receiptVoucher: string | ReceiptVoucher;
-    calendars: string | CalendarDentist;
+    calendars: CalendarDentist[];
     // Client Feedback 
     feedback: {
         message: string;
