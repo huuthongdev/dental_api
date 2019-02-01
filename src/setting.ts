@@ -1,4 +1,5 @@
 const nameProject = 'Dental';
+export const apiVersion = '1.0.1';
 
 interface ServerConfig {
     DATABASE_URI: string;
@@ -29,7 +30,6 @@ const testingConfig: ServerConfig = {
 
 const developmentConfig: ServerConfig = {
     DATABASE_URI: `mongodb://localhost/${nameProject.toLowerCase()}`,
-    // DATABASE_URI: "mongodb://dental:dental123@ds211635.mlab.com:11635/dental_test",
     FRONT_END_URL: 'http://localhost:3000',
     JWT_TOKEN_SECRET_KEY: 'abc123',
     ROOT_NAME: 'admin',
@@ -42,8 +42,8 @@ const developmentConfig: ServerConfig = {
 };
 
 const staggingConfig: ServerConfig = {
-    DATABASE_URI: 'mongodb://dental:dental123@ds211635.mlab.com:11635/dental_test',
-    FRONT_END_URL: 'http://localhost:3000',
+    DATABASE_URI: 'mongodb://nhakhoabaoan:nhakhoabaoan2019@ds213755.mlab.com:13755/dental_baoan',
+    FRONT_END_URL: 'https://app.nhakhoabaoan.vn',
     JWT_TOKEN_SECRET_KEY: 'dentalapplicationjwttokensecretkey@289917554876',
     ROOT_EMAIL: 'admin@gmail.com',
     ROOT_PHONE: '0908508136',
@@ -51,7 +51,7 @@ const staggingConfig: ServerConfig = {
     DEFAULT_PASSWORD: 'admin',
     SERVER_URL: 'https://dentalapi.herokuapp.com',
     SID_START_AT: 10000,
-    BRANCH_MASTER_NAME: 'Branch Name'
+    BRANCH_MASTER_NAME: 'Nha Khoa Bảo An'
 }
 
 // TODO update production config to run in production mode

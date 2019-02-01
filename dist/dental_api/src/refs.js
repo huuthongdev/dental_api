@@ -13,7 +13,6 @@ exports.ROOT_EMAIL = setting_1.ROOT_EMAIL;
 exports.ROOT_PHONE = setting_1.ROOT_PHONE;
 exports.SID_START_AT = setting_1.SID_START_AT;
 exports.BRANCH_MASTER_NAME = setting_1.BRANCH_MASTER_NAME;
-exports.apiVersion = setting_1.apiVersion;
 // Utils
 const server_error_1 = require("./utils/server-error");
 exports.ServerError = server_error_1.ServerError;

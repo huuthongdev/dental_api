@@ -2,7 +2,6 @@
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const nameProject = 'Dental';
-exports.apiVersion = '1.0.1';
 const testingConfig = {
     DATABASE_URI: `mongodb://localhost/${nameProject.toLowerCase()}-test`,
     FRONT_END_URL: '',
@@ -17,6 +16,7 @@ const testingConfig = {
 };
 const developmentConfig = {
     DATABASE_URI: `mongodb://localhost/${nameProject.toLowerCase()}`,
+    // DATABASE_URI: "mongodb://dental:dental123@ds211635.mlab.com:11635/dental_test",
     FRONT_END_URL: 'http://localhost:3000',
     JWT_TOKEN_SECRET_KEY: 'abc123',
     ROOT_NAME: 'admin',
@@ -28,8 +28,8 @@ const developmentConfig = {
     BRANCH_MASTER_NAME: 'Branch Name'
 };
 const staggingConfig = {
-    DATABASE_URI: 'mongodb://nhakhoabaoan:nhakhoabaoan2019@ds213755.mlab.com:13755/dental_baoan',
-    FRONT_END_URL: 'https://app.nhakhoabaoan.vn',
+    DATABASE_URI: 'mongodb://dental:dental123@ds211635.mlab.com:11635/dental_test',
+    FRONT_END_URL: 'http://localhost:3000',
     JWT_TOKEN_SECRET_KEY: 'dentalapplicationjwttokensecretkey@289917554876',
     ROOT_EMAIL: 'admin@gmail.com',
     ROOT_PHONE: '0908508136',
@@ -37,7 +37,7 @@ const staggingConfig = {
     DEFAULT_PASSWORD: 'admin',
     SERVER_URL: 'https://dentalapi.herokuapp.com',
     SID_START_AT: 10000,
-    BRANCH_MASTER_NAME: 'Nha Khoa Bảo An'
+    BRANCH_MASTER_NAME: 'Branch Name'
 };
 // TODO update production config to run in production mode
 // const productionConfig: ServerConfig = {};

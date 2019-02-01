@@ -1,7 +1,7 @@
 
 // ======================= IMPORT =======================
 // Settings
-import { DATABASE_URI, FRONT_END_URL, JWT_TOKEN_SECRET_KEY, ROOT_NAME, DEFAULT_PASSWORD, SERVER_URL, ROOT_EMAIL, ROOT_PHONE, SID_START_AT, BRANCH_MASTER_NAME } from './setting';
+import { DATABASE_URI, FRONT_END_URL, JWT_TOKEN_SECRET_KEY, ROOT_NAME, DEFAULT_PASSWORD, SERVER_URL, ROOT_EMAIL, ROOT_PHONE, SID_START_AT, BRANCH_MASTER_NAME, apiVersion } from './setting';
 // Utils
 import { ServerError } from './utils/server-error';
 import { makeSure, mustExist, mustBeObjectId, mustMatchReg } from './utils/asserts';
@@ -102,7 +102,10 @@ import { modifiedSelect } from './services/modified/modified-select.service';
 
 // ======================= EXPORT =======================
 // Settings
-export { SID_START_AT, DATABASE_URI, FRONT_END_URL, JWT_TOKEN_SECRET_KEY, ROOT_NAME, DEFAULT_PASSWORD, SERVER_URL, ROOT_EMAIL, ROOT_PHONE, BRANCH_MASTER_NAME }
+export {
+    apiVersion, SID_START_AT, DATABASE_URI, FRONT_END_URL, JWT_TOKEN_SECRET_KEY, ROOT_NAME,
+    DEFAULT_PASSWORD, SERVER_URL, ROOT_EMAIL, ROOT_PHONE, BRANCH_MASTER_NAME
+}
 // Utils
 export { ServerError }
 export { makeSure, mustExist, mustBeObjectId, mustMatchReg }

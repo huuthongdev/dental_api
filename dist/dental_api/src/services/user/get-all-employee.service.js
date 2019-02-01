@@ -13,7 +13,6 @@ class GetAllEmployeesService {
     static getAll(userId, branchId, userRoles) {
         return __awaiter(this, void 0, void 0, function* () {
             const checkMaster = yield refs_1.CheckMasterBranchService.check(branchId);
-            // const checkUserDirector = await CheckRoleInBranchService.check(userId, branchId, [Role.DIRECTOR]);
             if (checkMaster) {
                 const users = yield refs_1.User.find({}).populate({
                     path: 'roleInBranchs',

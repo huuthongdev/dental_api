@@ -1,8 +1,9 @@
-import { User, RoleInBranch, CheckMasterBranchService, Role } from "../../../src/refs";
+import { User, RoleInBranch, CheckMasterBranchService, Role, CheckRoleInBranchService } from "../../../src/refs";
 
 export class GetAllEmployeesService {
     static async getAll(userId: string, branchId: string, userRoles: Role[]) {
         const checkMaster = await CheckMasterBranchService.check(branchId);
+        // const checkUserDirector = await CheckRoleInBranchService.check(userId, branchId, [Role.DIRECTOR]);
         if (checkMaster) {
             const users = await User.find({}).populate({
                 path: 'roleInBranchs',
