@@ -21,8 +21,10 @@ import { CalendarDentist, CalendarStatus } from './models/calendar-dentist.model
 // Types
 import { Role, AccessorieItem, ModifieldTicketMessage, Gender } from './types';
 // Services
+import { MailService } from './services/mail/mail.service';
 import { ModifiedService } from './services/modified/modified.service';
 import { CreateUserService } from './services/user/create-user.service';
+import { ForgotPasswordService } from './services/user/forgot-password/forgot-password.service';
 import { LoginService } from './services/user/log-in.service';
 import { ChangePasswordService } from './services/user/change-password.service';
 import { GetAllBranchService } from './services/branch/get-all-branch.service';
@@ -130,6 +132,7 @@ export { Role, AccessorieItem, Gender }
 export { CreateUserService }
 export { UpdateProfileUserService, UpdateProfileUserInput }
 export { LoginService }
+export { MailService }
 export { ModifiedService, ModifieldTicketMessage }
 export { ChangePasswordService }
 export { GetAllBranchService }
@@ -172,6 +175,7 @@ export { GetReceiptVoucherService }
 export { GetMainDashboardInfoService }
 export { UpdateStatusTicketService }
 export { CheckMasterBranchService }
+export { ForgotPasswordService }
 // Middlewares
 export { onError }
 export { mustBeUser }

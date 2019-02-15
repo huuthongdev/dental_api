@@ -22,9 +22,11 @@ class UpdateStatusTicketService {
     }
     static update(staffId, ticketId, status) {
         return __awaiter(this, void 0, void 0, function* () {
+            refs_1.mustBeObjectId(staffId, ticketId);
             const oldTicket = yield this.validate(staffId, ticketId, status);
-            yield refs_1.Ticket.findByIdAndUpdate(ticketId, { status }, { new: true });
-            return yield refs_1.ModifiedService.ticket(ticketId, staffId, oldTicket, refs_1.ModifieldTicketMessage.UPDATE_TICKET_STATUS);
+            const newTicket = yield refs_1.Ticket.findByIdAndUpdate(ticketId, { status }, { new: true });
+            refs_1.ModifiedService.ticket(ticketId, staffId, oldTicket, refs_1.ModifieldTicketMessage.UPDATE_TICKET_STATUS);
+            return newTicket;
         });
     }
 }

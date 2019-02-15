@@ -11,8 +11,10 @@ export class UpdateStatusTicketService {
     }
 
     static async update(staffId: string, ticketId: string, status: TicketStatus) {
+        mustBeObjectId(staffId, ticketId);
         const oldTicket = await this.validate(staffId, ticketId, status);
-        await Ticket.findByIdAndUpdate(ticketId, { status }, { new: true });
-        return await ModifiedService.ticket(ticketId, staffId, oldTicket, ModifieldTicketMessage.UPDATE_TICKET_STATUS)
+        const newTicket = await Ticket.findByIdAndUpdate(ticketId, { status }, { new: true });
+        ModifiedService.ticket(ticketId, staffId, oldTicket, ModifieldTicketMessage.UPDATE_TICKET_STATUS);
+        return newTicket;
     }
 }

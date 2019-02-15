@@ -15,10 +15,32 @@ class GetMainDashboardInfoService {
             // Get ticket today, get ticket not have calendar (This branch)
             const calendarsToday = yield this.getCalendarsToday(branchId);
             const ticketNotHaveCanlendar = yield this.getTicketNotHaveCalendar(branchId);
+            const numberReports = yield this.getNumberReports(branchId);
             return {
                 calendarsToday,
-                ticketNotHaveCanlendar
+                ticketNotHaveCanlendar,
+                numberReports
             };
+        });
+    }
+    static getNumberReports(branchId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Tổng doanh thu
+            const receiptVouchers = yield refs_1.ReceiptVoucher.find({ branchTransaction: branchId });
+            let totalRevenue;
+            if (receiptVouchers.length === 0) {
+                totalRevenue = 0;
+            }
+            else {
+                totalRevenue = receiptVouchers.map(v => v.totalPayment).reduce((a, b) => a + b);
+            }
+            // Tổng khách hàng
+            const client = yield refs_1.Client.find({});
+            const totalClients = client.length;
+            // Tổng hồ sơ điều trị tại chi nhánh này
+            const tickets = yield refs_1.Ticket.find({ branchRegister: branchId });
+            const totalTickets = tickets.length;
+            return { totalRevenue, totalClients, totalTickets };
         });
     }
     static getCalendarsToday(branchId) {

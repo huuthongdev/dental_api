@@ -12,6 +12,7 @@ const userSchema = new mongoose_1.Schema({
     password: { type: String, required: true, trim: true },
     passwordVersion: { type: Number, default: 1 },
     isActive: { type: Boolean, default: true },
+    changePasswordPIN: { type: Number },
     // Address
     city: { type: String, trim: true },
     district: { type: String, trim: true },

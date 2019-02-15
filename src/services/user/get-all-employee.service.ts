@@ -23,4 +23,16 @@ export class GetAllEmployeesService {
     static async getEmployeeInOneBranch(branchId: string) {
         return await RoleInBranch.find({ branch: branchId }).populate('user');
     }
+
+    static async getFullForCreateEmployee() {
+        const users = await User.find({}).populate({
+            path: 'roleInBranchs',
+            select: { user: false },
+            populate: {
+                path: 'branch',
+                select: 'sid name isMaster'
+            }
+        })
+        return users;
+    }
 }

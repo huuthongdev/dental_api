@@ -3,7 +3,14 @@ import { Client, mustExist, ClientError, mustBeObjectId, Ticket } from "../../..
 export class GetClientDetailDataService {
     static async getDetailRelated(clientId: string) {
         // Ticket
-        const tickets = await Ticket.find({ client: clientId });
+        const tickets = await Ticket.find({ client: clientId })
+            .sort({ createAt: -1 })
+            .select('sid client dentistResponsible status items totalAmount receiptVoucher createAt')
+            .populate('client', 'name email phone')
+            .populate('dentistResponsible', 'name email phone')
+            .populate('items.service', 'name unit')
+            .populate('receiptVoucher')
+            .populate('branchRegister', 'name');
         return { tickets }
     }
 

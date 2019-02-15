@@ -13,7 +13,14 @@ class GetClientDetailDataService {
     static getDetailRelated(clientId) {
         return __awaiter(this, void 0, void 0, function* () {
             // Ticket
-            const tickets = yield refs_1.Ticket.find({ client: clientId });
+            const tickets = yield refs_1.Ticket.find({ client: clientId })
+                .sort({ createAt: -1 })
+                .select('sid client dentistResponsible status items totalAmount receiptVoucher createAt')
+                .populate('client', 'name email phone')
+                .populate('dentistResponsible', 'name email phone')
+                .populate('items.service', 'name unit')
+                .populate('receiptVoucher')
+                .populate('branchRegister', 'name');
             return { tickets };
         });
     }

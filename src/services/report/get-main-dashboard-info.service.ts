@@ -1,14 +1,31 @@
-import { CalendarDentist, Ticket } from "../../../src/refs";
+import { CalendarDentist, Ticket, ReceiptVoucher, Client } from "../../../src/refs";
 
 export class GetMainDashboardInfoService {
     static async get(branchId: string) {
         // Get ticket today, get ticket not have calendar (This branch)
         const calendarsToday = await this.getCalendarsToday(branchId);
         const ticketNotHaveCanlendar = await this.getTicketNotHaveCalendar(branchId);
+        const numberReports = await this.getNumberReports(branchId);
         return {
             calendarsToday,
-            ticketNotHaveCanlendar
+            ticketNotHaveCanlendar,
+            numberReports
         }
+    }
+
+    static async getNumberReports(branchId: string) {
+        // Tổng doanh thu
+        const receiptVouchers = await ReceiptVoucher.find({ branchTransaction: branchId }) as ReceiptVoucher[];
+        let totalRevenue: number;
+        if (receiptVouchers.length === 0) { totalRevenue = 0; }
+        else { totalRevenue = receiptVouchers.map(v => v.totalPayment).reduce((a, b) => a + b); }
+        // Tổng khách hàng
+        const client = await Client.find({}) as Client[];
+        const totalClients = client.length;
+        // Tổng hồ sơ điều trị tại chi nhánh này
+        const tickets = await Ticket.find({ branchRegister: branchId }) as Ticket[];
+        const totalTickets = tickets.length;
+        return { totalRevenue, totalClients, totalTickets }
     }
 
     static async getCalendarsToday(branchId: string) {

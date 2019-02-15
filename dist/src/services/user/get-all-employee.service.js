@@ -35,5 +35,18 @@ class GetAllEmployeesService {
             return yield refs_1.RoleInBranch.find({ branch: branchId }).populate('user');
         });
     }
+    static getFullForCreateEmployee() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const users = yield refs_1.User.find({}).populate({
+                path: 'roleInBranchs',
+                select: { user: false },
+                populate: {
+                    path: 'branch',
+                    select: 'sid name isMaster'
+                }
+            });
+            return users;
+        });
+    }
 }
 exports.GetAllEmployeesService = GetAllEmployeesService;

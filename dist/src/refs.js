@@ -57,10 +57,14 @@ exports.Role = types_1.Role;
 exports.ModifieldTicketMessage = types_1.ModifieldTicketMessage;
 exports.Gender = types_1.Gender;
 // Services
+const mail_service_1 = require("./services/mail/mail.service");
+exports.MailService = mail_service_1.MailService;
 const modified_service_1 = require("./services/modified/modified.service");
 exports.ModifiedService = modified_service_1.ModifiedService;
 const create_user_service_1 = require("./services/user/create-user.service");
 exports.CreateUserService = create_user_service_1.CreateUserService;
+const forgot_password_service_1 = require("./services/user/forgot-password/forgot-password.service");
+exports.ForgotPasswordService = forgot_password_service_1.ForgotPasswordService;
 const log_in_service_1 = require("./services/user/log-in.service");
 exports.LoginService = log_in_service_1.LoginService;
 const change_password_service_1 = require("./services/user/change-password.service");

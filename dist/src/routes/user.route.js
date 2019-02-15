@@ -16,10 +16,37 @@ exports.userRouter.post('/log-in', (req, res) => {
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
+// Support forgot password
+exports.userRouter.post('/forgot-password', (req, res) => {
+    const { email } = req.body;
+    refs_1.ForgotPasswordService.suggest(email)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+// Validate code PIN for change password
+exports.userRouter.post('/change-password-check-pin', (req, res) => {
+    const { pin } = req.body;
+    refs_1.ForgotPasswordService.validatePIN(pin)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+// Change password with PIN code
+exports.userRouter.post('/change-password-with-pin', (req, res) => {
+    const { pin, newPassword } = req.body;
+    refs_1.ForgotPasswordService.changePasswordWithPIN(pin, newPassword)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
 exports.userRouter.use(refs_1.mustBeUser);
 // Get all employees
 exports.userRouter.get('/employees', (req, res) => {
     refs_1.GetAllEmployeesService.getAll(req.query.userId, req.query.branchId, req.query.roles)
+        .then(result => res.send({ success: true, result }))
+        .catch(res.onError);
+});
+// Fetch All Employee for Director
+exports.userRouter.get('/fetch', (req, res) => {
+    refs_1.GetAllEmployeesService.getFullForCreateEmployee()
         .then(result => res.send({ success: true, result }))
         .catch(res.onError);
 });
